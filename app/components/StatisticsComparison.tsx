@@ -12,11 +12,12 @@ interface PensionGroup {
   description: string;
   characteristics: string[];
   percentage: number;
+  minValue: number;
+  maxValue: number;
 }
 
 export default function StatisticsComparison({ expectedPension = 4000 }: StatisticsComparisonProps) {
   const [selectedGroup, setSelectedGroup] = useState<PensionGroup | null>(null);
-  const [userPosition, setUserPosition] = useState<number>(0);
 
   // Real data from ZUS based on provided files
   const pensionGroups: PensionGroup[] = [
@@ -31,7 +32,9 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
         "Brak prawa do gwarancji minimalnej emerytury",
         "Często osoby z krótkim stażem pracy"
       ],
-      percentage: 8
+      percentage: 8,
+      minValue: 0,
+      maxValue: 1878
     },
     {
       name: "Minimalna emerytura",
@@ -44,7 +47,9 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
         "Często pracownicy fizyczni i usługowi",
         "Przeciętny kapitał początkowy: ~45 000 zł"
       ],
-      percentage: 15
+      percentage: 15,
+      minValue: 1878,
+      maxValue: 2500
     },
     {
       name: "Średnia krajowa",
@@ -57,7 +62,9 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
         "Przeciętne wynagrodzenia przez całą karierę",
         "Kapitał początkowy: ~70 000-100 000 zł"
       ],
-      percentage: 45
+      percentage: 45,
+      minValue: 2500,
+      maxValue: 4500
     },
     {
       name: "Powyżej średniej",
@@ -70,7 +77,9 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
         "Stałe zatrudnienie w dobrych warunkach",
         "Kapitał początkowy: ~110 000 zł"
       ],
-      percentage: 25
+      percentage: 25,
+      minValue: 4500,
+      maxValue: 7000
     },
     {
       name: "Wysokie emerytury",
@@ -83,20 +92,11 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
         "Bardzo długi staż w dobrych warunkach",
         "Wysokie składki przez cały okres pracy"
       ],
-      percentage: 7
+      percentage: 7,
+      minValue: 7000,
+      maxValue: 15000
     }
   ];
-
-  useEffect(() => {
-    // Calculate user position on scale - limited to 0-100% range
-    let userGroupIndex = pensionGroups.findIndex(group => 
-      expectedPension <= group.average || group === pensionGroups[pensionGroups.length - 1]
-    );
-    
-    // Protection against out-of-range values
-    userGroupIndex = Math.max(0, Math.min(userGroupIndex, pensionGroups.length - 1));
-    setUserPosition(userGroupIndex);
-  }, [expectedPension]);
 
   const getComparisonText = () => {
     const averagePension = 4045; // Average pension in Poland
@@ -112,23 +112,46 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
     }
   };
 
-  // Calculate dot position with constraints
+  // Calculate dot position based on actual pension value and group ranges
   const calculateDotPosition = () => {
-    const minPosition = 2; // Minimum position (2% from left)
-    const maxPosition = 98; // Maximum position (98% from left)
+    // Find which group the pension belongs to
+    let currentGroup: PensionGroup | null = null;
     
-    let position = (userPosition / (pensionGroups.length - 1)) * 100;
+    for (const group of pensionGroups) {
+      if (expectedPension <= group.maxValue || group === pensionGroups[pensionGroups.length - 1]) {
+        currentGroup = group;
+        break;
+      }
+    }
+
+    if (!currentGroup) return 50;
+
+    // Calculate accumulated percentage up to current group
+    let accumulatedPercentage = 0;
+    for (const group of pensionGroups) {
+      if (group.name === currentGroup.name) break;
+      accumulatedPercentage += group.percentage;
+    }
+
+    // Calculate position within current group
+    const groupRange = currentGroup.maxValue - currentGroup.minValue;
+    const positionInGroup = groupRange > 0 
+      ? (expectedPension - currentGroup.minValue) / groupRange
+      : 0.5; // fallback for groups with 0 range
+
+    // Limit positionInGroup to 0-1 range
+    const clampedPositionInGroup = Math.max(0, Math.min(positionInGroup, 1));
+
+    // Calculate final position
+    const position = accumulatedPercentage + (currentGroup.percentage * clampedPositionInGroup);
     
-    // Limit position to allowed range
-    position = Math.max(minPosition, Math.min(position, maxPosition));
-    
-    return position;
+    // Limit to 2%-98% for better appearance
+    return Math.max(2, Math.min(position, 98));
   };
 
   const dotPosition = calculateDotPosition();
 
   const handleGroupClick = (group: PensionGroup) => {
-    // If clicking already selected group, deselect it
     if (selectedGroup?.name === group.name) {
       setSelectedGroup(null);
     } else {
@@ -210,7 +233,7 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
             className="absolute top-full transform -translate-x-1/2 transition-all duration-500 z-10"
             style={{ 
               left: `${dotPosition}%`,
-              top: 'calc(100% - 8px)', // Adjusted to be directly below the bar
+              top: 'calc(100% - 8px)',
             }}
           >
             <div className="flex flex-col items-center">
