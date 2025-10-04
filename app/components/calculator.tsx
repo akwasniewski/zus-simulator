@@ -201,14 +201,17 @@ export default function RetirementCalculator({ formData, setFormData }) {
   };
 
   React.useEffect(() => {
-    if (!pastEarnings || pastEarnings.length === 0) return;
+    //if (!pastEarnings || pastEarnings.length === 0) return;
 
     // Combine pastEarnings + future projections for the calculation
-    const allEarnings = [...pastEarnings, ...projections];
+    //const allEarnings = [...pastEarnings, ...projections];
+    const projections = calculateProjections();
+    
+    // Combine past earnings + projections
+    const allData = [...pastEarnings, ...projections];
 
-    // Call your pension calculator
     const result = calculateFullPension(formData, allData);
-
+    console.log(result.monthlyPension)
     setPredictedPension(result.monthlyPension);
     setPensionHistory(
       result.yearlySavings.map(record => ({
