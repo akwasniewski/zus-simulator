@@ -73,14 +73,14 @@ export default function ExpectationsForm({ onPensionChange }: ExpectationsFormPr
         <div className="flex gap-4">
           <button
             type="button"
-            className="flex-1 bg-[var(--blue)] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[var(--blue)] focus:ring-offset-2 transition-all duration-300 cursor-pointer"
+            className="flex-1 bg-[var(--orange)] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[var(--orange)] focus:ring-offset-2 transition-all duration-300 cursor-pointer"
             onClick={scrollToComparison}
           >
             Porównaj oczekiwania ze statystykami
           </button>
           <button
             type="button"
-            className="flex-1 bg-[var(--orange)] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[var(--orange)] focus:ring-offset-2 transition-all duration-300 cursor-pointer"
+            className="flex-1 bg-[var(--blue)] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[var(--blue)] focus:ring-offset-2 transition-all duration-300 cursor-pointer"
             onClick={() => router.push('/kalkulator')}
           >
             Otwórz zaawansowany kalkulator
