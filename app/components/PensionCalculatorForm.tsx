@@ -580,7 +580,24 @@ export default function PensionCalculatorForm() {
                 <span className="text-[black] font-medium">Przewidywana miesięczna emerytura:</span>
                 <span className="text-[var(--green)] font-bold text-xl">{formatCurrency(result.monthlyPension)}</span>
               </div>
-              
+              <div className="flex justify-between items-center border-t border-[#00993F] pt-3 mt-2">
+        <span className="text-[black] font-medium">Emerytura po uwzględnieniu inflacji:</span>
+          <span className="text-[var(--green)] font-bold text-xl">
+            {formatCurrency(result.monthlyPensionAdjusted)}
+          </span>
+          <div className="flex justify-between items-center border-t border-[#00993F] pt-3 mt-2">
+        <span className="text-[black] font-medium">Stopa czegostam:</span>
+          <span className="text-[var(--green)] font-bold text-xl">
+            {result.FootOfReturn.toFixed(2)}
+          </span>
+        </div>
+        <div className="flex justify-between items-center border-t border-[#00993F] pt-3 mt-2">
+        <span className="text-[black] font-medium">Srednia przyszla emerytura:</span>
+          <span className="text-[var(--green)] font-bold text-xl">
+            {formatCurrency(result.AverageFuturePension)}
+          </span>
+        </div>
+        </div>
               {/* Additional calculations for working longer */}
               <div className="border-t border-gray-200 pt-3 mt-3">
                 <h4 className="text-[black] font-medium mb-2">Emerytura przy dłuższej pracy:</h4>
@@ -605,6 +622,35 @@ export default function PensionCalculatorForm() {
                     </div>
                   );
                 })}
+              </div>
+
+              {/* Sick leave comparison */}
+              <div className="border-t border-gray-200 pt-3 mt-3">
+                <h4 className="text-[black] font-medium mb-2">Wpływ zwolnień chorobowych:</h4>
+                {(() => {
+                  const sickLeaveFormData = {
+                    ...formData,
+                    considerSickLeave: !formData.considerSickLeave
+                  };
+                  const sickLeaveResult = calculatePension(sickLeaveFormData);
+                  const difference = sickLeaveResult.monthlyPension - result.monthlyPension;
+                  const percentageChange = ((difference / result.monthlyPension) * 100).toFixed(1);
+                  const isPositive = difference > 0;
+                  
+                  return (
+                    <div className="flex justify-between items-center py-1">
+                      <span className="text-[black] text-sm">
+                        {formData.considerSickLeave ? 'Nie uwzględniając L4 wyszłoby:' : 'Uwzględniając przeciętną ilość L4 wyszłoby:'}
+                      </span>
+                      <span className="text-[#00416E] font-medium text-sm">
+                        {formatCurrency(sickLeaveResult.monthlyPension)} 
+                        <span className={`ml-2 ${isPositive ? 'text-[var(--green)]' : 'text-[#cc0000]'}`}>
+                          ({isPositive ? '+' : ''}{formatCurrency(difference)}, {isPositive ? '+' : ''}{percentageChange}%)
+                        </span>
+                      </span>
+                    </div>
+                  );
+                })()}
               </div>
               
               {expectedPension && (
