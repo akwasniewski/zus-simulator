@@ -573,7 +573,7 @@ export default function PensionCalculatorForm() {
                 <span className="text-[#000000] font-bold">{result.yearsToRetirement} lat</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-[black] font-medium">Całkowita odłożona kwota</span>
+                <span className="text-[black] font-medium">Całkowita odłożona kwota:</span>
                 <span className="text-[#000000] font-bold">{formatCurrency(result.totalSavings)}</span>
               </div>
               <div className="flex justify-between items-center border-t border-[#00993F] pt-3">
@@ -594,7 +594,7 @@ export default function PensionCalculatorForm() {
               </div>
               {/* Additional calculations for working longer */}
               <div className="border-t border-gray-200 pt-3 mt-3">
-                <h4 className="text-[black] font-medium mb-2">Emerytura przy dłuższej pracy:</h4>
+                <h4 className="text-[black] font-medium mb-2">Emerytura przy dłuższej pracy</h4>
                 {[1, 2, 5].map(years => {
                   const extendedFormData = {
                     ...formData,
@@ -620,7 +620,7 @@ export default function PensionCalculatorForm() {
 
               {/* Sick leave comparison */}
               <div className="border-t border-gray-200 pt-3 mt-3">
-                <h4 className="text-[black] font-medium mb-2">Wpływ zwolnień chorobowych:</h4>
+                <h4 className="text-[black] font-medium mb-2">Wpływ zwolnień chorobowych</h4>
                 {(() => {
                   const sickLeaveFormData = {
                     ...formData,
