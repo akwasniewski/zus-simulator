@@ -206,7 +206,7 @@ export default function PensionCalculatorForm() {
       handleNext();
     } else {
       if (validateForm()) {
-        const calculatedResult = calculatePension(formData);
+        const calculatedResult = calculatePension(formData, expectedPension || undefined);
         setResult(calculatedResult);
         
         // Save telemetry data
@@ -653,8 +653,33 @@ export default function PensionCalculatorForm() {
                   <span className="text-[#666666] font-bold text-lg">{formatCurrency(expectedPension)}</span>
                 </div>
               )}
+              
+              {/* Years needed for desired pension */}
+              {expectedPension && result.yearsNeededForDesiredPension !== undefined && (
+                <div className="flex justify-between items-center border-t border-gray-300 pt-3">
+                  <span className="text-[black] font-medium">
+                    {result.yearsNeededForDesiredPension === 0 
+                      ? 'Już osiągniesz oczekiwaną emeryturę!' 
+                      : `Lata dodatkowej pracy dla oczekiwanej emerytury:`
+                    }
+                  </span>
+                  <span className="text-[#ff6600] font-bold text-lg">
+                    {result.yearsNeededForDesiredPension === 0 
+                      ? '✓' 
+                      : `${result.yearsNeededForDesiredPension} ${result.yearsNeededForDesiredPension === 1 ? 'rok' : result.yearsNeededForDesiredPension <= 4 ? 'lata' : 'lat'}`
+                    }
+                  </span>
+                </div>
+              )}
+              
+              {expectedPension && result.yearsNeededForDesiredPension === undefined && expectedPension > result.monthlyPension && (
+                <div className="flex justify-between items-center border-t border-red-300 pt-3">
+                  <span className="text-[black] font-medium">Oczekiwana emerytura:</span>
+                  <span className="text-[#cc0000] font-bold text-sm">Nieosiągalna nawet do 70. roku życia</span>
+                </div>
+              )}
             </div>
-            <p className="mt-4 text-sm text-[black]">
+            <p className="mt-4 text-sm text-gray-400">
               To są wyłącznie przewidywania. Rzeczywista emerytura może być inna.
             </p>
           </div>

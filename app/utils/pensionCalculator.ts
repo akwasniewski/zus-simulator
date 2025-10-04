@@ -22,6 +22,7 @@ export interface PensionResult {
   AverageFuturePension: number,
   totalSavings: number;
   yearsToRetirement: number;
+  yearsNeededForDesiredPension?: number;
 }
 
 export interface PensionYearRecord {
@@ -35,7 +36,31 @@ export interface PensionFullResult {
   yearlySavings: PensionYearRecord[];
 }
 
-export const calculatePension = (formData: FormData): PensionResult => {
+export const calculateYearsForDesiredPension = (formData: FormData, desiredPension: number): number | null => {
+  const currentAge = parseInt(formData.currentAge);
+  const maxRetirementAge = 70; // Set a reasonable maximum
+  let testRetirementAge = parseInt(formData.retirementAge);
+  
+  // Use while loop to find the retirement age needed
+  while (testRetirementAge <= maxRetirementAge) {
+    const testFormData = {
+      ...formData,
+      retirementAge: testRetirementAge.toString()
+    };
+    
+    const result = calculatePensionInternal(testFormData);
+    
+    if (result.monthlyPension >= desiredPension) {
+      return testRetirementAge - parseInt(formData.retirementAge);
+    }
+    
+    testRetirementAge++;
+  }
+  
+  return null; // Cannot reach desired pension even at age 70
+};
+
+const calculatePensionInternal = (formData: FormData): PensionResult => {
   const currentAge = parseInt(formData.currentAge);
   const monthlySalary = parseFloat(formData.currentSalary);
   let annualSalary = monthlySalary * 12;
@@ -93,6 +118,17 @@ export const calculatePension = (formData: FormData): PensionResult => {
     totalSavings: estimatedSalary,
     yearsToRetirement,
   };
+};
+
+export const calculatePension = (formData: FormData, desiredPension?: number): PensionResult => {
+  const result = calculatePensionInternal(formData);
+  
+  if (desiredPension && desiredPension > result.monthlyPension) {
+    const yearsNeeded = calculateYearsForDesiredPension(formData, desiredPension);
+    result.yearsNeededForDesiredPension = yearsNeeded !== null ? yearsNeeded : undefined;
+  }
+  
+  return result;
 };
 
 
