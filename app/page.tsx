@@ -16,7 +16,7 @@ export default function SymulatorPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-grey to-blue">
+    <div className="bg-gradient-to-br from-background via-grey to-blue">
       <div className="container mx-auto px-4 py-12">
         {/* Header */}
         <div className="text-center mb-12">
@@ -29,7 +29,7 @@ export default function SymulatorPage() {
         </div>
 
         {/* Form */}
-        <div className="max-w-2xl mx-auto mb-16">
+        <div className="max-w-2xl mx-auto">
           <ExpectationsForm 
             onPensionChange={handlePensionChange}
             onShowComparison={handleShowComparison}
