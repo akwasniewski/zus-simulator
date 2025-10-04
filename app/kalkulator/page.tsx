@@ -69,10 +69,16 @@ export default function RetirementCalculator() {
   };
 
   const projections = calculateProjections();
-  const totalEarnings = projections.reduce((sum, p) => sum + p.salary, 0);
-  const avgSalary = projections.length > 0 ? Math.round(totalEarnings / projections.length) : 0;
 
-  const allData = [...pastEarnings.map(p => ({ ...p, type: 'past' })), ...projections.map(p => ({ ...p, type: 'future' }))];
+  // Calculate total and average for both past and future earnings
+  const pastTotal = pastEarnings.reduce((sum, p) => sum + (parseFloat(p.salary) || 0), 0);
+  const futureTotal = projections.reduce((sum, p) => sum + p.salary, 0);
+  const totalEarnings = pastTotal + futureTotal;
+
+  const totalYears = pastEarnings.length + projections.length;
+  const avgSalary = totalYears > 0 ? Math.round(totalEarnings / totalYears) : 0;
+
+  const allData = [...pastEarnings.map(p => ({ ...p, salary: parseFloat(p.salary) || 0, type: 'past' })), ...projections.map(p => ({ ...p, type: 'future' }))];
 
   const updatePastEarning = (index, field, value) => {
     const updated = [...pastEarnings];
@@ -312,38 +318,135 @@ export default function RetirementCalculator() {
               </button>
             </div>
 
-            <div className="space-y-3 max-h-80 overflow-y-auto">
-              {pastEarnings.map((earning, index) => (
-                <div key={index} className="flex gap-2 items-center p-2 rounded" style={{ backgroundColor: 'rgba(190, 195, 206, 0.1)' }}>
-                  <input
-                    type="number"
-                    value={earning.year}
-                    onChange={(e) => updatePastEarning(index, 'year', e.target.value)}
-                    min={currentYear - 50}
-                    max={currentYear}
-                    className="w-20 px-2 py-1 text-sm border rounded"
-                    style={{ borderColor: 'var(--grey)' }}
-                    placeholder="Year"
-                  />
-                  <input
-                    type="number"
-                    value={earning.salary}
-                    onChange={(e) => updatePastEarning(index, 'salary', e.target.value)}
-                    min="0"
-                    max="10000000"
-                    className="flex-1 px-2 py-1 text-sm border rounded"
-                    style={{ borderColor: 'var(--grey)' }}
-                    placeholder="Salary"
-                  />
-                  <button
-                    onClick={() => removePastYear(index)}
-                    className="px-2 py-1 text-white rounded text-xs"
-                    style={{ backgroundColor: 'var(--red)' }}
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
+            <div className="border rounded" style={{ borderColor: 'var(--grey)' }}>
+              <div className="max-h-96 overflow-y-auto">
+                <table className="w-full text-sm">
+                  <thead className="sticky top-0 z-10" style={{ backgroundColor: 'var(--background)' }}>
+                    <tr style={{ backgroundColor: 'rgba(190, 195, 206, 0.2)' }}>
+                      <th className="px-4 py-2 text-left">Year</th>
+                      <th className="px-4 py-2 text-left">Salary</th>
+                      <th className="px-4 py-2 w-20"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {/* Add year above button */}
+                    <tr className="sticky top-10 z-10" style={{ backgroundColor: 'var(--background)' }}>
+                      <td colSpan="3" className="px-4 py-2 text-center border-b" style={{ borderColor: 'rgba(190, 195, 206, 0.2)' }}>
+                        <button
+                          onClick={() => {
+                            if (pastEarnings.length === 0) {
+                              setPastEarnings([{ year: currentYear, salary: '' }]);
+                            } else {
+                              const maxYear = Math.max(...pastEarnings.map(e => e.year));
+                              if (maxYear < currentYear) {
+                                setPastEarnings([...pastEarnings, { year: maxYear + 1, salary: '' }]);
+                              }
+                            }
+                          }}
+                          className="px-3 py-1 text-xs rounded text-white"
+                          style={{ backgroundColor: 'var(--green)' }}
+                          disabled={pastEarnings.length > 0 && Math.max(...pastEarnings.map(e => e.year)) >= currentYear}
+                        >
+                          + Add Year Above
+                        </button>
+                      </td>
+                    </tr>
+
+                    {(() => {
+                      if (pastEarnings.length === 0) {
+                        return (
+                          <tr>
+                            <td colSpan="3" className="px-4 py-8 text-center text-gray-500">
+                              No earnings data. Click "Add Year Above" or "Add Year Below" to start.
+                            </td>
+                          </tr>
+                        );
+                      }
+
+                      const years = pastEarnings.map(e => e.year);
+                      const minYear = Math.min(...years);
+                      const maxYear = Math.max(...years);
+                      const rows = [];
+
+                      // Create rows for all years from max to min
+                      for (let year = maxYear; year >= minYear; year--) {
+                        const earning = pastEarnings.find(e => e.year === year);
+                        const salary = earning ? earning.salary : '0';
+                        const existingIndex = pastEarnings.findIndex(e => e.year === year);
+
+                        rows.push(
+                          <tr
+                            key={year}
+                            className="border-b"
+                            style={{ borderColor: 'rgba(190, 195, 206, 0.2)' }}
+                          >
+                            <td className="px-4 py-2 font-medium">
+                              {year}
+                            </td>
+                            <td className="px-4 py-2">
+                              <input
+                                type="number"
+                                value={salary}
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  if (existingIndex !== -1) {
+                                    // Update existing entry
+                                    const updated = [...pastEarnings];
+                                    updated[existingIndex] = { ...updated[existingIndex], salary: value };
+                                    setPastEarnings(updated);
+                                  } else {
+                                    // Create new entry for this year
+                                    setPastEarnings([...pastEarnings, { year, salary: value }]);
+                                  }
+                                }}
+                                min="0"
+                                className="w-full px-2 py-1 border rounded"
+                                style={{ borderColor: 'var(--grey)' }}
+                                placeholder="Enter salary"
+                              />
+                            </td>
+                            <td className="px-4 py-2">
+                              {earning && (
+                                <button
+                                  onClick={() => {
+                                    setPastEarnings(pastEarnings.filter((_, i) => i !== existingIndex));
+                                  }}
+                                  className="px-2 py-1 text-white rounded text-xs"
+                                  style={{ backgroundColor: 'var(--red)' }}
+                                >
+                                  ×
+                                </button>
+                              )}
+                            </td>
+                          </tr>
+                        );
+                      }
+
+                      return rows;
+                    })()}
+
+                    {/* Add year below button */}
+                    <tr className="sticky bottom-0 z-10" style={{ backgroundColor: 'var(--background)' }}>
+                      <td colSpan="3" className="px-4 py-2 text-center border-t" style={{ borderColor: 'rgba(190, 195, 206, 0.2)' }}>
+                        <button
+                          onClick={() => {
+                            if (pastEarnings.length === 0) {
+                              setPastEarnings([{ year: currentYear - 1, salary: '' }]);
+                            } else {
+                              const minYear = Math.min(...pastEarnings.map(e => e.year));
+                              setPastEarnings([...pastEarnings, { year: minYear - 1, salary: '' }]);
+                            }
+                          }}
+                          className="px-3 py-1 text-xs rounded text-white"
+                          style={{ backgroundColor: 'var(--green)' }}
+                        >
+                          + Add Year Below
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
 
