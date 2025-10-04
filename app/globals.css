@@ -3,7 +3,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-lato, var(--font-geist-sans));
   --font-mono: var(--font-geist-mono);
 }
 
@@ -40,4 +40,129 @@ body {
   --lightblue: #0084d2;
   --red: #f05e5e;
   --black: #000000;
+}
+
+
+.zus-footer {
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  background-color: var(--green);
+  color: #fff;
+  width: 100%;
+  margin: 0;
+}
+
+.zus-footer__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.zus-footer__section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.zus-footer__links a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: white;
+  font-weight: 700;
+}
+
+.zus-footer__arrow {
+  font-size: 10px;
+}
+
+.gap-2 {
+  font-weight: 700 !important;
+}
+
+.zus-footer__group a {
+  display: block;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  text-decoration: none;
+  color: white;
+  font-weight: 700;
+}
+
+.zus-footer__socials a {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  text-decoration: none;
+  color: white;
+  font-weight: 700;
+}
+
+.zus-footer__icon {
+  background: white;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.zus-footer__top {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.zus-footer__top a {
+  font-weight: 700;
+  text-decoration: none;
+  color: white;
+}
+
+.zus-footer__top a:hover {
+  text-decoration: underline;
+}
+
+/* --- Desktop layout --- */
+@media (min-width: 768px) {
+  .zus-footer__container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .zus-footer__section {
+    flex: 1;
+  }
+
+  .zus-footer__group a,
+  .zus-footer__socials a {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .zus-footer__info {
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .zus-footer__socials {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+  }
+
+  .zus-footer__links {
+    gap: 0.5rem;
+  }
+
+  .zus-footer__top {
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
 }

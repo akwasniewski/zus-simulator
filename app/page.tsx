@@ -1,10 +1,11 @@
 import PensionCalculatorForm from './components/PensionCalculatorForm';
+import Footer from './components/Footer';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-[#BEC3CE] to-[#3F84D2]">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-100 via-[#BEC3CE] to-[#3F84D2]">
       {/* Hero Section */}
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 py-16 flex-grow">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-6xl font-bold text-[#00416E] mb-6">
             Plan Your Perfect
@@ -39,7 +40,7 @@ export default function Home() {
         {/* Calculator Form */}
         <PensionCalculatorForm />
 
-        {/* Features Section */}
+  {/* Features Section */}
         <div className="mt-20">
           <h2 className="text-3xl font-bold text-center text-[#00416E] mb-12">
             Why Plan Your Retirement?
@@ -82,7 +83,12 @@ export default function Home() {
             </div>
           </div>
         </div>
+
       </div>
+
+      {/* Footer (full width, flush to bottom) */}
+      <Footer />
+
     </div>
   );
 }
