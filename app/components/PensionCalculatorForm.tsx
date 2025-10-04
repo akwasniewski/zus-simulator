@@ -335,9 +335,6 @@ export default function PensionCalculatorForm() {
       case 5:
         return (
           <div className="space-y-4">
-            <p className="text-sm text-[black] mb-4">
-              We can factor in leave periods to give you a more accurate pension calculation:
-            </p>
             <div className="space-y-4">
               <div className="flex items-center">
                 <input
