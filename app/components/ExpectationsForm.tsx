@@ -1,7 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Link } from 'lucide-react';
 
 interface ExpectationsFormProps {
   onPensionChange?: (pension: number) => void;
@@ -26,6 +25,13 @@ export default function ExpectationsForm({ onPensionChange }: ExpectationsFormPr
 
   const handlePensionChange = (value: number) => {
     setExpectedPension(value);
+  };
+
+  const scrollToComparison = () => {
+    const element = document.getElementById("statistics-comparison");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
@@ -68,18 +74,13 @@ export default function ExpectationsForm({ onPensionChange }: ExpectationsFormPr
           <button
             type="button"
             className="flex-1 bg-[var(--blue)] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[var(--blue)] focus:ring-offset-2 transition-all duration-300 cursor-pointer"
-            onClick={() => {
-              const element = document.getElementById("StatisticsComparison");
-              if (element) {
-                element.scrollIntoView({ behavior: "smooth" });
-              }
-            }}
+            onClick={scrollToComparison}
           >
             Porównaj oczekiwania ze statystykami
           </button>
           <button
             type="button"
-            className="flex-1 bg-[var(--grey)] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[var(--grey)] focus:ring-offset-2 transition-all duration-300 cursor-pointer"
+            className="flex-1 bg-[var(--orange)] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[var(--orange)] focus:ring-offset-2 transition-all duration-300 cursor-pointer"
             onClick={() => router.push('/kalkulator')}
           >
             Otwórz zaawansowany kalkulator
