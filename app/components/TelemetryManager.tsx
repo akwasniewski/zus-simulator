@@ -190,31 +190,31 @@ export default function TelemetryManager() {
         <div className="space-x-4">
           <button
             onClick={handleExportData}
-            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            className="bg-[var(--green)] text-white px-4 py-2 rounded hover:opacity-80 focus:ring-2 focus:ring-[var(--green)] focus:ring-offset-2 transition-all duration-300 cursor-pointer"
           >
-            Eksportuj JSON
+            Eksportuj do JSON
           </button>
           <button
             onClick={handleExportToExcel}
-            className="bg-emerald-500 text-white px-4 py-2 rounded hover:bg-emerald-600"
+            className="bg-[var(--green)] text-white px-4 py-2 rounded hover:opacity-80 focus:ring-2 focus:ring-[var(--green)] focus:ring-offset-2 transition-all duration-300 cursor-pointer"
           >
-            Eksportuj CSV
+            Eksportuj do CSV
           </button>
           <button
             onClick={handleExportToXLSX}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            className="bg-[var(--green)] text-white px-4 py-2 rounded hover:opacity-80 focus:ring-2 focus:ring-[var(--green)] focus:ring-offset-2 transition-all duration-300 cursor-pointer"
           >
-            Eksportuj Excel (.xls)
+            Eksportuj do Excela (.xls)
           </button>
           <button
             onClick={loadTelemetryData}
-            className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:opacity-80 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 cursor-pointer"
           >
             Odśwież Dane
           </button>
           <button
             onClick={handleClearData}
-            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+            className="bg-red-500 text-white px-4 py-2 rounded hover:opacity-80 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-300 cursor-pointer"
           >
             Wyczyść Dane
           </button>

@@ -7,7 +7,7 @@ export default function TelemetryPage() {
         <div className="p-8">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-[#00416E] mb-4">
-              📊 Telemetry Dashboard
+              Raport zaintetresowania
             </h1>
             <p className="text-[#000000] text-lg">
               Analiza danych użytkowników kalkulatora emerytalnego
