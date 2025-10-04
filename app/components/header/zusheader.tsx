@@ -10,20 +10,28 @@ import ucho from './ikona_ucho.svg'
 
 const ZUSHeader = () => {
   const [isLangOpen, setIsLangOpen] = useState(false);
-
+  const navItems = [
+    { label: 'Świadczenia', href: '/swiadczenia' },
+    { label: 'Firmy', href: '/firmy' },
+    { label: 'Pracujący', href: '/pracujacy' },
+    { label: 'Lekarze', href: '/lekarze' },
+    { label: 'Wzory formularzy', href: '/wzory-formularzy' },
+    { label: 'Baza wiedzy', href: '/baza-wiedzy' },
+    { label: 'O ZUS', href: '/o-zus' },
+    { label: 'Kalkulator', href: '/kalkulator' },
+  ];
   return (
     <header className="w-full bg-white border-b border-gray-200">
       {/* Top Bar */}
-      <div className="px-6 py-4 flex items-center justify-between">
+      <div className="px-4 md:px-6 py-4 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-3">
-            <Image src={zusLogo} alt="ZUS Logo" className="zus-logo-img" width={300} />
+            <Image src={zusLogo} alt="ZUS Logo" className="zus-logo-img w-48 md:w-[300px]" width={300} />
           </div>
         </div>
-
         {/* Right Side Controls */}
-        <div className="flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-4">
           <button className="text-sm text-gray-700 hover:text-gray-900">
             Kontakt
           </button>
@@ -82,21 +90,38 @@ const ZUSHeader = () => {
 
       {/* Navigation Bar - Using CSS Variables */}
 
+
+
+
+
       <nav className="bg-gray-50 border-t border-gray-200">
         <div className="px-6 py-4 flex items-center justify-center">
-          <div className="flex gap-12">
-            {['Świadczenia', 'Firmy', 'Pracujący', 'Lekarze', 'Wzory formularzy', 'Baza wiedzy', 'O ZUS', 'Kalkulator'].map((item, index, arr) => (
+          {/* Wszystkie linki na desktopie */}
+          <div className="hidden md:flex gap-12">
+            {navItems.map((item) => (
               <a
-                key={item}
-                href={index === arr.length - 1 ? '/' : '#'}
+                key={item.label}
+                href={item.href}
                 className="text-[var(--green)] font-semibold hover:opacity-80 text-lg px-3 py-2"
               >
-                {item}
+                {item.label}
               </a>
             ))}
           </div>
+
+          {/* Tylko Kalkulator na telefonie */}
+          <div className="flex md:hidden">
+            <a
+              href="/kalkulator"
+              className="text-[var(--green)] font-semibold hover:opacity-80 text-lg px-3 py-2"
+            >
+              Kalkulator
+            </a>
+          </div>
         </div>
       </nav>
+
+
 
     </header>
   );
