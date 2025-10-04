@@ -404,7 +404,7 @@ export default function PensionCalculatorForm() {
               </div>
             </div>
             <p className="text-xs text-[var(--grey)] mt-3">
-              Powyższe opcje automatycznie zmieniają okresy składkowe.
+              Przeciętny Polak spędza na zwolnieniach chorobowych około 34 dni w roku.
             </p>
           </div>
         );
