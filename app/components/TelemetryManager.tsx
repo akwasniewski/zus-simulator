@@ -33,17 +33,11 @@ export default function TelemetryManager() {
   };
 
   const handleClearData = () => {
-    if (confirm('Are you sure you want to clear all telemetry data?')) {
+    if (confirm('Czy na pewno chcesz usunąć wszystkie dane telemetrii?')) {
       clearTelemetryData();
       setTelemetryData([]);
-      alert('Telemetry data cleared');
+      alert('Dane telemetrii zostały usunięte');
     }
-  };
-
-  const handleViewData = () => {
-    const data = exportTelemetryData();
-    console.log('Current telemetry data:', data);
-    alert(`Found ${data.length} entries. Check console for details.`);
   };
 
   const formatCurrency = (amount: number): string => {
@@ -61,35 +55,29 @@ export default function TelemetryManager() {
     <div className="space-y-6">
       {/* Control Panel */}
       <div className="p-6 bg-gray-100 rounded-lg">
-        <h3 className="text-lg font-bold mb-4">Telemetry Manager</h3>
+        <h3 className="text-lg font-bold mb-4">Menedżer Telemetrii</h3>
         <div className="space-x-4">
-          <button
-            onClick={handleViewData}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          >
-            View in Console
-          </button>
           <button
             onClick={handleExportData}
             className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
           >
-            Export JSON
+            Eksportuj JSON
           </button>
           <button
             onClick={loadTelemetryData}
             className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
           >
-            Refresh Data
+            Odśwież Dane
           </button>
           <button
             onClick={handleClearData}
             className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
           >
-            Clear Data
+            Wyczyść Dane
           </button>
         </div>
         <p className="text-sm text-gray-600 mt-2">
-          Total entries: {telemetryData.length}
+          Łącznie wpisów: {telemetryData.length}
         </p>
       </div>
 
@@ -97,27 +85,27 @@ export default function TelemetryManager() {
       {showData && (
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <div className="px-6 py-4 bg-gray-50 border-b">
-            <h4 className="text-lg font-semibold">Telemetry Data</h4>
+            <h4 className="text-lg font-semibold">Dane Telemetrii</h4>
           </div>
           
           {telemetryData.length === 0 ? (
             <div className="p-6 text-center text-gray-500">
-              No telemetry data available
+              Brak dostępnych danych telemetrii
             </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-4 py-3 text-left font-medium text-gray-900">Timestamp</th>
-                    <th className="px-4 py-3 text-left font-medium text-gray-900">Age</th>
-                    <th className="px-4 py-3 text-left font-medium text-gray-900">Gender</th>
-                    <th className="px-4 py-3 text-left font-medium text-gray-900">Salary</th>
-                    <th className="px-4 py-3 text-left font-medium text-gray-900">Expected</th>
-                    <th className="px-4 py-3 text-left font-medium text-gray-900">Calculated</th>
-                    <th className="px-4 py-3 text-left font-medium text-gray-900">Years to Retire</th>
-                    <th className="px-4 py-3 text-left font-medium text-gray-900">Retirement Balance</th>
-                    <th className="px-4 py-3 text-left font-medium text-gray-900">Zip Code</th>
+                    <th className="px-4 py-3 text-left font-medium text-gray-900">Data i czas</th>
+                    <th className="px-4 py-3 text-left font-medium text-gray-900">Wiek</th>
+                    <th className="px-4 py-3 text-left font-medium text-gray-900">Płeć</th>
+                    <th className="px-4 py-3 text-left font-medium text-gray-900">Pensja</th>
+                    <th className="px-4 py-3 text-left font-medium text-gray-900">Oczekiwana</th>
+                    <th className="px-4 py-3 text-left font-medium text-gray-900">Obliczona</th>
+                    <th className="px-4 py-3 text-left font-medium text-gray-900">Lat do emerytury</th>
+                    <th className="px-4 py-3 text-left font-medium text-gray-900">Saldo emerytalne</th>
+                    <th className="px-4 py-3 text-left font-medium text-gray-900">Kod pocztowy</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
