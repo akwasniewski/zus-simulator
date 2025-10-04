@@ -565,7 +565,7 @@ export default function PensionCalculatorForm() {
               </div>
               <div className="flex justify-between items-center border-t border-[#00993F] pt-3">
                 <span className="text-[black] font-medium">Przewidywana miesięczna emerytura:</span>
-                <span className="text-[#FFB34F] font-bold text-xl">{formatCurrency(result.monthlyPension)}</span>
+                <span className="text-[var(--green)] font-bold text-xl">{formatCurrency(result.monthlyPension)}</span>
               </div>
             </div>
             <p className="mt-4 text-sm text-[black]">
@@ -611,7 +611,7 @@ export default function PensionCalculatorForm() {
           <div className="w-full">
             <button
               onClick={handleCalculatorRedirect}
-              className="w-full bg-[var(--green)]  text-white py-3 px-6 rounded-md font-medium  hover:opacity-80 focus:ring-2 focus:ring-[#00993F] focus:ring-offset-2 transition-all duration-300"
+              className="w-full bg-[var(--blue)]  text-white py-3 px-6 rounded-md font-medium  hover:opacity-80 focus:ring-2 focus:ring-[#00993F] focus:ring-offset-2 transition-all duration-300"
             >
               Przejdź do zaawansowanego kalkulatora
             </button>
