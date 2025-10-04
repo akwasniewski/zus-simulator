@@ -1,10 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FormData, PensionResult, calculatePension } from '../utils/pensionCalculator';
+import { saveTelemetryData } from '../utils/telemetry';
 
 export default function PensionCalculatorForm() {
   const [currentStep, setCurrentStep] = useState<number>(1);
+  const [expectedPension, setExpectedPension] = useState<number | null>(null);
   const [formData, setFormData] = useState<FormData>({
     gender: '',
     currentAge: '',
@@ -23,6 +25,14 @@ export default function PensionCalculatorForm() {
   const [errors, setErrors] = useState<Partial<FormData>>({});
 
   const totalSteps = 8;
+
+  // Load expected pension from localStorage on component mount
+  useEffect(() => {
+    const saved = localStorage.getItem('expectedPension');
+    if (saved) {
+      setExpectedPension(Number(saved));
+    }
+  }, []);
 
   const handleCalculatorRedirect = () => {
     const params = new URLSearchParams(formData as any).toString();
@@ -198,6 +208,9 @@ export default function PensionCalculatorForm() {
       if (validateForm()) {
         const calculatedResult = calculatePension(formData);
         setResult(calculatedResult);
+        
+        // Save telemetry data
+        saveTelemetryData(formData, calculatedResult, expectedPension);
       }
     }
   };
