@@ -9,7 +9,6 @@ export interface FormData {
   considerSickLeave: boolean;
   hasChildren: boolean;
   numberOfChildren: string;
-  hasRetirementAccount: boolean;
   currentRetirementBalance: string;
   retirementAge: string;
   zipCode: string;
