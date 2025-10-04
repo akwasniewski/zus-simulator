@@ -594,8 +594,8 @@ export default function RetirementCalculator({ formData, setFormData }) {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-6">
-          <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="flex flex-col md:flex-row gap-6">
+          <div className="bg-white rounded-lg shadow-md flex-1">
             <h2 className="text-xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>
               Historia i predykcja pensji
             </h2>
@@ -622,7 +622,7 @@ export default function RetirementCalculator({ formData, setFormData }) {
             </ResponsiveContainer>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-white rounded-lg shadow-md flex-1">
             <h2 className="text-xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>
               Historia i predykcja zebranych składek
             </h2>
@@ -650,6 +650,7 @@ export default function RetirementCalculator({ formData, setFormData }) {
             </ResponsiveContainer>
           </div>
         </div>
+
 
 
       </div>

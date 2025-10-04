@@ -18,7 +18,7 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
   const [selectedGroup, setSelectedGroup] = useState<PensionGroup | null>(null);
   const [userPosition, setUserPosition] = useState<number>(0);
 
-  // Rzeczywiste dane z ZUS na podstawie dostarczonych plików
+  // Real data from ZUS based on provided files
   const pensionGroups: PensionGroup[] = [
     {
       name: "Poniżej minimalnej",
@@ -88,18 +88,18 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
   ];
 
   useEffect(() => {
-    // Oblicz pozycję użytkownika na skali - ograniczona do zakresu 0-100%
+    // Calculate user position on scale - limited to 0-100% range
     let userGroupIndex = pensionGroups.findIndex(group => 
       expectedPension <= group.average || group === pensionGroups[pensionGroups.length - 1]
     );
     
-    // Zabezpieczenie przed wartościami spoza zakresu
+    // Protection against out-of-range values
     userGroupIndex = Math.max(0, Math.min(userGroupIndex, pensionGroups.length - 1));
     setUserPosition(userGroupIndex);
   }, [expectedPension]);
 
   const getComparisonText = () => {
-    const averagePension = 4045; // Średnia emerytura w Polsce
+    const averagePension = 4045; // Average pension in Poland
     const difference = expectedPension - averagePension;
     const percentageDiff = ((difference / averagePension) * 100).toFixed(1);
 
@@ -112,14 +112,14 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
     }
   };
 
-  // Oblicz pozycję kropki z ograniczeniami
+  // Calculate dot position with constraints
   const calculateDotPosition = () => {
-    const minPosition = 2; // Minimalna pozycja (2% od lewej)
-    const maxPosition = 98; // Maksymalna pozycja (98% od lewej)
+    const minPosition = 2; // Minimum position (2% from left)
+    const maxPosition = 98; // Maximum position (98% from left)
     
     let position = (userPosition / (pensionGroups.length - 1)) * 100;
     
-    // Ogranicz pozycję do dozwolonego zakresu
+    // Limit position to allowed range
     position = Math.max(minPosition, Math.min(position, maxPosition));
     
     return position;
@@ -127,47 +127,55 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
 
   const dotPosition = calculateDotPosition();
 
+  const handleGroupClick = (group: PensionGroup) => {
+    // If clicking already selected group, deselect it
+    if (selectedGroup?.name === group.name) {
+      setSelectedGroup(null);
+    } else {
+      setSelectedGroup(group);
+    }
+  };
+
   return (
-    <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-8">
-      <h2 className="text-2xl font-bold text-[#00416E] mb-6 text-center">
+    <div className="bg-white rounded-lg shadow-lg p-8 border border-[var(--grey)]">
+      <h2 className="text-2xl font-bold text-[black] mb-6 text-center">
         Porównanie z rzeczywistymi danymi ZUS
       </h2>
 
-      {/* Podsumowanie porównania */}
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
+      {/* Comparison summary */}
+      <div className="bg-[var(--grey)]/10 border border-[var(--grey)] rounded-lg p-6 mb-8">
         <div className="text-center">
-          <p className="text-lg text-[#00416E] mb-2">
+          <p className="text-lg text-[black] mb-2">
             Oczekiwana emerytura: <strong>{expectedPension.toLocaleString()} zł</strong>
           </p>
-          <p className="text-md text-[#007834] font-semibold">
+          <p className="text-md text-[var(--green)] font-semibold">
             {getComparisonText()}
           </p>
         </div>
       </div>
 
-      {/* Wizualizacja grup emerytalnych */}
+      {/* Pension groups visualization */}
       <div className="mb-8">
-        <h3 className="text-lg font-semibold text-[#00416E] mb-4">
+        <h3 className="text-lg font-semibold text-[black] mb-4">
           Rozkład wysokości emerytur w Polsce
         </h3>
         
         <div className="relative bg-gray-100 rounded-lg p-4">
-          {/* Skala */}
+          {/* Scale */}
           <div className="flex justify-between text-xs text-gray-600 mb-2">
             <span>1 878 zł</span>
             <span>Średnia: 4 045 zł</span>
             <span>7 000+ zł</span>
           </div>
           
-          {/* Pasek progresu grup */}
+          {/* Groups progress bar */}
           <div className="flex h-8 rounded-lg overflow-hidden mb-4">
             {pensionGroups.map((group, index) => (
               <div
                 key={group.name}
                 className="relative group cursor-pointer"
                 style={{ width: `${group.percentage}%` }}
-                onMouseEnter={() => setSelectedGroup(group)}
-                onMouseLeave={() => setSelectedGroup(null)}
+                onClick={() => handleGroupClick(group)}
               >
                 <div
                   className={`h-full transition-all duration-300 ${
@@ -176,7 +184,7 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
                     index === 2 ? 'bg-yellow-400' :
                     index === 3 ? 'bg-green-400' :
                     'bg-blue-400'
-                  } ${selectedGroup?.name === group.name ? 'opacity-100' : 'opacity-80'}`}
+                  } ${selectedGroup?.name === group.name ? 'opacity-100 ring-2 ring-[var(--green)] ring-offset-1' : 'opacity-80'}`}
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <span className="text-xs font-bold text-white mix-blend-difference">
@@ -187,7 +195,7 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
             ))}
           </div>
 
-          {/* Wskaźnik użytkownika - POPRAWIONE POZYCJONOWANIE */}
+          {/* User indicator */}
           <div 
             className="absolute top-0 transform -translate-x-1/2 transition-all duration-500 z-10"
             style={{ 
@@ -197,8 +205,8 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
             }}
           >
             <div className="flex flex-col items-center">
-              <div className="w-4 h-4 bg-[#007834] rounded-full border-2 border-white shadow-lg" />
-              <div className="text-xs font-semibold text-[#007834] mt-1 whitespace-nowrap">
+              <div className="w-4 h-4 bg-[var(--green)] rounded-full border-2 border-white shadow-lg" />
+              <div className="text-xs font-semibold text-[var(--green)] mt-1 whitespace-nowrap">
                 Twoje oczekiwania
               </div>
             </div>
@@ -206,47 +214,54 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
         </div>
       </div>
 
-      {/* Szczegóły grup */}
+      {/* Groups details */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
         {pensionGroups.map((group, index) => (
           <div
             key={group.name}
             className={`border rounded-lg p-4 cursor-pointer transition-all duration-300 ${
               selectedGroup?.name === group.name 
-                ? 'border-[#007834] bg-green-50 shadow-md' 
-                : 'border-gray-200 hover:border-gray-300'
+                ? 'border-[var(--green)] bg-[var(--green)]/10 shadow-md ring-2 ring-[var(--green)]' 
+                : 'border-[var(--grey)] hover:border-[var(--grey)]/70'
             }`}
-            onMouseEnter={() => setSelectedGroup(group)}
-            onMouseLeave={() => setSelectedGroup(null)}
+            onClick={() => handleGroupClick(group)}
           >
-            <h4 className="font-semibold text-[#00416E] mb-2">{group.name}</h4>
-            <p className="text-sm text-gray-600 mb-2">{group.range}</p>
-            <p className="text-lg font-bold text-[#007834]">
+            <h4 className="font-semibold text-[black] mb-2">{group.name}</h4>
+            <p className="text-sm text[var(--grey)] mb-2">{group.range}</p>
+            <p className="text-lg font-bold text-[var(--green)]">
               Średnia: {group.average.toLocaleString()} zł
             </p>
           </div>
         ))}
       </div>
 
-      {/* Szczegółowy opis wybranej grupy */}
+      {/* Detailed description of selected group */}
       {selectedGroup && (
         <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 animate-fadeIn">
-          <h3 className="text-xl font-bold text-[#00416E] mb-3">
-            {selectedGroup.name}
-          </h3>
+          <div className="flex justify-between items-start mb-3">
+            <h3 className="text-xl font-bold text-[black]">
+              {selectedGroup.name}
+            </h3>
+            <button
+              onClick={() => setSelectedGroup(null)}
+              className="text-gray-500 hover:text-gray-700 text-sm bg-gray-200 hover:bg-gray-300 rounded-full w-6 h-6 flex items-center justify-center transition-colors"
+            >
+              ×
+            </button>
+          </div>
           <p className="text-gray-700 mb-4">{selectedGroup.description}</p>
           
           <div className="space-y-2">
-            <h4 className="font-semibold text-[#00416E]">Charakterystyka grupy:</h4>
-            <ul className="list-disc list-inside space-y-1 text-gray-600">
+            <h4 className="font-semibold text-[black]">Charakterystyka grupy:</h4>
+            <ul className="list-disc list-inside space-y-1 text-[#000000]">
               {selectedGroup.characteristics.map((char, index) => (
                 <li key={index}>{char}</li>
               ))}
             </ul>
           </div>
 
-          <div className="mt-4 p-3 bg-blue-100 rounded-lg">
-            <p className="text-sm text-[#00416E]">
+          <div className="mt-4 p-3 bg-[var(--green)]/10 rounded-lg border border-[var(--green)]">
+            <p className="text-sm text-[black]">
               <strong>Porównanie:</strong> Twoje oczekiwania są {
                 expectedPension > selectedGroup.average ? 'wyższe' : 
                 expectedPension < selectedGroup.average ? 'niższe' : 'równe'
@@ -255,14 +270,6 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
           </div>
         </div>
       )}
-
-      {/* Źródło danych */}
-      <div className="mt-6 pt-4 border-t border-gray-200">
-        <p className="text-xs text-gray-500 text-center">
-          Dane oparte na rzeczywistych statystykach ZUS za 2024 rok | 
-          Średnia emerytura: 4 045 zł | Minimalna: 1 878 zł
-        </p>
-      </div>
     </div>
   );
 }

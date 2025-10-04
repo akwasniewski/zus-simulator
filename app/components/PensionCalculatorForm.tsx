@@ -1,10 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FormData, PensionResult, calculatePension } from '../utils/pensionCalculator';
+import { saveTelemetryData } from '../utils/telemetry';
 
 export default function PensionCalculatorForm() {
   const [currentStep, setCurrentStep] = useState<number>(1);
+  const [expectedPension, setExpectedPension] = useState<number | null>(null);
   const [formData, setFormData] = useState<FormData>({
     gender: '',
     currentAge: '',
@@ -23,6 +25,14 @@ export default function PensionCalculatorForm() {
   const [errors, setErrors] = useState<Partial<FormData>>({});
 
   const totalSteps = 8;
+
+  // Load expected pension from localStorage on component mount
+  useEffect(() => {
+    const saved = localStorage.getItem('expectedPension');
+    if (saved) {
+      setExpectedPension(Number(saved));
+    }
+  }, []);
 
   const handleCalculatorRedirect = () => {
     const params = new URLSearchParams(formData as any).toString();
@@ -198,6 +208,9 @@ export default function PensionCalculatorForm() {
       if (validateForm()) {
         const calculatedResult = calculatePension(formData);
         setResult(calculatedResult);
+        
+        // Save telemetry data
+        saveTelemetryData(formData, calculatedResult, expectedPension);
       }
     }
   };
@@ -500,7 +513,7 @@ export default function PensionCalculatorForm() {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
+    <div className="w-full max-w-4xl mx-auto">
       {!result ? (
         <div className="space-y-6 bg-white p-8 rounded-lg shadow-lg border border-[var(--grey)]">
           {/* Progress Indicator */}
@@ -522,7 +535,7 @@ export default function PensionCalculatorForm() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            <h2 className="text-2xl font-bold text-[black] text-center mb-6">
+            <h2 className="text-4xl font-bold text-[black] text-center mb-6">
               {getStepTitle(currentStep)}
             </h2>
 
