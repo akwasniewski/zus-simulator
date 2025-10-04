@@ -3,7 +3,7 @@ import PensionCalculatorForm from './components/PensionCalculatorForm';
 export default function Home() {
   return (
     /* vvv className="min-h-screen" vvv*/
-    <div className="flex flex-col bg-gradient-to-br from-gray-100 via-[#BEC3CE] to-[#3F84D2]">
+    <div className="flex flex-col from-gray-100 via-[#BEC3CE] to-[#3F84D2]">
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-16 flex-grow">
         {/* <div className="text-center mb-12">
