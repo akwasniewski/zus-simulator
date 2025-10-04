@@ -40,8 +40,6 @@ export const saveTelemetryData = async (
       formData: {
         ...formData,
         hasRetirementAccount, // Add this field for telemetry purposes
-        // Remove sensitive data if needed
-        zipCode: formData.zipCode ? 'PROVIDED' : 'NOT_PROVIDED'
       },
       expectedPension,
       calculationResult,
