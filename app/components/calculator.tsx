@@ -6,15 +6,13 @@ import { DollarSign, TrendingUp, Calendar, PiggyBank } from 'lucide-react';
 export default function RetirementCalculator({ formData, setFormData }) {
   const currentYear = new Date().getFullYear();
 
-  // Safely access formData with fallbacks
-  const gender = formData?.gender || 'male';
-  const currentAge = parseInt(formData?.currentAge) || 35;
-  const retirementAge = parseInt(formData?.retirementAge) || (gender === 'female' ? 60 : 65);
-  const currentSalary = parseInt(formData?.currentSalary) || 0;
+  // Initialize state variables FIRST
+  const [currentAge, setCurrentAge] = useState(parseInt(formData?.currentAge) || 35);
+  const [retirementAge, setRetirementAge] = useState(parseInt(formData?.retirementAge) || (formData?.gender === 'female' ? 60 : 65));
   const [pastEarnings, setPastEarnings] = useState([{
-    year: new Date().getFullYear(),
+    year: currentYear,
     age: parseInt(formData?.currentAge) || 35,
-    salary: parseInt(formData!.currentSalary) || 0,
+    salary: parseInt(formData?.currentSalary) || 0,
     pregnancy: false
   }]);
   const [periods, setPeriods] = useState([]);
@@ -26,6 +24,9 @@ export default function RetirementCalculator({ formData, setFormData }) {
     annualRaise: 3
   });
 
+  // Then use them in derived values
+  const gender = formData?.gender || 'male';
+  const currentSalary = parseInt(formData?.currentSalary) || 0;
 
   React.useEffect(() => {
     // Add theme variables
@@ -46,13 +47,10 @@ export default function RetirementCalculator({ formData, setFormData }) {
     document.head.appendChild(style);
 
     return () => document.head.removeChild(style);
-  }, [formData?.currentSalary, formData?.currentAge]);
+  }, []);
 
   React.useEffect(() => {
-    console.log("xd")
-    // --- Add / update current year's pastEarnings entry ---
-    const currentYear = new Date().getFullYear();
-    const currentAge = parseInt(formData?.currentAge) || 35;
+    // Update current year's pastEarnings entry
     const currentSalary =
       formData?.currentSalary && formData.currentSalary !== ''
         ? parseFloat(formData.currentSalary)
@@ -73,7 +71,7 @@ export default function RetirementCalculator({ formData, setFormData }) {
       ];
     });
 
-  }, [formData?.currentSalary, formData?.currentAge])
+  }, [formData?.currentSalary, currentAge, currentYear]);
 
   const calculateProjections = () => {
     const projections = [];
@@ -114,30 +112,6 @@ export default function RetirementCalculator({ formData, setFormData }) {
   const avgSalary = totalYears > 0 ? Math.round(totalEarnings / totalYears) : 0;
 
   const allData = [...pastEarnings.map(p => ({ ...p, salary: parseFloat(p.salary) || 0, type: 'past' })), ...projections.map(p => ({ ...p, type: 'future' }))];
-
-  const updatePastEarning = (index, field, value) => {
-    const updated = [...pastEarnings];
-    const numValue = parseFloat(value) || 0;
-
-    if (field === 'year') {
-      updated[index][field] = Math.max(currentYear - 50, Math.min(currentYear, numValue));
-    } else if (field === 'salary') {
-      updated[index][field] = Math.max(0, Math.min(10000000, numValue));
-    } else {
-      updated[index][field] = numValue;
-    }
-
-    setPastEarnings(updated);
-  };
-
-  const addPastYear = () => {
-    const lastYear = pastEarnings.length > 0 ? pastEarnings[pastEarnings.length - 1] : { year: currentYear - 6, age: currentAge - 6, salary: 50000 };
-    setPastEarnings([...pastEarnings, { year: lastYear.year + 1, age: lastYear.age + 1, salary: lastYear.salary }]);
-  };
-
-  const removePastYear = (index) => {
-    setPastEarnings(pastEarnings.filter((_, i) => i !== index));
-  };
 
   const addBulkPastYears = () => {
     const start = Math.max(currentYear - 50, bulkPastYears.startYear);
@@ -254,7 +228,11 @@ export default function RetirementCalculator({ formData, setFormData }) {
                 <input
                   type="number"
                   value={currentAge}
-                  onChange={(e) => setCurrentAge(Math.max(16, Math.min(100, parseInt(e.target.value) || 0)))}
+                  onChange={(e) => {
+                    const newAge = Math.max(16, Math.min(100, parseInt(e.target.value) || 0));
+                    setCurrentAge(newAge);
+                    setFormData({ ...formData, currentAge: newAge });
+                  }}
                   min="16"
                   max="100"
                   className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2"
@@ -267,12 +245,35 @@ export default function RetirementCalculator({ formData, setFormData }) {
                 <input
                   type="number"
                   value={retirementAge}
-                  onChange={(e) => setRetirementAge(Math.max(currentAge, Math.min(100, parseInt(e.target.value) || 0)))}
+                  onChange={(e) => {
+                    const newRetirementAge = Math.max(currentAge, Math.min(100, parseInt(e.target.value) || 0));
+                    setRetirementAge(newRetirementAge);
+                    setFormData({ ...formData, retirementAge: newRetirementAge });
+                  }}
                   min={currentAge}
                   max="100"
                   className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2"
                   style={{ borderColor: 'var(--grey)' }}
                 />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-1" style={{ color: 'var(--foreground)' }}>Obecny stan konta emerytalnego (zł)</label>
+                <input
+                  type="number"
+                  value={formData?.currentRetirementBalance || ''}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setFormData({ ...formData, currentRetirementBalance: value });
+                  }}
+                  min="0"
+                  placeholder="0"
+                  className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2"
+                  style={{ borderColor: 'var(--grey)' }}
+                />
+                <p className="text-xs mt-1" style={{ color: 'var(--grey)' }}>
+                  Kwota już zgromadzona na Twoim koncie w ZUS
+                </p>
               </div>
             </div>
           </div>
@@ -280,16 +281,9 @@ export default function RetirementCalculator({ formData, setFormData }) {
           <div className="bg-white rounded-lg shadow-md p-6">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-bold" style={{ color: 'var(--foreground)' }}>Historyczne zarobki</h2>
-              <button
-                onClick={addPastYear}
-                className="px-3 py-1 text-white rounded-md text-sm"
-                style={{ backgroundColor: 'var(--blue)' }}
-              >
-                + Dodaj roczne zarobki
-              </button>
             </div>
             <div className="text-sm mb-2" style={{ color: 'var(--grey)' }}>
-              Jeśli nie jesteś pewny dokładnej wartości możesz na raz dodać szacowane zarobki z wielu lat
+              Jeśli nie znasz kwotu zebranej na koncie, a nie jesteś pewny dokładnej wartości zarobków możesz na raz dodać szacowane zarobki z wielu lat
             </div>
             <div className="mb-4 p-3 rounded-lg border" style={{ backgroundColor: 'rgba(63, 132, 210, 0.1)', borderColor: 'var(--blue)' }}>
               <h3 className="text-sm font-semibold mb-2" style={{ color: 'var(--foreground)' }}>Dodaj zarobki z wielu lat</h3>
@@ -364,7 +358,6 @@ export default function RetirementCalculator({ formData, setFormData }) {
                     </tr>
                   </thead>
                   <tbody>
-                    {/* Add year above button */}
                     <tr className="sticky top-10 z-10" style={{ backgroundColor: 'var(--background)' }}>
                       <td colSpan="3" className="px-4 py-2 text-center border-b" style={{ borderColor: 'rgba(190, 195, 206, 0.2)' }}>
                         <button
@@ -403,7 +396,6 @@ export default function RetirementCalculator({ formData, setFormData }) {
                       const maxYear = Math.max(...years);
                       const rows = [];
 
-                      // Create rows for all years from max to min
                       for (let year = maxYear; year >= minYear; year--) {
                         const earning = pastEarnings.find(e => e.year === year);
                         const salary = earning ? earning.salary : '0';
@@ -425,12 +417,10 @@ export default function RetirementCalculator({ formData, setFormData }) {
                                 onChange={(e) => {
                                   const value = e.target.value;
                                   if (existingIndex !== -1) {
-                                    // Update existing entry
                                     const updated = [...pastEarnings];
                                     updated[existingIndex] = { ...updated[existingIndex], salary: value };
                                     setPastEarnings(updated);
                                   } else {
-                                    // Create new entry for this year
                                     setPastEarnings([...pastEarnings, { year, salary: value }]);
                                   }
                                 }}
@@ -460,7 +450,6 @@ export default function RetirementCalculator({ formData, setFormData }) {
                       return rows;
                     })()}
 
-                    {/* Add year below button */}
                     <tr className="sticky bottom-0 z-10" style={{ backgroundColor: 'var(--background)' }}>
                       <td colSpan="3" className="px-4 py-2 text-center border-t" style={{ borderColor: 'rgba(190, 195, 206, 0.2)' }}>
                         <button
