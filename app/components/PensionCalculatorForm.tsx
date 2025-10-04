@@ -623,6 +623,35 @@ export default function PensionCalculatorForm() {
                   );
                 })}
               </div>
+
+              {/* Sick leave comparison */}
+              <div className="border-t border-gray-200 pt-3 mt-3">
+                <h4 className="text-[black] font-medium mb-2">Wpływ zwolnień chorobowych:</h4>
+                {(() => {
+                  const sickLeaveFormData = {
+                    ...formData,
+                    considerSickLeave: !formData.considerSickLeave
+                  };
+                  const sickLeaveResult = calculatePension(sickLeaveFormData);
+                  const difference = sickLeaveResult.monthlyPension - result.monthlyPension;
+                  const percentageChange = ((difference / result.monthlyPension) * 100).toFixed(1);
+                  const isPositive = difference > 0;
+                  
+                  return (
+                    <div className="flex justify-between items-center py-1">
+                      <span className="text-[black] text-sm">
+                        {formData.considerSickLeave ? 'Nie uwzględniając L4 wyszłoby:' : 'Uwzględniając przeciętną ilość L4 wyszłoby:'}
+                      </span>
+                      <span className="text-[#00416E] font-medium text-sm">
+                        {formatCurrency(sickLeaveResult.monthlyPension)} 
+                        <span className={`ml-2 ${isPositive ? 'text-[var(--green)]' : 'text-[#cc0000]'}`}>
+                          ({isPositive ? '+' : ''}{formatCurrency(difference)}, {isPositive ? '+' : ''}{percentageChange}%)
+                        </span>
+                      </span>
+                    </div>
+                  );
+                })()}
+              </div>
               
               {expectedPension && (
                 <div className="flex justify-between items-center border-t border-gray-300 pt-3">
