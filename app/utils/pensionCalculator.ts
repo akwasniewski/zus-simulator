@@ -49,9 +49,9 @@ export const calculatePension = (formData: FormData): PensionResult => {
     annualSalary = annualSalary * 11/12;
   }
   if (formData.hasRetirementAccount){
+    estimatedSalary = parseInt(formData.currentRetirementBalance);
     for (let year = new Date().getFullYear(); year < new Date().getFullYear() + yearsToRetirement; year++) {
       const row = params.find((r) =>  r.rok === year);
-      estimatedSalary = parseInt(formData.currentRetirementBalance);
       if (row) {
         let valorization = parseFloat(row.waloryzacja.replace("%", "")) / 100;
         estimatedSalary = (estimatedSalary + annualSalary * 0.1952) * valorization;
