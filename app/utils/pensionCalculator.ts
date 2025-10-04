@@ -41,7 +41,7 @@ export const calculatePension = (formData: FormData): PensionResult => {
   }
 
   const lifeRow = lifeTable.find(
-    (r) => r.Age === currentAge && r.Month === 6 
+    (r) => r.Age === retirementAge && r.Month === 6 
   );
 
   const divisor = lifeRow ? lifeRow.Value : 200; // fallback if not found
