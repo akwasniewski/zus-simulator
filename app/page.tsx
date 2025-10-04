@@ -5,14 +5,9 @@ import StatisticsComparison from './components/StatisticsComparison';
 
 export default function SymulatorPage() {
   const [expectedPension, setExpectedPension] = useState(4000);
-  const [showComparison, setShowComparison] = useState(false);
 
   const handlePensionChange = (pension: number) => {
     setExpectedPension(pension);
-  };
-
-  const handleShowComparison = () => {
-    setShowComparison(true);
   };
 
   return (
@@ -21,7 +16,7 @@ export default function SymulatorPage() {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Kalkulator Emerytalny
+            Symulator Emerytalny
           </h1>
           <p className="text-xl text-black max-w-2xl mx-auto">
             Sprawdź, jak Twoje oczekiwania emerytalne mają się do rzeczywistości
@@ -32,16 +27,13 @@ export default function SymulatorPage() {
         <div className="max-w-2xl mx-auto mb-16">
           <ExpectationsForm 
             onPensionChange={handlePensionChange}
-            onShowComparison={handleShowComparison}
           />
         </div>
 
-        {/* Stats comparison - pokazuj tylko po kliknięciu przycisku */}
-        {showComparison && (
-          <div className="max-w-4xl mx-auto animate-fadeIn">
-            <StatisticsComparison expectedPension={expectedPension} />
-          </div>
-        )}
+        {/* Stats comparison - pokazuj zawsze */}
+        <div className="max-w-4xl mx-auto">
+          <StatisticsComparison expectedPension={expectedPension} />
+        </div>
       </div>
     </div>
   );

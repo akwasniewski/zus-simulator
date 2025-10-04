@@ -1,25 +1,30 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 interface ExpectationsFormProps {
   onPensionChange?: (pension: number) => void;
-  onShowComparison?: () => void;
 }
 
-export default function ExpectationsForm({ onPensionChange, onShowComparison }: ExpectationsFormProps) {
+export default function ExpectationsForm({ onPensionChange }: ExpectationsFormProps) {
   const [expectedPension, setExpectedPension] = useState(4000);
-  const [localPension, setLocalPension] = useState(4000);
+  const router = useRouter();
+
+  // Automatycznie aktualizuj rodzica przy zmianie wartości
+  useEffect(() => {
+    onPensionChange?.(expectedPension);
+  }, [expectedPension, onPensionChange]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setExpectedPension(localPension);
-    onPensionChange?.(localPension);
-    onShowComparison?.();
+    // Save expected pension to localStorage
+    localStorage.setItem('expectedPension', expectedPension.toString());
+    // Redirect to basic form
+    router.push('/basic-form');
   };
 
-  const handleLocalPensionChange = (value: number) => {
-    setLocalPension(value);
+  const handlePensionChange = (value: number) => {
+    setExpectedPension(value);
   };
 
   return (
@@ -38,8 +43,8 @@ export default function ExpectationsForm({ onPensionChange, onShowComparison }: 
           </label>
           <input
             type="number"
-            value={localPension}
-            onChange={(e) => handleLocalPensionChange(Number(e.target.value))}
+            value={expectedPension}
+            onChange={(e) => handlePensionChange(Number(e.target.value))}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3F84D2] focus:border-transparent text-center text-2xl font-bold"
             min="1000"
             step="100"
