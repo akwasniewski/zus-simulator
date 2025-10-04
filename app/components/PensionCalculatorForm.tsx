@@ -39,6 +39,10 @@ export default function PensionCalculatorForm() {
     window.location.href = `/kalkulator?${params}`;
   };
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     const inputValue = type === 'checkbox' ? checked : value;
@@ -712,12 +716,19 @@ export default function PensionCalculatorForm() {
               Przelicz ponownie
             </button>
           </div>
-          <div className="w-full">
+          <div className="w-full flex flex-col sm:flex-row gap-4">
             <button
               onClick={handleCalculatorRedirect}
-              className="w-full bg-[var(--blue)]  text-white py-3 px-6 rounded-md font-medium  hover:opacity-80 focus:ring-2 focus:ring-[#00993F] focus:ring-offset-2 transition-all duration-300 cursor-pointer"
+              className="flex-1 bg-[var(--blue)] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[#00993F] focus:ring-offset-2 transition-all duration-300 cursor-pointer"
             >
               Przejdź do zaawansowanego kalkulatora
+            </button>
+            <button
+              type="button"
+              onClick={handlePrint}
+              className="flex-1 bg-[var(--orange)] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[#00993F] focus:ring-offset-2 transition-all duration-300 cursor-pointer"
+            >
+              Wydrukuj stronę
             </button>
           </div>
         </div >
