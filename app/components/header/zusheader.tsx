@@ -81,13 +81,14 @@ const ZUSHeader = () => {
       </div>
 
       {/* Navigation Bar - Using CSS Variables */}
+
       <nav className="bg-gray-50 border-t border-gray-200">
         <div className="px-6 py-4 flex items-center justify-center">
           <div className="flex gap-12">
-            {['Świadczenia', 'Firmy', 'Pracujący', 'Lekarze', 'Wzory formularzy', 'Baza wiedzy', 'O ZUS'].map((item) => (
+            {['Świadczenia', 'Firmy', 'Pracujący', 'Lekarze', 'Wzory formularzy', 'Baza wiedzy', 'O ZUS', 'Kalkulator'].map((item, index, arr) => (
               <a
                 key={item}
-                href="#"
+                href={index === arr.length - 1 ? '/' : '#'}
                 className="text-[var(--green)] font-semibold hover:opacity-80 text-lg px-3 py-2"
               >
                 {item}
@@ -96,6 +97,7 @@ const ZUSHeader = () => {
           </div>
         </div>
       </nav>
+
     </header>
   );
 };

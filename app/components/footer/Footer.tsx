@@ -2,7 +2,7 @@ import React, { JSX } from "react";
 
 export default function Footer(): JSX.Element {
   return (
-    <footer className="bg-[#006943] text-white w-full">
+    <footer className="bg-[var(--green)] text-white w-full">
       <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row md:items-start md:justify-between gap-8">
         {/* Left column - link list */}
         <div style={{ fontWeight: 700 }} className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-1 gap-2 text-sm font-medium">

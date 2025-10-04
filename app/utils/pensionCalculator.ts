@@ -17,6 +17,8 @@ export interface FormData {
 
 export interface PensionResult {
   monthlyPension: number;
+  monthlyPensionAdjusted: number,
+  FootOfReturn: number,
   totalSavings: number;
   yearsToRetirement: number;
 }
@@ -24,7 +26,7 @@ export interface PensionResult {
 export const calculatePension = (formData: FormData): PensionResult => {
   const currentAge = parseInt(formData.currentAge);
   const monthlySalary = parseFloat(formData.currentSalary);
-  const annualSalary = monthlySalary * 12;
+  let annualSalary = monthlySalary * 12;
   const retirementAge = parseInt(formData.retirementAge);
   const workStartYear = parseInt(formData.workStartYear);
 
@@ -32,23 +34,47 @@ export const calculatePension = (formData: FormData): PensionResult => {
 
   // Simulate valorization
   let estimatedSalary = 0;
-  for (let year = workStartYear; year < new Date().getFullYear() + yearsToRetirement; year++) {
-    const row = params.find((r) =>  r.rok === year);
-    if (row) {
-      let valorization = parseFloat(row.waloryzacja.replace("%", "")) / 100;
-      estimatedSalary = (estimatedSalary + annualSalary * 0.1952) * valorization;
+    if (formData.considerSickLeave){
+    annualSalary = annualSalary * 11/12;
+  }
+  if (formData.hasRetirementAccount){
+    for (let year = new Date().getFullYear(); year < new Date().getFullYear() + yearsToRetirement; year++) {
+      const row = params.find((r) =>  r.rok === year);
+      estimatedSalary = parseInt(formData.currentRetirementBalance);
+      if (row) {
+        let valorization = parseFloat(row.waloryzacja.replace("%", "")) / 100;
+        estimatedSalary = (estimatedSalary + annualSalary * 0.1952) * valorization;
+      }
     }
   }
-
+  else
+  {
+    for (let year = workStartYear; year < new Date().getFullYear() + yearsToRetirement; year++) {
+      const row = params.find((r) =>  r.rok === year);
+      if (row) {
+        let valorization = parseFloat(row.waloryzacja.replace("%", "")) / 100;
+        estimatedSalary = (estimatedSalary + annualSalary * 0.1952) * valorization;
+      }
+    }
+  }
   const lifeRow = lifeTable.find(
     (r) => r.Age === retirementAge && r.Month === 6 
   );
 
   const divisor = lifeRow ? lifeRow.Value : 200; // fallback if not found
   const monthlyPension = estimatedSalary / divisor;
-
+  const monthlyPensionAdjusted = monthlyPension / Math.pow(1 + 0.03, yearsToRetirement);
+  const FuturePensionPrediction = monthlySalary *
+  parseFloat(
+    params.find((r) => r.rok === new Date().getFullYear() + yearsToRetirement)?.["przeciętne miesięczne wynagrodzenie w gospodarce narodowej**)"]?.toString() ?? "0"
+  )/parseFloat(
+    params.find((r) => r.rok === new Date().getFullYear())?.["przeciętne miesięczne wynagrodzenie w gospodarce narodowej**)"]?.toString() ?? "0"
+  );
+  const FootOfReturn = monthlyPension/FuturePensionPrediction
   return {
     monthlyPension,
+    monthlyPensionAdjusted,
+    FootOfReturn,
     totalSavings: estimatedSalary,
     yearsToRetirement,
   };
