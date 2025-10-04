@@ -43,9 +43,15 @@ export default function ExpectationsForm({ onPensionChange }: ExpectationsFormPr
           </label>
           <input
             type="number"
+<<<<<<< HEAD
             value={expectedPension}
             onChange={(e) => handlePensionChange(Number(e.target.value))}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3F84D2] focus:border-transparent text-center text-2xl font-bold"
+=======
+            value={localPension}
+            onChange={(e) => handleLocalPensionChange(Number(e.target.value))}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3F84D2] focus:border-transparent text-center text-2xl font-bold focus:ring-[var(--green)] focus:border-[var(--green)] focus-visible:border-[var(--green)] transition-all duration-300"
+>>>>>>> 47735fc2038f1423006d03aca3beaf132f2f7381
             min="1000"
             step="100"
           />

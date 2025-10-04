@@ -76,8 +76,8 @@ export default function FunFactsCarousel() {
 
   return (
     <div className="bg-white  py-6">
-      <div className="container mx-auto px-4 max-w-6xl">
-        <div className="bg-white rounded-lg shadow-lg p-6 border border-grey relative">
+      <div className="container .border-gray-200 max-w-2xl mx-auto mb-16">
+        <div className="bg-white rounded-lg shadow-lg p-6 border border-[var(--grey)] relative">
           {/* Header */}
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">

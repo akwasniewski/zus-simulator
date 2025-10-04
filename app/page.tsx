@@ -11,8 +11,8 @@ export default function SymulatorPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-grey to-blue">
-      <div className="container mx-auto px-4 py-12">
+    <div className="bg-gradient-to-br from-background via-grey to-blue">
+      <div className="container mx-auto px-4 pt-16">
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
