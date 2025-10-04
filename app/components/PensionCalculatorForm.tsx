@@ -601,7 +601,7 @@ export default function PensionCalculatorForm() {
           <div className="w-full">
             <button
               onClick={handleCalculatorRedirect}
-              className="w-full bg-[#00993F] text-white py-3 px-6 rounded-md font-medium hover:bg-[#00B84A] focus:ring-2 focus:ring-[#00993F] focus:ring-offset-2 transition-colors"
+              className="w-full bg-[var(--green)]  text-white py-3 px-6 rounded-md font-medium hover:bg-[#00B84A] focus:ring-2 focus:ring-[#00993F] focus:ring-offset-2 transition-colors"
             >
               Przejdź do zaawansowanego kalkulatora
             </button>
