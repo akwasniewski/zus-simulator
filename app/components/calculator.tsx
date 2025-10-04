@@ -12,7 +12,7 @@ export default function RetirementCalculator({ formData, setFormData }) {
   const [pastEarnings, setPastEarnings] = useState([{
     year: currentYear,
     age: parseInt(formData?.currentAge) || 35,
-    salary: parseInt(formData?.currentSalary) || 0,
+    salary: parseInt(formData?.currentSalary) * 12 || 0,
     pregnancy: false
   }]);
   const [periods, setPeriods] = useState([]);
@@ -65,7 +65,7 @@ export default function RetirementCalculator({ formData, setFormData }) {
         {
           year: currentYear,
           age: currentAge,
-          salary: currentSalary,
+          salary: currentSalary * 12,
           pregnancy: false,
         },
       ];
@@ -353,7 +353,7 @@ export default function RetirementCalculator({ formData, setFormData }) {
                   <thead className="sticky top-0 z-10" style={{ backgroundColor: 'var(--background)' }}>
                     <tr style={{ backgroundColor: 'rgba(190, 195, 206, 0.2)' }}>
                       <th className="px-4 py-2 text-left">Rok</th>
-                      <th className="px-4 py-2 text-left">Zarobki</th>
+                      <th className="px-4 py-2 text-left">Roczne zarobki</th>
                       <th className="px-4 py-2 w-20"></th>
                     </tr>
                   </thead>
