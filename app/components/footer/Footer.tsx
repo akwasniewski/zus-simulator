@@ -1,5 +1,4 @@
 import React, { JSX } from "react";
-import "./footer/footer.css";
 
 export default function Footer(): JSX.Element {
   return (
