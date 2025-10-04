@@ -675,7 +675,7 @@ export default function PensionCalculatorForm() {
               {expectedPension && result.yearsNeededForDesiredPension === undefined && expectedPension > result.monthlyPension && (
                 <div className="flex justify-between items-center border-t border-red-300 pt-3">
                   <span className="text-[black] font-medium">Oczekiwana emerytura:</span>
-                  <span className="text-[#cc0000] font-bold text-sm">Nieosiągalna nawet do 70. roku życia</span>
+                  <span className="text-[#cc0000] font-bold text-sm">Nieosiągalna nawet do 120. roku życia</span>
                 </div>
               )}
             </div>
