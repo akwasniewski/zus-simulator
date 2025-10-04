@@ -236,7 +236,7 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
             onClick={() => handleGroupClick(group)}
           >
             <h4 className="font-semibold text-[black] mb-2">{group.name}</h4>
-            <p className="text-sm text-[var(--grey)] mb-2">{group.range}</p>
+            <p className="text-sm text-gray-600 mb-2">{group.range}</p>
             <p className="text-lg font-bold text-[var(--green)]">
               Średnia: {group.average.toLocaleString()} zł
             </p>
