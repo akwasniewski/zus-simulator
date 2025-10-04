@@ -230,7 +230,7 @@ export default function PensionCalculatorForm() {
       case 4: return 'Kiedy zacząłeś pracę (na UoP)?';
       case 5: return 'Uwzględniać okresy na zwolnieniach?';
       case 6: return 'Czy wiesz ile masz zgromadzone na koncie emerytalnym?';
-      case 7: return 'Kiedy planujesz przejsć na emeryturę?<span>*</span>';
+      case 7: return 'Kiedy planujesz przejsć na emeryturę?';
       case 8: return 'Jaki masz kod pocztowy?';
       default: return '';
     }
