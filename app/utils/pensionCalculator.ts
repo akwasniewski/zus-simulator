@@ -56,6 +56,7 @@ export const calculatePension = (formData: FormData): PensionResult => {
       if (row) {
         let valorization = parseFloat(row.waloryzacja.replace("%", "")) / 100;
         estimatedSalary = (estimatedSalary + annualSalary * 0.1952) * valorization;
+        annualSalary = annualSalary + 0.03*annualSalary;
       }
     }
   }
@@ -83,7 +84,7 @@ export const calculatePension = (formData: FormData): PensionResult => {
     params.find((r) => r.rok === new Date().getFullYear())?.["przeciętne miesięczne wynagrodzenie w gospodarce narodowej**)"]?.toString() ?? "0"
   );
   const FootOfReturn = monthlyPension/FuturePensionPrediction;
-  const AverageFuturePension = 4045*FuturePensionPrediction/monthlySalary 
+  const AverageFuturePension = 4045*FuturePensionPrediction/monthlySalary;
   return {
     monthlyPension,
     monthlyPensionAdjusted,
