@@ -1,3 +1,6 @@
+import params from "./data/params.json";
+import lifeTable from "./data/life_expectancy_table.json";
+
 export interface FormData {
   gender: string;
   currentAge: string;
@@ -21,56 +24,32 @@ export interface PensionResult {
 export const calculatePension = (formData: FormData): PensionResult => {
   const currentAge = parseInt(formData.currentAge);
   const monthlySalary = parseFloat(formData.currentSalary);
-  const currentSalary = monthlySalary * 12;
+  const annualSalary = monthlySalary * 12;
   const retirementAge = parseInt(formData.retirementAge);
   const workStartYear = parseInt(formData.workStartYear);
-  const currentYear = new Date().getFullYear();
-  
+
   const yearsToRetirement = retirementAge - currentAge;
-  const totalWorkingYears = retirementAge - (currentAge - (currentYear - workStartYear));
-  
-  // Calculate effective contribution years considering leave periods
-  let effectiveContributionYears = yearsToRetirement;
-  
-  // Reduce contribution years if leave periods are considered
-  if (formData.considerSickLeave) {
-    // Assume average 1 month sick leave per year
-    effectiveContributionYears -= yearsToRetirement * (1/12);
+
+  // Simulate valorization
+  let estimatedSalary = 0;
+  for (let year = workStartYear; year < new Date().getFullYear() + yearsToRetirement; year++) {
+    const row = params.find((r) =>  r.rok === year);
+    if (row) {
+      let valorization = parseFloat(row.waloryzacja.replace("%", "")) / 100;
+      estimatedSalary = (estimatedSalary + annualSalary * 0.1952) * valorization;
+    }
   }
-  
-  if (formData.hasChildren && formData.numberOfChildren && parseInt(formData.numberOfChildren) > 0) {
-    // Calculate parental leave based on number of children
-    const children = parseInt(formData.numberOfChildren);
-    // Assume 6 months per child for women, 3 months per child for men
-    const monthsPerChild = formData.gender === 'female' ? 6 : 3;
-    const totalParentalLeaveYears = (children * monthsPerChild) / 12;
-    effectiveContributionYears -= Math.min(totalParentalLeaveYears, yearsToRetirement);
-  }
-  
-  // Ensure we don't go below 0
-  effectiveContributionYears = Math.max(0, effectiveContributionYears);
-  
-  // Calculate future savings from contributions
-  const annualContribution = currentSalary * 0.10; // 10% contribution rate
-  const annualGrowthRate = 0.05; // 5% annual growth
-  
-  // Future value of annuity formula for new contributions
-  const futureContributions = effectiveContributionYears > 0 ? 
-    annualContribution * (((1 + annualGrowthRate) ** effectiveContributionYears - 1) / annualGrowthRate) : 0;
-  
-  // Add existing retirement account balance with growth
-  const existingBalance = formData.hasRetirementAccount ? 
-    parseFloat(formData.currentRetirementBalance || '0') : 0;
-  const futureExistingBalance = existingBalance * ((1 + annualGrowthRate) ** yearsToRetirement);
-  
-  const totalSavings = futureContributions + futureExistingBalance;
-  
-  // Calculate monthly pension using 4% withdrawal rate
-  const monthlyPension = (totalSavings * 0.04) / 12;
-  
+
+  const lifeRow = lifeTable.find(
+    (r) => r.Age === currentAge && r.Month === 6 
+  );
+
+  const divisor = lifeRow ? lifeRow.Value : 200; // fallback if not found
+  const monthlyPension = estimatedSalary / divisor;
+
   return {
     monthlyPension,
-    totalSavings,
-    yearsToRetirement
+    totalSavings: estimatedSalary,
+    yearsToRetirement,
   };
 };
