@@ -56,24 +56,27 @@ export default function ExpectationsForm({ onPensionChange }: ExpectationsFormPr
             <span>Największa: 51 400 zł</span>
           </div>
         </div>
-        <button
-          type="button"
-          className="w-full bg-[var(--blue)] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[var(--blue)] focus:ring-offset-2 transition-all duration-300"
-          onClick={() => {
-            const element = document.getElementById("StatisticsComparison");
-            if (element) {
-              element.scrollIntoView({ behavior: "smooth" });
-            }
-          }}
-        >
-          Porównaj oczekiwania ze statystykami
-        </button>
-        <button
-          type="submit"
-          className="w-full bg-[var(--green)] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[var(--green)] focus:ring-offset-2 transition-all duration-300"
-        >
-          Oblicz swoją emeryturę
-        </button>
+
+        <div className="flex gap-4">
+          <button
+            type="button"
+            className="flex-1 bg-[var(--blue)] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[var(--blue)] focus:ring-offset-2 transition-all duration-300"
+            onClick={() => {
+              const element = document.getElementById("StatisticsComparison");
+              if (element) {
+                element.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+          >
+            Porównaj oczekiwania ze statystykami
+          </button>
+          <button
+            type="submit"
+            className="flex-1 bg-[var(--green)] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[var(--green)] focus:ring-offset-2 transition-all duration-300"
+          >
+            Oblicz swoją emeryturę
+          </button>
+        </div>
       </form>
     </div>
   );
