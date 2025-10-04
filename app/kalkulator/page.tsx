@@ -10,11 +10,7 @@ export default function RetirementCalculator() {
   const [currentSalary, setCurrentSalary] = useState(75000);
 
   const [pastEarnings, setPastEarnings] = useState([
-    { year: currentYear - 5, age: currentAge - 5, salary: 55000 },
-    { year: currentYear - 4, age: currentAge - 4, salary: 58000 },
-    { year: currentYear - 3, age: currentAge - 3, salary: 62000 },
-    { year: currentYear - 2, age: currentAge - 2, salary: 68000 },
-    { year: currentYear - 1, age: currentAge - 1, salary: 72000 },
+
   ]);
 
   const [periods, setPeriods] = useState([
@@ -206,7 +202,7 @@ export default function RetirementCalculator() {
               <DollarSign style={{ color: 'var(--green)' }} size={24} />
               <span className="text-sm" style={{ color: 'var(--grey)' }}>Całkowite dochody</span>
             </div>
-            <div className="text-2xl font-bold" style={{ color: 'var(--foreground)' }}>${(totalEarnings / 1000).toFixed(0)}k</div>
+            <div className="text-2xl font-bold" style={{ color: 'var(--foreground)' }}>{totalEarnings} zł</div>
           </div>
 
           <div className="bg-white rounded-lg shadow-md p-6" style={{ borderLeft: '4px solid var(--orange)' }}>
@@ -214,7 +210,7 @@ export default function RetirementCalculator() {
               <TrendingUp style={{ color: 'var(--orange)' }} size={24} />
               <span className="text-sm" style={{ color: 'var(--grey)' }}>Średnia pensja</span>
             </div>
-            <div className="text-2xl font-bold" style={{ color: 'var(--foreground)' }}>${(avgSalary / 1000).toFixed(0)}k</div>
+            <div className="text-2xl font-bold" style={{ color: 'var(--foreground)' }}>{avgSalary} zł</div>
           </div>
         </div>
 
@@ -459,7 +455,7 @@ export default function RetirementCalculator() {
                 <XAxis dataKey="year" stroke="var(--foreground)" />
                 <YAxis stroke="var(--foreground)" />
                 <Tooltip
-                  formatter={(value) => `$${value.toLocaleString()}`}
+                  formatter={(value) => `${value.toLocaleString()} zł`}
                   contentStyle={{ backgroundColor: 'var(--background)', borderColor: 'var(--grey)' }}
                   labelStyle={{ color: 'var(--foreground)' }}
                 />
@@ -469,7 +465,7 @@ export default function RetirementCalculator() {
                   dataKey="salary"
                   stroke="var(--blue)"
                   strokeWidth={2}
-                  name="Salary"
+                  name="Zarobki"
                   dot={{ fill: 'var(--blue)' }}
                 />
               </LineChart>
