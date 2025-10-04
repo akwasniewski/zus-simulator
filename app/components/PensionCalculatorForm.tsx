@@ -35,7 +35,7 @@ export default function PensionCalculatorForm() {
       };
       
       // Auto-set retirement age when gender is selected
-      if (name === 'gender' && !prev.retirementAge) {
+      if (name === 'gender') {
         updated.retirementAge = value === 'female' ? '60' : '65';
       }
       
@@ -67,56 +67,56 @@ export default function PensionCalculatorForm() {
     switch (step) {
       case 1:
         if (!formData.gender) {
-          newErrors.gender = 'Please select your gender';
+          newErrors.gender = 'Wybierz swoją płeć';
         }
         break;
       case 2:
-        if (!formData.currentAge || parseInt(formData.currentAge) < 18 || parseInt(formData.currentAge) > 80) {
-          newErrors.currentAge = 'Please enter a valid age between 18 and 80';
+        if (!formData.currentAge || parseInt(formData.currentAge) < 18 || parseInt(formData.currentAge) > 99) {
+          newErrors.currentAge = 'Wpisz wiek pomiędzy 18 a 99 lat';
         }
         break;
       case 3:
         if (!formData.currentSalary || parseFloat(formData.currentSalary) < 0) {
-          newErrors.currentSalary = 'Please enter a valid salary amount';
+          newErrors.currentSalary = 'Podaj poprawną wartość';
         }
         break;
       case 4:
         const currentYear = new Date().getFullYear();
         const workStartYear = parseInt(formData.workStartYear);
         if (!formData.workStartYear || workStartYear < 1950 || workStartYear > currentYear) {
-          newErrors.workStartYear = `Please enter a valid year between 1950 and ${currentYear}`;
+          newErrors.workStartYear = `Wybierz rok pomiędzy 1950 a ${currentYear}`;
         }
         if (formData.currentAge && workStartYear) {
           const currentAge = parseInt(formData.currentAge);
           const expectedStartAge = currentAge - (currentYear - workStartYear);
           if (expectedStartAge < 14 || expectedStartAge > 70) {
-            newErrors.workStartYear = 'Work start year seems inconsistent with your current age';
+            newErrors.workStartYear = 'Zbyt niski lub zbyt wysoki wiek rozpoczęcia pracy';
           }
         }
         break;
       case 5:
-        if (formData.hasChildren && (!formData.numberOfChildren || parseInt(formData.numberOfChildren) < 0 || parseInt(formData.numberOfChildren) > 10)) {
-          newErrors.numberOfChildren = 'Please enter a valid number of children (0-10)';
+        if (formData.hasChildren && (!formData.numberOfChildren || parseInt(formData.numberOfChildren) < 0 || parseInt(formData.numberOfChildren) > 25)) {
+          newErrors.numberOfChildren = 'Podaj liczbę z zakresu 0-25';
         }
         break;
       case 6:
         if (formData.hasRetirementAccount && (!formData.currentRetirementBalance || parseFloat(formData.currentRetirementBalance) < 0)) {
-          newErrors.currentRetirementBalance = 'Please enter a valid retirement account balance';
+          newErrors.currentRetirementBalance = 'Podaj poprawną wartość';
         }
         break;
       case 7:
         if (!formData.retirementAge || parseInt(formData.retirementAge) < 55 || parseInt(formData.retirementAge) > 100) {
-          newErrors.retirementAge = 'Please enter a valid retirement age between 55 and 100';
+          newErrors.retirementAge = 'Podaj wiek z zakresu 55-100';
         }
         if (parseInt(formData.currentAge) >= parseInt(formData.retirementAge)) {
-          newErrors.retirementAge = 'Retirement age must be greater than current age';
+          newErrors.retirementAge = 'Wiek emerytalny musi być większy niż obecny';
         }
         break;
       case 8:
         if (formData.zipCode) {
           const zipCodePattern = /^\d{2}-\d{3}$/;
           if (!zipCodePattern.test(formData.zipCode)) {
-            newErrors.zipCode = 'Please enter a valid zip code in format 00-000';
+            newErrors.zipCode = 'Podaj poprawny kod pocztowy w formaie 00-000';
           }
         }
         break;
@@ -131,42 +131,42 @@ export default function PensionCalculatorForm() {
     const currentYear = new Date().getFullYear();
     
     if (!formData.gender) {
-      newErrors.gender = 'Please select your gender';
+      newErrors.gender = 'Wybierz swoją płeć';
     }
     
-    if (!formData.currentAge || parseInt(formData.currentAge) < 18 || parseInt(formData.currentAge) > 80) {
-      newErrors.currentAge = 'Please enter a valid age between 18 and 80';
+    if (!formData.currentAge || parseInt(formData.currentAge) < 18 || parseInt(formData.currentAge) > 99) {
+      newErrors.currentAge = 'Wpisz wiek pomiędzy 18 a 99 lat';
     }
     
     if (!formData.currentSalary || parseFloat(formData.currentSalary) < 0) {
-      newErrors.currentSalary = 'Please enter a valid salary amount';
+      newErrors.currentSalary = 'Podaj poprawną wartość';
     }
     
     const workStartYear = parseInt(formData.workStartYear);
     if (!formData.workStartYear || workStartYear < 1950 || workStartYear > currentYear) {
-      newErrors.workStartYear = `Please enter a valid year between 1950 and ${currentYear}`;
+      newErrors.workStartYear = `Wybierz rok pomiędzy 1950 a ${currentYear}`;
     }
     
-    if (formData.hasChildren && (!formData.numberOfChildren || parseInt(formData.numberOfChildren) < 0 || parseInt(formData.numberOfChildren) > 10)) {
-      newErrors.numberOfChildren = 'Please enter a valid number of children (0-10)';
+    if (formData.hasChildren && (!formData.numberOfChildren || parseInt(formData.numberOfChildren) < 0 || parseInt(formData.numberOfChildren) > 25)) {
+      newErrors.numberOfChildren = 'Podaj liczbę z zakresu 0-25';
     }
     
     if (formData.hasRetirementAccount && (!formData.currentRetirementBalance || parseFloat(formData.currentRetirementBalance) < 0)) {
-      newErrors.currentRetirementBalance = 'Please enter a valid retirement account balance';
+      newErrors.currentRetirementBalance = 'Podaj poprawną wartość';
     }
     
     if (!formData.retirementAge || parseInt(formData.retirementAge) < 55 || parseInt(formData.retirementAge) > 100) {
-      newErrors.retirementAge = 'Please enter a valid retirement age between 55 and 100';
+      newErrors.retirementAge = 'Podaj wiek z zakresu 55-100';
     }
     
     if (parseInt(formData.currentAge) >= parseInt(formData.retirementAge)) {
-      newErrors.retirementAge = 'Retirement age must be greater than current age';
+      newErrors.retirementAge = 'Wiek emerytalny musi być większy niż obecny';
     }
     
     if (formData.zipCode) {
       const zipCodePattern = /^\d{2}-\d{3}$/;
       if (!zipCodePattern.test(formData.zipCode)) {
-        newErrors.zipCode = 'Please enter a valid zip code in format 00-000';
+        newErrors.zipCode = 'Podaj poprawny kod pocztowy w formaie 00-000';
       }
     }
     
@@ -206,14 +206,14 @@ export default function PensionCalculatorForm() {
 
   const getStepTitle = (step: number): string => {
     switch (step) {
-      case 1: return 'What is your gender?';
-      case 2: return 'What is your current age?';
-      case 3: return 'What is your current monthly salary?';
-      case 4: return 'When did you start working?';
-      case 5: return 'Do you want to consider leave periods?';
-      case 6: return 'Do you have an existing retirement account?';
-      case 7: return 'When do you plan to retire?';
-      case 8: return 'What is your zip code?';
+      case 1: return 'Jakiej jesteś płci?';
+      case 2: return 'Ile masz lat?';
+      case 3: return 'Jaka jest twoja obecna pensja (brutto)?';
+      case 4: return 'Kiedy zacząłeś pracę (na UoP)?';
+      case 5: return 'Uwzględniać okresy na zwolnieniu';
+      case 6: return 'Czy wiesz ile masz zgromadzone na koncie emerytalnym?';
+      case 7: return 'Kiedy planujesz przejsć na emeryturę?';
+      case 8: return 'Jaki masz kod pocztowy?';
       default: return '';
     }
   };
@@ -223,9 +223,6 @@ export default function PensionCalculatorForm() {
       case 1:
         return (
           <div>
-            <label className="block text-sm font-medium text-[#000000] mb-4">
-              Gender
-            </label>
             <div className="space-y-3">
               <div className="flex items-center">
                 <input
@@ -238,7 +235,7 @@ export default function PensionCalculatorForm() {
                   className="w-4 h-4 text-[#3F84D2] bg-gray-100 border-gray-300 focus:ring-[#3F84D2] focus:ring-2"
                 />
                 <label htmlFor="female" className="ml-2 text-sm font-medium text-[#000000]">
-                  Female
+                  Kobieta
                 </label>
               </div>
               <div className="flex items-center">
@@ -252,7 +249,7 @@ export default function PensionCalculatorForm() {
                   className="w-4 h-4 text-[#3F84D2] bg-gray-100 border-gray-300 focus:ring-[#3F84D2] focus:ring-2"
                 />
                 <label htmlFor="male" className="ml-2 text-sm font-medium text-[#000000]">
-                  Male
+                  Mężczyzna
                 </label>
               </div>
             </div>
@@ -264,9 +261,6 @@ export default function PensionCalculatorForm() {
       case 2:
         return (
           <div>
-            <label htmlFor="currentAge" className="block text-sm font-medium text-[#000000] mb-2">
-              Current Age
-            </label>
             <input
               type="number"
               id="currentAge"
@@ -274,11 +268,11 @@ export default function PensionCalculatorForm() {
               value={formData.currentAge}
               onChange={handleInputChange}
               min="18"
-              max="80"
+              max="99"
               className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[#3F84D2] focus:border-[#3F84D2] transition-colors text-[#000000] ${
                 errors.currentAge ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
               }`}
-              placeholder="Enter your current age"
+              placeholder="Podaj swój wiek"
               autoFocus
             />
             {errors.currentAge && (
@@ -289,9 +283,6 @@ export default function PensionCalculatorForm() {
       case 3:
         return (
           <div>
-            <label htmlFor="currentSalary" className="block text-sm font-medium text-[#000000] mb-2">
-              Current Monthly Salary (PLN)
-            </label>
             <input
               type="number"
               id="currentSalary"
@@ -299,11 +290,11 @@ export default function PensionCalculatorForm() {
               value={formData.currentSalary}
               onChange={handleInputChange}
               min="0"
-              step="1"
+              step="0.01"
               className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[#3F84D2] focus:border-[#3F84D2] transition-colors text-[#000000] ${
                 errors.currentSalary ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
               }`}
-              placeholder="Enter your monthly salary"
+              placeholder="Pensja"
               autoFocus
             />
             {errors.currentSalary && (
@@ -314,9 +305,6 @@ export default function PensionCalculatorForm() {
       case 4:
         return (
           <div>
-            <label htmlFor="workStartYear" className="block text-sm font-medium text-[#000000] mb-2">
-              Year You Started Working
-            </label>
             <input
               type="number"
               id="workStartYear"
@@ -328,7 +316,7 @@ export default function PensionCalculatorForm() {
               className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[#3F84D2] focus:border-[#3F84D2] transition-colors text-[#000000] ${
                 errors.workStartYear ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
               }`}
-              placeholder="Enter the year you started working"
+              placeholder="Rok rozpoczęcia pracy"
               autoFocus
             />
             {errors.workStartYear && (
@@ -353,7 +341,7 @@ export default function PensionCalculatorForm() {
                   className="w-4 h-4 text-[#3F84D2] bg-gray-100 border-gray-300 rounded focus:ring-[#3F84D2] focus:ring-2"
                 />
                 <label htmlFor="considerSickLeave" className="ml-2 text-sm font-medium text-[#000000]">
-                  Consider average sick leave periods
+                  Uwzględniaj przewidywane okresy na zwolnieniu chorobowym
                 </label>
               </div>
               
@@ -368,15 +356,12 @@ export default function PensionCalculatorForm() {
                     className="w-4 h-4 text-[#3F84D2] bg-gray-100 border-gray-300 rounded focus:ring-[#3F84D2] focus:ring-2"
                   />
                   <label htmlFor="hasChildren" className="ml-2 text-sm font-medium text-[#000000]">
-                    I plan to have children
+                    Planuję mieć dzieci
                   </label>
                 </div>
                 
                 {formData.hasChildren && (
                   <div>
-                    <label htmlFor="numberOfChildren" className="block text-sm font-medium text-[#000000] mb-2">
-                      How many children do you plan to have?
-                    </label>
                     <input
                       type="number"
                       id="numberOfChildren"
@@ -388,27 +373,18 @@ export default function PensionCalculatorForm() {
                       className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[#3F84D2] focus:border-[#3F84D2] transition-colors text-[#000000] ${
                         errors.numberOfChildren ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
                       }`}
-                      placeholder="Enter number of children"
+                      placeholder="Podaj liczbę"
                       autoFocus
                     />
                     {errors.numberOfChildren && (
                       <p className="mt-1 text-sm text-[#F05E5E]">{errors.numberOfChildren}</p>
                     )}
-                    <p className="text-xs text-[#BEC3CE] mt-1">
-                      This helps calculate parental leave impact on your pension contributions
-                    </p>
                   </div>
-                )}
-                
-                {!formData.hasChildren && (
-                  <p className="text-sm text-[#BEC3CE]">
-                    No problem! We'll calculate your pension without considering parental leave.
-                  </p>
                 )}
               </div>
             </div>
             <p className="text-xs text-[#BEC3CE] mt-3">
-              These options will adjust your contribution periods and pension calculations accordingly.
+              Powyższe opcje automatycznie zmieniają okresy składkowe.
             </p>
           </div>
         );
@@ -425,15 +401,12 @@ export default function PensionCalculatorForm() {
                 className="w-4 h-4 text-[#3F84D2] bg-gray-100 border-gray-300 rounded focus:ring-[#3F84D2] focus:ring-2"
               />
               <label htmlFor="hasRetirementAccount" className="ml-2 text-sm font-medium text-[#000000]">
-                I have an existing retirement account
+                Tak
               </label>
             </div>
             
             {formData.hasRetirementAccount && (
               <div>
-                <label htmlFor="currentRetirementBalance" className="block text-sm font-medium text-[#000000] mb-2">
-                  Current Retirement Account Balance (PLN)
-                </label>
                 <input
                   type="number"
                   id="currentRetirementBalance"
@@ -441,11 +414,11 @@ export default function PensionCalculatorForm() {
                   value={formData.currentRetirementBalance}
                   onChange={handleInputChange}
                   min="0"
-                  step="1000"
+                  step="0.01"
                   className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[#3F84D2] focus:border-[#3F84D2] transition-colors text-[#000000] ${
                     errors.currentRetirementBalance ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
                   }`}
-                  placeholder="Enter your current retirement account balance"
+                  placeholder="Stan konta emerytalnego"
                   autoFocus
                 />
                 {errors.currentRetirementBalance && (
@@ -453,19 +426,16 @@ export default function PensionCalculatorForm() {
                 )}
               </div>
             )}
-            
-            {!formData.hasRetirementAccount && (
-              <p className="text-sm text-[#BEC3CE]">
-                No worries! We'll calculate your pension based on future contributions only.
-              </p>
-            )}
+            <p className="text-sm text-[#BEC3CE]">
+              Jeśli nie, spróbujemy go oszacować.
+            </p>
           </div>
         );
       case 7:
         return (
           <div>
             <label htmlFor="retirementAge" className="block text-sm font-medium text-[#000000] mb-2">
-              Planned Retirement Age
+              Planowany wiek emerytalny
               {formData.gender && (
                 <span className="text-sm text-[#3F84D2] ml-2">
                   (Default: {formData.gender === 'female' ? '60' : '65'} years)
@@ -495,7 +465,7 @@ export default function PensionCalculatorForm() {
         return (
           <div>
             <label htmlFor="zipCode" className="block text-sm font-medium text-[#000000] mb-2">
-              Zip Code (optional)
+              Kod pocztowy (opcjonalnie)
             </label>
             <input
               type="text"
@@ -514,9 +484,6 @@ export default function PensionCalculatorForm() {
             {errors.zipCode && (
               <p className="mt-1 text-sm text-[#F05E5E]">{errors.zipCode}</p>
             )}
-            <p className="text-xs text-[#BEC3CE] mt-2">
-              This information is collected for telemetrics purposes only and will not affect your pension calculation. You can leave this field empty if you prefer.
-            </p>
           </div>
         );
       default:
@@ -532,11 +499,11 @@ export default function PensionCalculatorForm() {
           <div className="mb-8">
             <div className="flex justify-between items-center mb-4">
               <span className="text-sm font-medium text-[#00416E]">
-                Step {currentStep} of {totalSteps}
+                Krok {currentStep} z {totalSteps}
               </span>
-              <span className="text-sm text-[#BEC3CE]">
+              {/* <span className="text-sm text-[#BEC3CE]">
                 {Math.round((currentStep / totalSteps) * 100)}% Complete
-              </span>
+              </span> */}
             </div>
             <div className="w-full bg-[#BEC3CE] bg-opacity-30 rounded-full h-2">
               <div 
@@ -562,14 +529,14 @@ export default function PensionCalculatorForm() {
                   onClick={handlePrevious}
                   className="flex-1 bg-[#BEC3CE] text-[#00416E] py-3 px-6 rounded-md font-medium hover:bg-[#BEC3CE] hover:bg-opacity-80 focus:ring-2 focus:ring-[#BEC3CE] focus:ring-offset-2 transition-colors"
                 >
-                  Previous
+                  Wstecz
                 </button>
               )}
               <button
                 type="submit"
                 className="flex-1 bg-[#3F84D2] text-white py-3 px-6 rounded-md font-medium hover:bg-[#00416E] focus:ring-2 focus:ring-[#3F84D2] focus:ring-offset-2 transition-colors"
               >
-                {currentStep < totalSteps ? 'Next' : 'Calculate My Pension'}
+                {currentStep < totalSteps ? 'Dalej' : 'Oblicz moją emeryturę'}
               </button>
             </div>
           </form>
@@ -578,51 +545,61 @@ export default function PensionCalculatorForm() {
         /* Results Display */
         <div className="space-y-6">
           <div className="bg-[#BEC3CE] bg-opacity-30 p-6 rounded-lg border border-[#00993F]">
-            <h3 className="text-xl font-bold text-[#00416E] mb-4">Your Pension Projection</h3>
+            <h3 className="text-xl font-bold text-[#00416E] mb-4">Przewidywana emerytura</h3>
             <div className="space-y-3">
               <div className="flex justify-between items-center">
-                <span className="text-[#00416E] font-medium">Years to retirement:</span>
-                <span className="text-[#000000] font-bold">{result.yearsToRetirement} years</span>
+                <span className="text-[#00416E] font-medium">Lat do emerytury:</span>
+                <span className="text-[#000000] font-bold">{result.yearsToRetirement} lat</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-[#00416E] font-medium">Total retirement savings:</span>
+                <span className="text-[#00416E] font-medium">Całkowita odłożona kwota</span>
                 <span className="text-[#000000] font-bold">{formatCurrency(result.totalSavings)}</span>
               </div>
               <div className="flex justify-between items-center border-t border-[#00993F] pt-3">
-                <span className="text-[#00416E] font-medium">Estimated monthly pension:</span>
+                <span className="text-[#00416E] font-medium">Przewidywana miesięczna emerytura:</span>
                 <span className="text-[#FFB34F] font-bold text-xl">{formatCurrency(result.monthlyPension)}</span>
               </div>
             </div>
             <p className="mt-4 text-sm text-[#00416E]">
-              * This is a simplified calculation based on 10% annual contribution and 5% growth rate. 
-              Actual results may vary based on market conditions and your specific retirement plan.
+              To są wyłącznie przewidywania. Rzeczywista emerytura może być inna.
             </p>
           </div>
           
-          {/* Reset Button */}
-          <button
-            onClick={() => {
-              setResult(null);
-              setCurrentStep(1);
-              setFormData({ 
-              gender: '', 
-              currentAge: '', 
-              currentSalary: '', 
-              workStartYear: '', 
-              considerSickLeave: false,
-              hasChildren: false,
-              numberOfChildren: '',
-              hasRetirementAccount: false,
-              currentRetirementBalance: '',
-              retirementAge: '',
-              zipCode: ''
-            });
-              setErrors({});
-            }}
-            className="w-full bg-[#3F84D2] text-white py-3 px-6 rounded-md font-medium hover:bg-[#00416E] focus:ring-2 focus:ring-[#3F84D2] focus:ring-offset-2 transition-colors"
-          >
-            Calculate Again
-          </button>
+          {/* Navigation Buttons */}
+          <div className="flex gap-4">
+            <button
+              onClick={() => {
+                setResult(null);
+                setCurrentStep(totalSteps);
+              }}
+              className="flex-1 bg-[#BEC3CE] text-[#00416E] py-3 px-6 rounded-md font-medium hover:bg-[#BEC3CE] hover:bg-opacity-80 focus:ring-2 focus:ring-[#BEC3CE] focus:ring-offset-2 transition-colors"
+            >
+              Wstecz
+            </button>
+            <button
+              onClick={() => {
+                setResult(null);
+                setCurrentStep(1);
+                setFormData({ 
+                gender: '', 
+                currentAge: '', 
+                currentSalary: '', 
+                workStartYear: '', 
+                considerSickLeave: false,
+                hasChildren: false,
+                numberOfChildren: '',
+                hasRetirementAccount: false,
+                currentRetirementBalance: '',
+                retirementAge: '',
+                zipCode: ''
+              });
+                setErrors({});
+              }}
+              className="flex-1 bg-[#3F84D2] text-white py-3 px-6 rounded-md font-medium hover:bg-[#00416E] focus:ring-2 focus:ring-[#3F84D2] focus:ring-offset-2 transition-colors"
+            >
+              Przelicz ponownie
+            </button>
+          </div>
         </div>
       )}
     </div>
