@@ -8,7 +8,7 @@ export default function SymulatorPage() {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Symulator Emerytalny
+            Kalkulator Emerytalny
           </h1>
           <p className="text-xl text-black max-w-2xl mx-auto">
             Sprawdź, jak Twoje oczekiwania emerytalne mają się do rzeczywistości
