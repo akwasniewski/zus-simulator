@@ -38,7 +38,7 @@ export interface PensionFullResult {
 
 export const calculateYearsForDesiredPension = (formData: FormData, desiredPension: number): number | null => {
   const currentAge = parseInt(formData.currentAge);
-  const maxRetirementAge = 70; // Set a reasonable maximum
+  const maxRetirementAge = 120; // Set a reasonable maximum
   let testRetirementAge = parseInt(formData.retirementAge);
   
   // Use while loop to find the retirement age needed
