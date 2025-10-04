@@ -77,15 +77,31 @@ export default function RetirementCalculator({ formData, setFormData }) {
 
   }, [formData?.currentSalary, currentAge, currentYear]);
 
+
   const calculateProjections = () => {
     const projections = [];
 
     const sortedPeriods = [...periods].sort((a, b) => a.startYear - b.startYear);
 
     sortedPeriods.forEach((period) => {
-      let salary = period.startingSalary;
-      const periodStartYear = period.startYear;
-      const periodEndYear = Math.min(period.endYear, currentYear + (retirementAge - currentAge));
+      // --- Clip & validate inputs before projecting ---
+      const startYear = Math.max(currentYear - 50, Math.min(currentYear + 50, period.startYear));
+      const endYear = Math.max(startYear, Math.min(currentYear + 50, period.endYear));
+
+      // Salary: if invalid number or out of range → projection = 0
+      const parsedSalary = parseFloat(period.startingSalary);
+      const salaryValid = !isNaN(parsedSalary);
+      const clippedSalary = salaryValid
+        ? Math.max(0, Math.min(10_000_000, parsedSalary))
+        : 0;
+
+      const annualRaise = Math.max(-20, Math.min(50, parseFloat(period.annualRaise) || 0));
+
+      // If salary is invalid → all salaries in projection = 0
+      let salary = salaryValid ? clippedSalary : 0;
+
+      const periodStartYear = startYear;
+      const periodEndYear = Math.min(endYear, currentYear + (retirementAge - currentAge));
 
       for (let year = periodStartYear; year <= periodEndYear; year++) {
         const age = currentAge + (year - currentYear);
@@ -94,16 +110,17 @@ export default function RetirementCalculator({ formData, setFormData }) {
         projections.push({
           year,
           age,
-          salary: Math.round(salary),
+          salary: Math.round(salaryValid ? salary : 0),
           periodName: period.name
         });
 
-        salary = salary * (1 + period.annualRaise / 100);
+        salary *= (1 + annualRaise / 100);
       }
     });
 
     return projections;
   };
+
 
   const projections = calculateProjections();
 
@@ -158,27 +175,22 @@ export default function RetirementCalculator({ formData, setFormData }) {
     }]);
   };
 
+
   const updatePeriod = (id, field, value) => {
-    const numValue = parseFloat(value) || 0;
+    const numValue = parseFloat(value);
+    const isValidNumber = !isNaN(numValue);
+
     setPeriods(periods.map(p => {
       if (p.id === id) {
-        let newValue = numValue;
+        let newValue = isValidNumber ? numValue : 0;
 
-        if (field === 'startYear') {
-          newValue = Math.max(currentYear - 50, Math.min(currentYear + 50, numValue));
-        } else if (field === 'endYear') {
-          newValue = Math.max(p.startYear, Math.min(currentYear + 50, numValue));
-        } else if (field === 'startingSalary') {
-          newValue = Math.max(0, Math.min(10000000, numValue));
-        } else if (field === 'annualRaise') {
-          newValue = Math.max(-20, Math.min(50, numValue));
-        }
 
         return { ...p, [field]: newValue };
       }
       return p;
     }));
   };
+
 
   const updatePeriodName = (id, value) => {
     setPeriods(periods.map(p => p.id === id ? { ...p, name: value } : p));
@@ -189,22 +201,22 @@ export default function RetirementCalculator({ formData, setFormData }) {
   };
 
   React.useEffect(() => {
-      if (!pastEarnings || pastEarnings.length === 0) return;
+    if (!pastEarnings || pastEarnings.length === 0) return;
 
-      // Combine pastEarnings + future projections for the calculation
-      const allEarnings = [...pastEarnings, ...projections];
+    // Combine pastEarnings + future projections for the calculation
+    const allEarnings = [...pastEarnings, ...projections];
 
-      // Call your pension calculator
-      const result = calculateFullPension(formData,allData);
+    // Call your pension calculator
+    const result = calculateFullPension(formData, allData);
 
-      setPredictedPension(result.monthlyPension);
-      setPensionHistory(
-        result.yearlySavings.map(record => ({
-          year: record.year,
-          total: record.savings, // or whatever field holds the yearly balance
-        }))
-      );
-  }, [pastEarnings, currentAge, retirementAge, formData,totalEarnings]);
+    setPredictedPension(result.monthlyPension);
+    setPensionHistory(
+      result.yearlySavings.map(record => ({
+        year: record.year,
+        total: record.savings, // or whatever field holds the yearly balance
+      }))
+    );
+  }, [pastEarnings, currentAge, retirementAge, formData, totalEarnings]);
 
   return (
     <div className="min-h-screen p-6" style={{ background: 'var(--background)' }}>
@@ -637,15 +649,15 @@ export default function RetirementCalculator({ formData, setFormData }) {
                   labelStyle={{ color: 'var(--foreground)' }}
                 />
                 <Legend />
-              <Line
-              type="monotone"
-              data={pensionHistory}
-              dataKey="total"
-              stroke="var(--green)"
-              strokeWidth={2}
-              name="Saldo emerytalne"
-              dot={{ fill: 'var(--green)' }}
-            />
+                <Line
+                  type="monotone"
+                  data={pensionHistory}
+                  dataKey="total"
+                  stroke="var(--green)"
+                  strokeWidth={2}
+                  name="Saldo emerytalne"
+                  dot={{ fill: 'var(--green)' }}
+                />
               </LineChart>
             </ResponsiveContainer>
           </div>
