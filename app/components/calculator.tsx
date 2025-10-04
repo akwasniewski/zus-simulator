@@ -215,7 +215,7 @@ export default function RetirementCalculator({ formData, setFormData }) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-white rounded-lg shadow-md p-6" style={{ borderLeft: '4px solid var(--blue)' }}>
+          <div className="bg-white rounded-lg shadow-lg border border-[var(--grey)] p-6" style={{ borderLeft: '4px solid var(--blue)' }}>
             <div className="flex items-center justify-between mb-2">
               <Calendar style={{ color: 'var(--blue)' }} size={24} />
               <span className="text-sm" style={{ color: 'var(--grey)' }}>Pozostało do emerytury</span>
@@ -223,7 +223,7 @@ export default function RetirementCalculator({ formData, setFormData }) {
             <div className="text-2xl font-bold" style={{ color: 'var(--foreground)' }}>{retirementAge - currentAge}</div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-6" style={{ borderLeft: '4px solid var(--red)' }}>
+          <div className="bg-whitee rounded-lg shadow-lg border border-[var(--grey)] p-6" style={{ borderLeft: '4px solid var(--red)' }}>
             <div className="flex items-center justify-between mb-2">
               <DollarSign style={{ color: 'var(--red)' }} size={24} />
               <span className="text-sm" style={{ color: 'var(--grey)' }}>Całkowite dochody</span>
@@ -231,7 +231,7 @@ export default function RetirementCalculator({ formData, setFormData }) {
             <div className="text-2xl font-bold" style={{ color: 'var(--foreground)' }}>{totalEarnings} zł</div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-6" style={{ borderLeft: '4px solid var(--orange)' }}>
+          <div className="bg-white rounded-lg shadow-lg border border-[var(--grey)] p-6" style={{ borderLeft: '4px solid var(--orange)' }}>
             <div className="flex items-center justify-between mb-2">
               <TrendingUp style={{ color: 'var(--orange)' }} size={24} />
               <span className="text-sm" style={{ color: 'var(--grey)' }}>Średnia pensja</span>
@@ -239,7 +239,7 @@ export default function RetirementCalculator({ formData, setFormData }) {
             <div className="text-2xl font-bold" style={{ color: 'var(--foreground)' }}>{avgSalary} zł</div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-6" style={{ borderLeft: '4px solid var(--green)' }}>
+          <div className="bg-white rounded-lg shadow-lg border border-[var(--grey)] p-6" style={{ borderLeft: '4px solid var(--green)' }}>
             <div className="flex items-center justify-between mb-2">
               <PiggyBank style={{ color: 'var(--green)' }} size={24} />
               <span className="text-sm" style={{ color: 'var(--grey)' }}>Przewidywana emerytura</span>
@@ -249,7 +249,7 @@ export default function RetirementCalculator({ formData, setFormData }) {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-white  rounded-lg shadow-lg p-6 border border-[var(--grey)] p-6">
             <h2 className="text-xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>Aktualne ustawienia</h2>
 
             <div className="space-y-4">
@@ -308,7 +308,7 @@ export default function RetirementCalculator({ formData, setFormData }) {
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-white rounded-lg shadow-lg border border-[var(--grey)] p-6">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-bold" style={{ color: 'var(--foreground)' }}>Historyczne zarobki</h2>
             </div>
@@ -504,7 +504,7 @@ export default function RetirementCalculator({ formData, setFormData }) {
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-white rounded-lg shadow-lg border border-[var(--grey)] shadow-md p-6">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-bold" style={{ color: 'var(--foreground)' }}>Zaplanuj przyszłość</h2>
               <button
@@ -595,7 +595,7 @@ export default function RetirementCalculator({ formData, setFormData }) {
         </div>
 
         <div className="flex flex-col md:flex-row gap-6">
-          <div className="bg-white rounded-lg shadow-md flex-1">
+          <div className="bg-white rounded-lg p-6 shadow-lg border border-[var(--grey)] flex-1">
             <h2 className="text-xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>
               Historia i predykcja pensji
             </h2>
@@ -622,7 +622,7 @@ export default function RetirementCalculator({ formData, setFormData }) {
             </ResponsiveContainer>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md flex-1">
+          <div className="bg-white rounded-lg shadow-lg p-6 border border-[var(--grey)] flex-1">
             <h2 className="text-xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>
               Historia i predykcja zebranych składek
             </h2>
