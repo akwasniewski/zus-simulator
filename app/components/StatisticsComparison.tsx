@@ -169,7 +169,7 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
           </div>
           
           {/* Groups progress bar */}
-          <div className="flex h-8 rounded-lg overflow-hidden mb-4">
+          <div className="flex h-8 rounded-lg overflow-hidden mb-2">
             {pensionGroups.map((group, index) => (
               <div
                 key={group.name}
@@ -207,11 +207,10 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
 
           {/* User indicator */}
           <div 
-            className="absolute top-0 transform -translate-x-1/2 transition-all duration-500 z-10"
+            className="absolute top-full transform -translate-x-1/2 transition-all duration-500 z-10"
             style={{ 
               left: `${dotPosition}%`,
-              top: '100%',
-              marginTop: '10px'
+              top: 'calc(100% - 8px)', // Adjusted to be directly below the bar
             }}
           >
             <div className="flex flex-col items-center">
