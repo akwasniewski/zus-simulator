@@ -128,18 +128,18 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
   const dotPosition = calculateDotPosition();
 
   return (
-    <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-8">
-      <h2 className="text-2xl font-bold text-[#00416E] mb-6 text-center">
+    <div className="bg-white rounded-lg shadow-lg p-8 border border-[var(--grey)]">
+      <h2 className="text-2xl font-bold text-[black] mb-6 text-center">
         Porównanie z rzeczywistymi danymi ZUS
       </h2>
 
       {/* Podsumowanie porównania */}
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
+      <div className="bg-[var(--grey)]/10 border border-[var(--grey)] rounded-lg p-6 mb-8">
         <div className="text-center">
-          <p className="text-lg text-[#00416E] mb-2">
+          <p className="text-lg text-[black] mb-2">
             Oczekiwana emerytura: <strong>{expectedPension.toLocaleString()} zł</strong>
           </p>
-          <p className="text-md text-[#007834] font-semibold">
+          <p className="text-md text-[var(--green)] font-semibold">
             {getComparisonText()}
           </p>
         </div>
@@ -147,7 +147,7 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
 
       {/* Wizualizacja grup emerytalnych */}
       <div className="mb-8">
-        <h3 className="text-lg font-semibold text-[#00416E] mb-4">
+        <h3 className="text-lg font-semibold text-[black] mb-4">
           Rozkład wysokości emerytur w Polsce
         </h3>
         
@@ -197,8 +197,8 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
             }}
           >
             <div className="flex flex-col items-center">
-              <div className="w-4 h-4 bg-[#007834] rounded-full border-2 border-white shadow-lg" />
-              <div className="text-xs font-semibold text-[#007834] mt-1 whitespace-nowrap">
+              <div className="w-4 h-4 bg-[var(--green)] rounded-full border-2 border-white shadow-lg" />
+              <div className="text-xs font-semibold text-[var(--green)] mt-1 whitespace-nowrap">
                 Twoje oczekiwania
               </div>
             </div>
@@ -213,15 +213,15 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
             key={group.name}
             className={`border rounded-lg p-4 cursor-pointer transition-all duration-300 ${
               selectedGroup?.name === group.name 
-                ? 'border-[#007834] bg-green-50 shadow-md' 
-                : 'border-gray-200 hover:border-gray-300'
+                ? 'border-[var(--green)] bg-[var(--green)]/10 shadow-md' 
+                : 'border-[var(--grey)] hover:border-[var(--grey)]/70'
             }`}
             onMouseEnter={() => setSelectedGroup(group)}
             onMouseLeave={() => setSelectedGroup(null)}
           >
-            <h4 className="font-semibold text-[#00416E] mb-2">{group.name}</h4>
-            <p className="text-sm text-gray-600 mb-2">{group.range}</p>
-            <p className="text-lg font-bold text-[#007834]">
+            <h4 className="font-semibold text-[black] mb-2">{group.name}</h4>
+            <p className="text-sm text-[var(--grey)] mb-2">{group.range}</p>
+            <p className="text-lg font-bold text-[var(--green)]">
               Średnia: {group.average.toLocaleString()} zł
             </p>
           </div>
@@ -230,23 +230,23 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
 
       {/* Szczegółowy opis wybranej grupy */}
       {selectedGroup && (
-        <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 animate-fadeIn">
-          <h3 className="text-xl font-bold text-[#00416E] mb-3">
+        <div className="bg-[var(--grey)]/10 border border-[var(--grey)] rounded-lg p-6 animate-fadeIn">
+          <h3 className="text-xl font-bold text-[black] mb-3">
             {selectedGroup.name}
           </h3>
-          <p className="text-gray-700 mb-4">{selectedGroup.description}</p>
+          <p className="text-[#000000] mb-4">{selectedGroup.description}</p>
           
           <div className="space-y-2">
-            <h4 className="font-semibold text-[#00416E]">Charakterystyka grupy:</h4>
-            <ul className="list-disc list-inside space-y-1 text-gray-600">
+            <h4 className="font-semibold text-[black]">Charakterystyka grupy:</h4>
+            <ul className="list-disc list-inside space-y-1 text-[#000000]">
               {selectedGroup.characteristics.map((char, index) => (
                 <li key={index}>{char}</li>
               ))}
             </ul>
           </div>
 
-          <div className="mt-4 p-3 bg-blue-100 rounded-lg">
-            <p className="text-sm text-[#00416E]">
+          <div className="mt-4 p-3 bg-[var(--green)]/10 rounded-lg border border-[var(--green)]">
+            <p className="text-sm text-[black]">
               <strong>Porównanie:</strong> Twoje oczekiwania są {
                 expectedPension > selectedGroup.average ? 'wyższe' : 
                 expectedPension < selectedGroup.average ? 'niższe' : 'równe'
@@ -257,8 +257,8 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
       )}
 
       {/* Źródło danych */}
-      <div className="mt-6 pt-4 border-t border-gray-200">
-        <p className="text-xs text-gray-500 text-center">
+      <div className="mt-6 pt-4 border-t border-[var(--grey)]">
+        <p className="text-xs text-[var(--grey)] text-center">
           Dane oparte na rzeczywistych statystykach ZUS za 2024 rok | 
           Średnia emerytura: 4 045 zł | Minimalna: 1 878 zł
         </p>
