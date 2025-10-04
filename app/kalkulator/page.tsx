@@ -7,22 +7,11 @@ export default function RetirementCalculator() {
   const currentYear = new Date().getFullYear();
   const [currentAge, setCurrentAge] = useState(35);
   const [retirementAge, setRetirementAge] = useState(65);
-  const [currentSalary, setCurrentSalary] = useState(75000);
+  const [currentSalary, setCurrentSalary] = useState(0);
 
-  const [pastEarnings, setPastEarnings] = useState([
+  const [pastEarnings, setPastEarnings] = useState([]);
 
-  ]);
-
-  const [periods, setPeriods] = useState([
-    {
-      id: 1,
-      name: 'Predykcja kariery',
-      startYear: currentYear,
-      endYear: currentYear + 10,
-      startingSalary: currentSalary,
-      annualRaise: 3
-    }
-  ]);
+  const [periods, setPeriods] = useState([]);
 
   const [bulkPastYears, setBulkPastYears] = useState({
     startYear: currentYear - 10,
@@ -142,7 +131,7 @@ export default function RetirementCalculator() {
 
     setPeriods([...periods, {
       id: Date.now(),
-      name: `Period ${periods.length + 1}`,
+      name: `Okres ${periods.length + 1}`,
       startYear: newStartYear,
       endYear: newStartYear + 5,
       startingSalary: lastPeriod ? lastPeriod.startingSalary * Math.pow(1 + lastPeriod.annualRaise / 100, 5) : currentSalary,
@@ -258,7 +247,9 @@ export default function RetirementCalculator() {
                 + Dodaj roczne zarobki
               </button>
             </div>
-
+            <div className="text-sm mb-2" style={{ color: 'var(--grey)' }}>
+              Jeśli nie jesteś pewny dokładnej wartości możesz na raz dodać szacowane zarobki z wielu lat
+            </div>
             <div className="mb-4 p-3 rounded-lg border" style={{ backgroundColor: 'rgba(63, 132, 210, 0.1)', borderColor: 'var(--blue)' }}>
               <h3 className="text-sm font-semibold mb-2" style={{ color: 'var(--foreground)' }}>Dodaj zarobki z wielu lat</h3>
               <div className="grid grid-cols-2 gap-2 text-xs mb-2">
@@ -317,7 +308,7 @@ export default function RetirementCalculator() {
                 className="w-full px-3 py-1 text-white rounded text-sm"
                 style={{ backgroundColor: 'var(--blue)' }}
               >
-                Generate Years
+                Wygeneruj zarobki z wielu lat
               </button>
             </div>
 
