@@ -1,21 +1,26 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,              // allow .js files
-    "checkJs": false,             // don’t check JS files for errors
-    "skipLibCheck": true,         // skip type checking of node_modules
-    "strict": false,              // disable all strict type-checking
-    "noEmit": false,              // allow emitting files
-    "noEmitOnError": false,       // emit even if errors exist
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true, // allow .js files
+    "checkJs": false, // don’t check JS files for errors
+    "skipLibCheck": true, // skip type checking of node_modules
+    "strict": false, // turns off all strict checks
+    "noImplicitAny": false, // allows variables to be implicitly any
+    "noEmit": false, // allow emitting files
+    "noEmitOnError": false, // emit even if errors exist
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "isolatedModules": false,     // turn off isolatedModules checks
+    "isolatedModules": true, // turn off isolatedModules checks
     "jsx": "preserve",
     "incremental": true,
-    "forceConsistentCasingInFileNames": false, 
+    "forceConsistentCasingInFileNames": false,
     "suppressImplicitAnyIndexErrors": true,
     "plugins": [
       {
@@ -23,10 +28,19 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": [
+        "./*"
+      ]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "**/*.js"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "**/*.js"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
-
