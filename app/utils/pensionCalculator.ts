@@ -19,6 +19,7 @@ export interface PensionResult {
   monthlyPension: number;
   monthlyPensionAdjusted: number,
   FootOfReturn: number,
+  AverageFuturePension: number,
   totalSavings: number;
   yearsToRetirement: number;
 }
@@ -82,10 +83,12 @@ export const calculatePension = (formData: FormData): PensionResult => {
     params.find((r) => r.rok === new Date().getFullYear())?.["przeciętne miesięczne wynagrodzenie w gospodarce narodowej**)"]?.toString() ?? "0"
   );
   const FootOfReturn = monthlyPension/FuturePensionPrediction;
+  const AverageFuturePension = 4045*FuturePensionPrediction/monthlySalary 
   return {
     monthlyPension,
     monthlyPensionAdjusted,
     FootOfReturn,
+    AverageFuturePension,
     totalSavings: estimatedSalary,
     yearsToRetirement,
   };

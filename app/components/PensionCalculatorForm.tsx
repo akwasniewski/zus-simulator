@@ -580,6 +580,24 @@ export default function PensionCalculatorForm() {
                 <span className="text-[black] font-medium">Przewidywana miesięczna emerytura:</span>
                 <span className="text-[var(--green)] font-bold text-xl">{formatCurrency(result.monthlyPension)}</span>
               </div>
+              <div className="flex justify-between items-center border-t border-[#00993F] pt-3 mt-2">
+        <span className="text-[black] font-medium">Emerytura po uwzględnieniu inflacji:</span>
+          <span className="text-[var(--green)] font-bold text-xl">
+            {formatCurrency(result.monthlyPensionAdjusted)}
+          </span>
+          <div className="flex justify-between items-center border-t border-[#00993F] pt-3 mt-2">
+        <span className="text-[black] font-medium">Stopa czegostam:</span>
+          <span className="text-[var(--green)] font-bold text-xl">
+            {result.FootOfReturn.toFixed(2)}
+          </span>
+        </div>
+        <div className="flex justify-between items-center border-t border-[#00993F] pt-3 mt-2">
+        <span className="text-[black] font-medium">Srednia przyszla emerytura:</span>
+          <span className="text-[var(--green)] font-bold text-xl">
+            {formatCurrency(result.AverageFuturePension)}
+          </span>
+        </div>
+        </div>
             </div>
             <p className="mt-4 text-sm text-[black]">
               To są wyłącznie przewidywania. Rzeczywista emerytura może być inna.
