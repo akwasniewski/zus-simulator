@@ -75,7 +75,7 @@ export default function FunFactsCarousel() {
   }, []);
 
   return (
-    <div className="bg-white border-t border-grey py-6">
+    <div className="bg-white  py-6">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="bg-white rounded-lg shadow-lg p-6 border border-grey relative">
           {/* Header */}
