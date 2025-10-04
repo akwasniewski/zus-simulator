@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { DollarSign, TrendingUp, Calendar, PiggyBank } from 'lucide-react';
+import { calculateFullPension } from '../utils/pensionCalculator';
+
 
 export default function RetirementCalculator({ formData, setFormData }) {
   const currentYear = new Date().getFullYear();
@@ -17,6 +19,7 @@ export default function RetirementCalculator({ formData, setFormData }) {
     pregnancy: false
   }]);
   const [periods, setPeriods] = useState([]);
+  const [pensionHistory, setPensionHistory] = useState<{ year: number; total: number }[]>([]);
 
   const [bulkPastYears, setBulkPastYears] = useState({
     startYear: currentYear - 10,
@@ -185,6 +188,24 @@ export default function RetirementCalculator({ formData, setFormData }) {
     setPeriods(periods.filter(p => p.id !== id));
   };
 
+  React.useEffect(() => {
+      if (!pastEarnings || pastEarnings.length === 0) return;
+
+      // Combine pastEarnings + future projections for the calculation
+      const allEarnings = [...pastEarnings, ...projections];
+
+      // Call your pension calculator
+      const result = calculateFullPension(formData,allData);
+
+      setPredictedPension(result.monthlyPension);
+      setPensionHistory(
+        result.yearlySavings.map(record => ({
+          year: record.year,
+          total: record.savings, // or whatever field holds the yearly balance
+        }))
+      );
+  }, [pastEarnings, currentAge, retirementAge, formData,totalEarnings]);
+
   return (
     <div className="min-h-screen p-6" style={{ background: 'var(--background)' }}>
       <div className="max-w-7xl mx-auto">
@@ -223,7 +244,7 @@ export default function RetirementCalculator({ formData, setFormData }) {
               <PiggyBank style={{ color: 'var(--green)' }} size={24} />
               <span className="text-sm" style={{ color: 'var(--grey)' }}>Przewidywana emerytura</span>
             </div>
-            <div className="text-2xl font-bold" style={{ color: 'var(--foreground)' }}>{predictedPension} zł</div>
+            <div className="text-2xl font-bold" style={{ color: 'var(--foreground)' }}>{predictedPension.toFixed(2)} zł</div>
           </div>
         </div>
 
@@ -616,14 +637,15 @@ export default function RetirementCalculator({ formData, setFormData }) {
                   labelStyle={{ color: 'var(--foreground)' }}
                 />
                 <Legend />
-                <Line
-                  type="monotone"
-                  dataKey="salary"
-                  stroke="var(--green)"
-                  strokeWidth={2}
-                  name="Zarobki"
-                  dot={{ fill: 'var(--green)' }}
-                />
+              <Line
+              type="monotone"
+              data={pensionHistory}
+              dataKey="total"
+              stroke="var(--green)"
+              strokeWidth={2}
+              name="Saldo emerytalne"
+              dot={{ fill: 'var(--green)' }}
+            />
               </LineChart>
             </ResponsiveContainer>
           </div>

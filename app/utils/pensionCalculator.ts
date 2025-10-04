@@ -23,6 +23,17 @@ export interface PensionResult {
   yearsToRetirement: number;
 }
 
+export interface PensionYearRecord {
+  year: number;
+  savings: number;
+}
+
+export interface PensionFullResult {
+  monthlyPension: number;
+  totalSavings: number;
+  yearlySavings: PensionYearRecord[];
+}
+
 export const calculatePension = (formData: FormData): PensionResult => {
   const currentAge = parseInt(formData.currentAge);
   const monthlySalary = parseFloat(formData.currentSalary);
@@ -70,12 +81,70 @@ export const calculatePension = (formData: FormData): PensionResult => {
   )/parseFloat(
     params.find((r) => r.rok === new Date().getFullYear())?.["przeciętne miesięczne wynagrodzenie w gospodarce narodowej**)"]?.toString() ?? "0"
   );
-  const FootOfReturn = monthlyPension/FuturePensionPrediction
+  const FootOfReturn = monthlyPension/FuturePensionPrediction;
   return {
     monthlyPension,
     monthlyPensionAdjusted,
     FootOfReturn,
     totalSavings: estimatedSalary,
     yearsToRetirement,
+  };
+};
+
+
+
+export const calculateFullPension = (
+  formData: FormData,
+  salaryHistory: { year: number; salary: number }[]
+): PensionFullResult => {
+  const currentAge = parseInt(formData.currentAge);
+  const retirementAge = parseInt(formData.retirementAge);
+  const yearsToRetirement = retirementAge - currentAge;
+
+  let estimatedSavings = formData.hasRetirementAccount
+    ? parseInt(formData.currentRetirementBalance || "0")
+    : 0;
+
+  const sickLeaveFactor = formData.considerSickLeave ? 11 / 12 : 1;
+
+  let PensionHistory: PensionYearRecord[] = [];
+
+  // Determine start and end years
+  const startYear = Math.min(...salaryHistory.map(s => s.year), new Date().getFullYear());
+  const endYear = new Date().getFullYear() + yearsToRetirement;
+
+  for (let year = startYear; year <= endYear; year++) {
+    const salaryEntry = salaryHistory.find(s => s.year === year);
+    const row = params.find((r) => r.rok === year);
+
+    if (!row) continue;
+
+    const valorization = parseFloat(row.waloryzacja.replace("%", "")) / 100;
+
+    if (salaryEntry) {
+      const contribution = salaryEntry.salary * sickLeaveFactor * 0.1952;
+      estimatedSavings = (estimatedSavings + contribution) * valorization;
+    } else {
+      // No salary this year, just valorize
+      estimatedSavings = estimatedSavings * valorization;
+    }
+
+    PensionHistory.push({
+      year,
+      savings: estimatedSavings,
+    });
+  }
+
+  const lifeRow = lifeTable.find(
+    (r) => r.Age === retirementAge && r.Month === 6
+  );
+  const divisor = lifeRow ? lifeRow.Value : 200;
+
+  const monthlyPension = estimatedSavings / divisor;
+
+  return {
+    monthlyPension,
+    totalSavings: estimatedSavings,
+    yearlySavings: PensionHistory,
   };
 };
