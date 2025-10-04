@@ -580,6 +580,12 @@ export default function PensionCalculatorForm() {
                 <span className="text-[black] font-medium">Przewidywana miesięczna emerytura:</span>
                 <span className="text-[var(--green)] font-bold text-xl">{formatCurrency(result.monthlyPension)}</span>
               </div>
+              {expectedPension && (
+                <div className="flex justify-between items-center border-t border-gray-300 pt-3">
+                  <span className="text-[black] font-medium">Oczekiwana emerytura (wprowadzona wcześniej):</span>
+                  <span className="text-[#666666] font-bold text-lg">{formatCurrency(expectedPension)}</span>
+                </div>
+              )}
             </div>
             <p className="mt-4 text-sm text-[black]">
               To są wyłącznie przewidywania. Rzeczywista emerytura może być inna.
