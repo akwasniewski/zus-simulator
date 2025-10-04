@@ -215,7 +215,7 @@ export default function PensionCalculatorForm() {
       case 2: return 'Ile masz lat?';
       case 3: return 'Jaka jest twoja obecna pensja (brutto)?';
       case 4: return 'Kiedy zacząłeś pracę (na UoP)?';
-      case 5: return 'Uwzględniać okresy na zwolnieniu';
+      case 5: return 'Uwzględniać okresy na zwolnieniach?';
       case 6: return 'Czy wiesz ile masz zgromadzone na koncie emerytalnym?';
       case 7: return 'Kiedy planujesz przejsć na emeryturę?';
       case 8: return 'Jaki masz kod pocztowy?';
@@ -376,7 +376,7 @@ export default function PensionCalculatorForm() {
                       value={formData.numberOfChildren}
                       onChange={handleInputChange}
                       min="1"
-                      max="10"
+                      max="25"
                       className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[var(--green)] focus:border-[var(--green)] focus-visible:ring-[var(--green)] focus-visible:border-[var(--green)] transition-all duration-300 text-[#000000] focus:outline-none focus:ring-2 focus:ring-[var(--green)] ${
                         errors.numberOfChildren ? 'border-[#F05E5E]' : 'border-[var(--grey)]'
                       }`}
@@ -435,7 +435,7 @@ export default function PensionCalculatorForm() {
               </div>
             )}
             <p className="text-sm text-[var(--grey)]">
-              Jeśli nie, spróbujemy go oszacować.
+              Jeśli nie, spróbujemy to oszacować.
             </p>
           </div>
         );
