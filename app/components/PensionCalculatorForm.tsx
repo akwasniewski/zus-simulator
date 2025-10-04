@@ -208,7 +208,7 @@ export default function PensionCalculatorForm() {
       if (validateForm()) {
         const calculatedResult = calculatePension(formData, expectedPension || undefined);
         setResult(calculatedResult);
-        
+
         // Save telemetry data
         saveTelemetryData(formData, calculatedResult, expectedPension);
       }
@@ -290,9 +290,8 @@ export default function PensionCalculatorForm() {
               onChange={handleInputChange}
               min="18"
               max="99"
-              className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[var(--green)] focus:border-[var(--green)] focus-visible:border-[var(--green)] transition-all duration-300 text-[#000000] focus:outline-none focus:ring-2 focus:ring-[var(--green)] ${
-                errors.currentAge ? 'border-[#F05E5E]' : 'border-[var(--grey)]'
-              }`}
+              className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[var(--green)] focus:border-[var(--green)] focus-visible:border-[var(--green)] transition-all duration-300 text-[#000000] focus:outline-none focus:ring-2 focus:ring-[var(--green)] ${errors.currentAge ? 'border-[#F05E5E]' : 'border-[var(--grey)]'
+                }`}
               placeholder="Podaj swój wiek"
               autoFocus
             />
@@ -312,9 +311,8 @@ export default function PensionCalculatorForm() {
               onChange={handleInputChange}
               min="0"
               step="0.01"
-              className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[var(--green)] focus:border-[var(--green)] focus-visible:border-[var(--green)] transition-all duration-300 text-[#000000] focus:outline-none focus:ring-2 focus:ring-[var(--green)] ${
-                errors.currentSalary ? 'border-[#F05E5E]' : 'border-[var(--grey)]'
-              }`}
+              className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[var(--green)] focus:border-[var(--green)] focus-visible:border-[var(--green)] transition-all duration-300 text-[#000000] focus:outline-none focus:ring-2 focus:ring-[var(--green)] ${errors.currentSalary ? 'border-[#F05E5E]' : 'border-[var(--grey)]'
+                }`}
               placeholder="Pensja"
               autoFocus
             />
@@ -334,9 +332,8 @@ export default function PensionCalculatorForm() {
               onChange={handleInputChange}
               min="1950"
               max={new Date().getFullYear()}
-              className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[var(--green)] focus:border-[var(--green)] focus-visible:ring-[var(--green)] focus-visible:border-[var(--green)] transition-all duration-300 text-[#000000] focus:outline-none focus:ring-2 focus:ring-[var(--green)] ${
-                errors.workStartYear ? 'border-[#F05E5E]' : 'border-[var(--grey)]'
-              }`}
+              className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[var(--green)] focus:border-[var(--green)] focus-visible:ring-[var(--green)] focus-visible:border-[var(--green)] transition-all duration-300 text-[#000000] focus:outline-none focus:ring-2 focus:ring-[var(--green)] ${errors.workStartYear ? 'border-[#F05E5E]' : 'border-[var(--grey)]'
+                }`}
               placeholder="Rok rozpoczęcia pracy"
               autoFocus
             />
@@ -390,9 +387,8 @@ export default function PensionCalculatorForm() {
                       onChange={handleInputChange}
                       min="1"
                       max="25"
-                      className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[var(--green)] focus:border-[var(--green)] focus-visible:ring-[var(--green)] focus-visible:border-[var(--green)] transition-all duration-300 text-[#000000] focus:outline-none focus:ring-2 focus:ring-[var(--green)] ${
-                        errors.numberOfChildren ? 'border-[#F05E5E]' : 'border-[var(--grey)]'
-                      }`}
+                      className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[var(--green)] focus:border-[var(--green)] focus-visible:ring-[var(--green)] focus-visible:border-[var(--green)] transition-all duration-300 text-[#000000] focus:outline-none focus:ring-2 focus:ring-[var(--green)] ${errors.numberOfChildren ? 'border-[#F05E5E]' : 'border-[var(--grey)]'
+                        }`}
                       placeholder="Podaj liczbę"
                       autoFocus
                     />
@@ -436,9 +432,8 @@ export default function PensionCalculatorForm() {
                   onChange={handleInputChange}
                   min="0"
                   step="0.01"
-                  className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[var(--green)] focus:border-[var(--green)] focus-visible:ring-[var(--green)] focus-visible:border-[var(--green)] transition-all duration-300 text-[#000000] focus:outline-none focus:ring-2 focus:ring-[var(--green)] ${
-                    errors.currentRetirementBalance ? 'border-[#F05E5E]' : 'border-[var(--grey)]'
-                  }`}
+                  className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[var(--green)] focus:border-[var(--green)] focus-visible:ring-[var(--green)] focus-visible:border-[var(--green)] transition-all duration-300 text-[#000000] focus:outline-none focus:ring-2 focus:ring-[var(--green)] ${errors.currentRetirementBalance ? 'border-[#F05E5E]' : 'border-[var(--grey)]'
+                    }`}
                   placeholder="Stan konta emerytalnego"
                   autoFocus
                 />
@@ -471,9 +466,8 @@ export default function PensionCalculatorForm() {
               onChange={handleInputChange}
               min="55"
               max="100"
-              className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[var(--green)] focus:border-[var(--green)] focus-visible:ring-[var(--green)] focus-visible:border-[var(--green)] transition-all duration-300 text-[#000000] focus:outline-none focus:ring-2 focus:ring-[var(--green)] ${
-                errors.retirementAge ? 'border-[#F05E5E]' : 'border-[var(--grey)]'
-              }`}
+              className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[var(--green)] focus:border-[var(--green)] focus-visible:ring-[var(--green)] focus-visible:border-[var(--green)] transition-all duration-300 text-[#000000] focus:outline-none focus:ring-2 focus:ring-[var(--green)] ${errors.retirementAge ? 'border-[#F05E5E]' : 'border-[var(--grey)]'
+                }`}
               placeholder={`Wpisz planowany wiek emerytalny (domyślnie: ${formData.gender === 'female' ? '60' : '65'})`}
               autoFocus
             />
@@ -496,9 +490,8 @@ export default function PensionCalculatorForm() {
               onChange={handleInputChange}
               maxLength={6}
               pattern="[0-9]{2}-[0-9]{3}"
-              className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[var(--green)] focus:border-[var(--green)] focus-visible:ring-[var(--green)] focus-visible:border-[var(--green)] transition-all duration-300 text-[#000000] focus:outline-none focus:ring-2 focus:ring-[var(--green)] ${
-                errors.zipCode ? 'border-[#F05E5E]' : 'border-[var(--grey)]'
-              }`}
+              className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[var(--green)] focus:border-[var(--green)] focus-visible:ring-[var(--green)] focus-visible:border-[var(--green)] transition-all duration-300 text-[#000000] focus:outline-none focus:ring-2 focus:ring-[var(--green)] ${errors.zipCode ? 'border-[#F05E5E]' : 'border-[var(--grey)]'
+                }`}
               placeholder="00-000 (opcjonalne)"
               autoFocus
             />
@@ -527,7 +520,7 @@ export default function PensionCalculatorForm() {
               </span> */}
             </div>
             <div className="w-full bg-[var(--grey)] bg-opacity-30 rounded-full h-2">
-              <div 
+              <div
                 className="bg-[var(--green)] h-2 rounded-full transition-all duration-300 ease-in-out"
                 style={{ width: `${(currentStep / totalSteps) * 100}%` }}
               ></div>
@@ -586,7 +579,7 @@ export default function PensionCalculatorForm() {
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-[black] font-medium">Stopa zastąpienia:</span>
-                <span className="text-[#000000] font-bold">{(result.FootOfReturn*100).toFixed(2)}%</span>
+                <span className="text-[#000000] font-bold">{(result.FootOfReturn * 100).toFixed(2)}%</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-[black] font-medium">Średnia przyszła emerytura:</span>
@@ -603,12 +596,12 @@ export default function PensionCalculatorForm() {
                   const extendedResult = calculatePension(extendedFormData);
                   const difference = extendedResult.monthlyPension - result.monthlyPension;
                   const percentageIncrease = ((difference / result.monthlyPension) * 100).toFixed(1);
-                  
+
                   return (
                     <div key={years} className="flex justify-between items-center py-1">
                       <span className="text-[black] text-sm">Praca o {years} {years === 1 ? 'rok' : years <= 4 ? 'lata' : 'lat'} dłużej:</span>
                       <span className="text-[#00416E] font-medium text-sm">
-                        {formatCurrency(extendedResult.monthlyPension)} 
+                        {formatCurrency(extendedResult.monthlyPension)}
                         <span className="text-[var(--green)] ml-2">
                           (+{formatCurrency(difference)}, +{percentageIncrease}%)
                         </span>
@@ -630,14 +623,14 @@ export default function PensionCalculatorForm() {
                   const difference = sickLeaveResult.monthlyPension - result.monthlyPension;
                   const percentageChange = ((difference / result.monthlyPension) * 100).toFixed(1);
                   const isPositive = difference > 0;
-                  
+
                   return (
                     <div className="flex justify-between items-center py-1">
                       <span className="text-[black] text-sm">
                         {formData.considerSickLeave ? 'Nie uwzględniając L4 wyszłoby:' : 'Uwzględniając przeciętną ilość L4 wyszłoby:'}
                       </span>
                       <span className="text-[#00416E] font-medium text-sm">
-                        {formatCurrency(sickLeaveResult.monthlyPension)} 
+                        {formatCurrency(sickLeaveResult.monthlyPension)}
                         <span className={`ml-2 ${isPositive ? 'text-[var(--green)]' : 'text-[#cc0000]'}`}>
                           ({isPositive ? '+' : ''}{formatCurrency(difference)}, {isPositive ? '+' : ''}{percentageChange}%)
                         </span>
@@ -646,32 +639,32 @@ export default function PensionCalculatorForm() {
                   );
                 })()}
               </div>
-              
+
               {expectedPension && (
                 <div className="flex justify-between items-center border-t border-gray-300 pt-3">
                   <span className="text-[black] font-medium">Oczekiwana emerytura (wprowadzona wcześniej):</span>
                   <span className="text-[#666666] font-bold text-lg">{formatCurrency(expectedPension)}</span>
                 </div>
               )}
-              
+
               {/* Years needed for desired pension */}
               {expectedPension && result.yearsNeededForDesiredPension !== undefined && (
                 <div className="flex justify-between items-center border-t border-gray-300 pt-3">
                   <span className="text-[black] font-medium">
-                    {result.yearsNeededForDesiredPension === 0 
-                      ? 'Już osiągniesz oczekiwaną emeryturę!' 
+                    {result.yearsNeededForDesiredPension === 0
+                      ? 'Już osiągniesz oczekiwaną emeryturę!'
                       : `Lata dodatkowej pracy dla oczekiwanej emerytury:`
                     }
                   </span>
                   <span className="text-[#ff6600] font-bold text-lg">
-                    {result.yearsNeededForDesiredPension === 0 
-                      ? '✓' 
+                    {result.yearsNeededForDesiredPension === 0
+                      ? '✓'
                       : `${result.yearsNeededForDesiredPension} ${result.yearsNeededForDesiredPension === 1 ? 'rok' : result.yearsNeededForDesiredPension <= 4 ? 'lata' : 'lat'}`
                     }
                   </span>
                 </div>
               )}
-              
+
               {expectedPension && result.yearsNeededForDesiredPension === undefined && expectedPension > result.monthlyPension && (
                 <div className="flex justify-between items-center border-t border-red-300 pt-3">
                   <span className="text-[black] font-medium">Oczekiwana emerytura:</span>
@@ -715,7 +708,7 @@ export default function PensionCalculatorForm() {
                 setErrors({});
               }}
               className="flex-1 bg-[var(--green)] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[#3F84D2] focus:ring-offset-2 transition-all duration-300 cursor-pointer"
-              >
+            >
               Przelicz ponownie
             </button>
           </div>
