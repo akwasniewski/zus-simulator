@@ -728,7 +728,7 @@ export default function PensionCalculatorForm() {
               onClick={handlePrint}
               className="flex-1 bg-[var(--orange)] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[#00993F] focus:ring-offset-2 transition-all duration-300 cursor-pointer"
             >
-              Wydrukuj stronę
+              Pobierz wynik
             </button>
           </div>
         </div >
