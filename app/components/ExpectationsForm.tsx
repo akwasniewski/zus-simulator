@@ -7,10 +7,7 @@ export default function ExpectationsForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Save expected pension to localStorage
-    localStorage.setItem('expectedPension', expectedPension.toString());
-    // Redirect to basic form
-    window.location.href = '/basic-form';
+    setShowComparison(true);
   };
 
   return (
@@ -46,7 +43,7 @@ export default function ExpectationsForm() {
           type="submit"
           className="w-full bg-[#007834] text-white py-3 px-6 rounded-lg font-semibold hover:bg-white hover:text-[#007834] border-2 border-[#007834] transition-all duration-300 shadow-lg"
         >
-          Oblicz swoją emeryturę
+          Porównaj ze statystykami
         </button>
       </form>
 

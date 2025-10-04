@@ -1,38 +1,28 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { FormData, PensionResult, calculatePension } from '../utils/pensionCalculator';
 
 export default function PensionCalculatorForm() {
   const [currentStep, setCurrentStep] = useState<number>(1);
-  const [expectedPension, setExpectedPension] = useState<number | null>(null);
-  const [formData, setFormData] = useState({
-    birthYear: '',
-    currentAge: '',
-    monthlySalary: '',
-    currentSalary: '',
+  const [formData, setFormData] = useState<FormData>({
     gender: '',
-    startWorkingYear: '',
+    currentAge: '',
+    currentSalary: '',
     workStartYear: '',
-    retirementAge: '',
-    currentRetirementBalance: '',
+    considerSickLeave: false,
     hasChildren: false,
     numberOfChildren: '',
+    hasRetirementAccount: false,
+    currentRetirementBalance: '',
+    retirementAge: '',
     zipCode: '',
-    considerSickLeave: false,
-    considerParentalLeave: false,
-  });  const [result, setResult] = useState<PensionResult | null>(null);
+  });
+
+  const [result, setResult] = useState<PensionResult | null>(null);
   const [errors, setErrors] = useState<Partial<FormData>>({});
 
   const totalSteps = 8;
-
-  // Load expected pension from localStorage on component mount
-  useEffect(() => {
-    const saved = localStorage.getItem('expectedPension');
-    if (saved) {
-      setExpectedPension(Number(saved));
-    }
-  }, []);
 
   const handleCalculatorRedirect = () => {
     const params = new URLSearchParams(formData as any).toString();
@@ -54,7 +44,10 @@ export default function PensionCalculatorForm() {
         updated.retirementAge = value === 'female' ? '60' : '65';
       }
 
-
+      // Clear retirement balance if hasRetirementAccount is unchecked
+      if (name === 'hasRetirementAccount' && !checked) {
+        updated.currentRetirementBalance = '';
+      }
 
       // Clear number of children if hasChildren is unchecked
       if (name === 'hasChildren' && !checked) {
@@ -112,7 +105,7 @@ export default function PensionCalculatorForm() {
         }
         break;
       case 6:
-        if (formData.currentRetirementBalance && parseFloat(formData.currentRetirementBalance) < 0) {
+        if (formData.hasRetirementAccount && (!formData.currentRetirementBalance || parseFloat(formData.currentRetirementBalance) < 0)) {
           newErrors.currentRetirementBalance = 'Podaj poprawną wartość';
         }
         break;
@@ -163,7 +156,7 @@ export default function PensionCalculatorForm() {
       newErrors.numberOfChildren = 'Podaj liczbę z zakresu 0-25';
     }
 
-    if (formData.currentRetirementBalance && parseFloat(formData.currentRetirementBalance) < 0) {
+    if (formData.hasRetirementAccount && (!formData.currentRetirementBalance || parseFloat(formData.currentRetirementBalance) < 0)) {
       newErrors.currentRetirementBalance = 'Podaj poprawną wartość';
     }
 
@@ -220,10 +213,10 @@ export default function PensionCalculatorForm() {
     switch (step) {
       case 1: return 'Jakiej jesteś płci?';
       case 2: return 'Ile masz lat?';
-      case 3: return 'Jaka jest twoja miesięczna pensja (brutto)?';
+      case 3: return 'Jaka jest twoja obecna pensja (brutto)?';
       case 4: return 'Kiedy zacząłeś pracę (na UoP)?';
       case 5: return 'Uwzględniać okresy na zwolnieniu';
-      case 6: return 'Ile masz zgromadzone na koncie emerytalnym?';
+      case 6: return 'Czy wiesz ile masz zgromadzone na koncie emerytalnym?';
       case 7: return 'Kiedy planujesz przejsć na emeryturę?';
       case 8: return 'Jaki masz kod pocztowy?';
       default: return '';
@@ -398,25 +391,43 @@ export default function PensionCalculatorForm() {
         );
       case 6:
         return (
-          <div>
-            <input
-              type="number"
-              id="currentRetirementBalance"
-              name="currentRetirementBalance"
-              value={formData.currentRetirementBalance}
-              onChange={handleInputChange}
-              min="0"
-              step="0.01"
-              className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[#3F84D2] focus:border-[#3F84D2] transition-colors text-[#000000] ${errors.currentRetirementBalance ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
-                }`}
-              placeholder="Podaj kwotę w PLN (jeśli znasz)"
-              autoFocus
-            />
-            {errors.currentRetirementBalance && (
-              <p className="mt-1 text-sm text-[#F05E5E]">{errors.currentRetirementBalance}</p>
+          <div className="space-y-4">
+            <div className="flex items-center mb-4">
+              <input
+                type="checkbox"
+                id="hasRetirementAccount"
+                name="hasRetirementAccount"
+                checked={formData.hasRetirementAccount}
+                onChange={handleInputChange}
+                className="w-4 h-4 text-[#3F84D2] bg-gray-100 border-gray-300 rounded focus:ring-[#3F84D2] focus:ring-2"
+              />
+              <label htmlFor="hasRetirementAccount" className="ml-2 text-sm font-medium text-[#000000]">
+                Tak
+              </label>
+            </div>
+
+            {formData.hasRetirementAccount && (
+              <div>
+                <input
+                  type="number"
+                  id="currentRetirementBalance"
+                  name="currentRetirementBalance"
+                  value={formData.currentRetirementBalance}
+                  onChange={handleInputChange}
+                  min="0"
+                  step="0.01"
+                  className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[#3F84D2] focus:border-[#3F84D2] transition-colors text-[#000000] ${errors.currentRetirementBalance ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
+                    }`}
+                  placeholder="Stan konta emerytalnego"
+                  autoFocus
+                />
+                {errors.currentRetirementBalance && (
+                  <p className="mt-1 text-sm text-[#F05E5E]">{errors.currentRetirementBalance}</p>
+                )}
+              </div>
             )}
-            <p className="text-sm text-[#BEC3CE] mt-2">
-              Jeśli nie wiesz, spróbujemy go oszacować.
+            <p className="text-sm text-[#BEC3CE]">
+              Jeśli nie, spróbujemy go oszacować.
             </p>
           </div>
         );
@@ -546,16 +557,6 @@ export default function PensionCalculatorForm() {
                 <span className="text-[#00416E] font-medium">Przewidywana miesięczna emerytura:</span>
                 <span className="text-[#FFB34F] font-bold text-xl">{formatCurrency(result.monthlyPension)}</span>
               </div>
-              {expectedPension && (
-                <div className="flex justify-between items-center">
-                  <span className="text-[#00416E] font-medium">Twoje oczekiwania:</span>
-                  <span className={`font-bold ${
-                    result.monthlyPension >= expectedPension ? 'text-[#00993F]' : 'text-[#F05E5E]'
-                  }`}>
-                    {formatCurrency(expectedPension)}
-                  </span>
-                </div>
-              )}
             </div>
             <p className="mt-4 text-sm text-[#00416E]">
               To są wyłącznie przewidywania. Rzeczywista emerytura może być inna.
@@ -578,20 +579,17 @@ export default function PensionCalculatorForm() {
                 setResult(null);
                 setCurrentStep(1);
                 setFormData({
-                  birthYear: '',
-                  currentAge: '',
-                  monthlySalary: '',
-                  currentSalary: '',
                   gender: '',
-                  startWorkingYear: '',
+                  currentAge: '',
+                  currentSalary: '',
                   workStartYear: '',
-                  retirementAge: '',
-                  currentRetirementBalance: '',
+                  considerSickLeave: false,
                   hasChildren: false,
                   numberOfChildren: '',
-                  zipCode: '',
-                  considerSickLeave: false,
-                  considerParentalLeave: false,
+                  hasRetirementAccount: false,
+                  currentRetirementBalance: '',
+                  retirementAge: '',
+                  zipCode: ''
                 });
                 setErrors({});
               }}
