@@ -24,34 +24,39 @@ export default function PensionCalculatorForm() {
 
   const totalSteps = 8;
 
+  const handleCalculatorRedirect = () => {
+    const params = new URLSearchParams(formData as any).toString();
+    window.location.href = `/kalkulator?${params}`;
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     const inputValue = type === 'checkbox' ? checked : value;
-    
+
     setFormData(prev => {
       const updated = {
         ...prev,
         [name]: inputValue
       };
-      
+
       // Auto-set retirement age when gender is selected
       if (name === 'gender') {
         updated.retirementAge = value === 'female' ? '60' : '65';
       }
-      
+
       // Clear retirement balance if hasRetirementAccount is unchecked
       if (name === 'hasRetirementAccount' && !checked) {
         updated.currentRetirementBalance = '';
       }
-      
+
       // Clear number of children if hasChildren is unchecked
       if (name === 'hasChildren' && !checked) {
         updated.numberOfChildren = '';
       }
-      
+
       return updated;
     });
-    
+
     // Clear error when user starts typing
     if (errors[name as keyof FormData]) {
       setErrors(prev => ({
@@ -63,7 +68,7 @@ export default function PensionCalculatorForm() {
 
   const validateStep = (step: number): boolean => {
     const newErrors: Partial<FormData> = {};
-    
+
     switch (step) {
       case 1:
         if (!formData.gender) {
@@ -121,7 +126,7 @@ export default function PensionCalculatorForm() {
         }
         break;
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -129,47 +134,47 @@ export default function PensionCalculatorForm() {
   const validateForm = (): boolean => {
     const newErrors: Partial<FormData> = {};
     const currentYear = new Date().getFullYear();
-    
+
     if (!formData.gender) {
       newErrors.gender = 'Wybierz swoją płeć';
     }
-    
+
     if (!formData.currentAge || parseInt(formData.currentAge) < 18 || parseInt(formData.currentAge) > 99) {
       newErrors.currentAge = 'Wpisz wiek pomiędzy 18 a 99 lat';
     }
-    
+
     if (!formData.currentSalary || parseFloat(formData.currentSalary) < 0) {
       newErrors.currentSalary = 'Podaj poprawną wartość';
     }
-    
+
     const workStartYear = parseInt(formData.workStartYear);
     if (!formData.workStartYear || workStartYear < 1950 || workStartYear > currentYear) {
       newErrors.workStartYear = `Wybierz rok pomiędzy 1950 a ${currentYear}`;
     }
-    
+
     if (formData.hasChildren && (!formData.numberOfChildren || parseInt(formData.numberOfChildren) < 0 || parseInt(formData.numberOfChildren) > 25)) {
       newErrors.numberOfChildren = 'Podaj liczbę z zakresu 0-25';
     }
-    
+
     if (formData.hasRetirementAccount && (!formData.currentRetirementBalance || parseFloat(formData.currentRetirementBalance) < 0)) {
       newErrors.currentRetirementBalance = 'Podaj poprawną wartość';
     }
-    
+
     if (!formData.retirementAge || parseInt(formData.retirementAge) < 55 || parseInt(formData.retirementAge) > 100) {
       newErrors.retirementAge = 'Podaj wiek z zakresu 55-100';
     }
-    
+
     if (parseInt(formData.currentAge) >= parseInt(formData.retirementAge)) {
       newErrors.retirementAge = 'Wiek emerytalny musi być większy niż obecny';
     }
-    
+
     if (formData.zipCode) {
       const zipCodePattern = /^\d{2}-\d{3}$/;
       if (!zipCodePattern.test(formData.zipCode)) {
         newErrors.zipCode = 'Podaj poprawny kod pocztowy w formaie 00-000';
       }
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -186,7 +191,7 @@ export default function PensionCalculatorForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (currentStep < totalSteps) {
       handleNext();
     } else {
@@ -269,9 +274,8 @@ export default function PensionCalculatorForm() {
               onChange={handleInputChange}
               min="18"
               max="99"
-              className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[#3F84D2] focus:border-[#3F84D2] transition-colors text-[#000000] ${
-                errors.currentAge ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
-              }`}
+              className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[#3F84D2] focus:border-[#3F84D2] transition-colors text-[#000000] ${errors.currentAge ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
+                }`}
               placeholder="Podaj swój wiek"
               autoFocus
             />
@@ -291,9 +295,8 @@ export default function PensionCalculatorForm() {
               onChange={handleInputChange}
               min="0"
               step="0.01"
-              className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[#3F84D2] focus:border-[#3F84D2] transition-colors text-[#000000] ${
-                errors.currentSalary ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
-              }`}
+              className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[#3F84D2] focus:border-[#3F84D2] transition-colors text-[#000000] ${errors.currentSalary ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
+                }`}
               placeholder="Pensja"
               autoFocus
             />
@@ -313,9 +316,8 @@ export default function PensionCalculatorForm() {
               onChange={handleInputChange}
               min="1950"
               max={new Date().getFullYear()}
-              className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[#3F84D2] focus:border-[#3F84D2] transition-colors text-[#000000] ${
-                errors.workStartYear ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
-              }`}
+              className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[#3F84D2] focus:border-[#3F84D2] transition-colors text-[#000000] ${errors.workStartYear ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
+                }`}
               placeholder="Rok rozpoczęcia pracy"
               autoFocus
             />
@@ -344,7 +346,7 @@ export default function PensionCalculatorForm() {
                   Uwzględniaj przewidywane okresy na zwolnieniu chorobowym
                 </label>
               </div>
-              
+
               <div className="space-y-3">
                 <div className="flex items-center">
                   <input
@@ -359,7 +361,7 @@ export default function PensionCalculatorForm() {
                     Planuję mieć dzieci
                   </label>
                 </div>
-                
+
                 {formData.hasChildren && (
                   <div>
                     <input
@@ -370,9 +372,8 @@ export default function PensionCalculatorForm() {
                       onChange={handleInputChange}
                       min="1"
                       max="10"
-                      className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[#3F84D2] focus:border-[#3F84D2] transition-colors text-[#000000] ${
-                        errors.numberOfChildren ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
-                      }`}
+                      className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[#3F84D2] focus:border-[#3F84D2] transition-colors text-[#000000] ${errors.numberOfChildren ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
+                        }`}
                       placeholder="Podaj liczbę"
                       autoFocus
                     />
@@ -404,7 +405,7 @@ export default function PensionCalculatorForm() {
                 Tak
               </label>
             </div>
-            
+
             {formData.hasRetirementAccount && (
               <div>
                 <input
@@ -415,9 +416,8 @@ export default function PensionCalculatorForm() {
                   onChange={handleInputChange}
                   min="0"
                   step="0.01"
-                  className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[#3F84D2] focus:border-[#3F84D2] transition-colors text-[#000000] ${
-                    errors.currentRetirementBalance ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
-                  }`}
+                  className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[#3F84D2] focus:border-[#3F84D2] transition-colors text-[#000000] ${errors.currentRetirementBalance ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
+                    }`}
                   placeholder="Stan konta emerytalnego"
                   autoFocus
                 />
@@ -450,9 +450,8 @@ export default function PensionCalculatorForm() {
               onChange={handleInputChange}
               min="55"
               max="100"
-              className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[#3F84D2] focus:border-[#3F84D2] transition-colors text-[#000000] ${
-                errors.retirementAge ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
-              }`}
+              className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[#3F84D2] focus:border-[#3F84D2] transition-colors text-[#000000] ${errors.retirementAge ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
+                }`}
               placeholder={`Enter your planned retirement age (default: ${formData.gender === 'female' ? '60' : '65'})`}
               autoFocus
             />
@@ -475,9 +474,8 @@ export default function PensionCalculatorForm() {
               onChange={handleInputChange}
               maxLength={6}
               pattern="[0-9]{2}-[0-9]{3}"
-              className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[#3F84D2] focus:border-[#3F84D2] transition-colors text-[#000000] ${
-                errors.zipCode ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
-              }`}
+              className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[#3F84D2] focus:border-[#3F84D2] transition-colors text-[#000000] ${errors.zipCode ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
+                }`}
               placeholder="00-000 (optional)"
               autoFocus
             />
@@ -506,7 +504,7 @@ export default function PensionCalculatorForm() {
               </span> */}
             </div>
             <div className="w-full bg-[#BEC3CE] bg-opacity-30 rounded-full h-2">
-              <div 
+              <div
                 className="bg-[#3F84D2] h-2 rounded-full transition-all duration-300 ease-in-out"
                 style={{ width: `${(currentStep / totalSteps) * 100}%` }}
               ></div>
@@ -517,7 +515,7 @@ export default function PensionCalculatorForm() {
             <h2 className="text-2xl font-bold text-[#00416E] text-center mb-6">
               {getStepTitle(currentStep)}
             </h2>
-            
+
             {/* Current Step Content */}
             {renderCurrentStep()}
 
@@ -564,7 +562,7 @@ export default function PensionCalculatorForm() {
               To są wyłącznie przewidywania. Rzeczywista emerytura może być inna.
             </p>
           </div>
-          
+
           {/* Navigation Buttons */}
           <div className="flex gap-4">
             <button
@@ -580,19 +578,19 @@ export default function PensionCalculatorForm() {
               onClick={() => {
                 setResult(null);
                 setCurrentStep(1);
-                setFormData({ 
-                gender: '', 
-                currentAge: '', 
-                currentSalary: '', 
-                workStartYear: '', 
-                considerSickLeave: false,
-                hasChildren: false,
-                numberOfChildren: '',
-                hasRetirementAccount: false,
-                currentRetirementBalance: '',
-                retirementAge: '',
-                zipCode: ''
-              });
+                setFormData({
+                  gender: '',
+                  currentAge: '',
+                  currentSalary: '',
+                  workStartYear: '',
+                  considerSickLeave: false,
+                  hasChildren: false,
+                  numberOfChildren: '',
+                  hasRetirementAccount: false,
+                  currentRetirementBalance: '',
+                  retirementAge: '',
+                  zipCode: ''
+                });
                 setErrors({});
               }}
               className="flex-1 bg-[#3F84D2] text-white py-3 px-6 rounded-md font-medium hover:bg-[#00416E] focus:ring-2 focus:ring-[#3F84D2] focus:ring-offset-2 transition-colors"
@@ -600,8 +598,17 @@ export default function PensionCalculatorForm() {
               Przelicz ponownie
             </button>
           </div>
-        </div>
-      )}
-    </div>
+          <div className="w-full">
+            <button
+              onClick={handleCalculatorRedirect}
+              className="w-full bg-[#00993F] text-white py-3 px-6 rounded-md font-medium hover:bg-[#00B84A] focus:ring-2 focus:ring-[#00993F] focus:ring-offset-2 transition-colors"
+            >
+              Przejdź do zaawansowanego kalkulatora
+            </button>
+          </div>
+        </div >
+      )
+      }
+    </div >
   );
 }

@@ -95,7 +95,7 @@ export default function FunFactsCarousel() {
               aria-label="Previous fun fact"
             >
               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
               </svg>
             </button>
 
@@ -113,7 +113,7 @@ export default function FunFactsCarousel() {
               aria-label="Next fun fact"
             >
               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
               </svg>
             </button>
           </div>
@@ -124,11 +124,10 @@ export default function FunFactsCarousel() {
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  currentIndex === index 
-                    ? 'bg-green scale-125' 
-                    : 'bg-grey hover:bg-green/50'
-                }`}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${currentIndex === index
+                  ? 'bg-green scale-125'
+                  : 'bg-grey hover:bg-green/50'
+                  }`}
                 aria-label={`Go to fun fact ${index + 1}`}
               />
             ))}
