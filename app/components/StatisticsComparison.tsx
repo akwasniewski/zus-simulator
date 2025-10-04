@@ -184,10 +184,20 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
                     index === 2 ? 'bg-yellow-400' :
                     index === 3 ? 'bg-green-400' :
                     'bg-blue-400'
-                  } ${selectedGroup?.name === group.name ? 'opacity-100 ring-2 ring-[var(--green)] ring-offset-1' : 'opacity-80'}`}
+                  } ${
+                    selectedGroup 
+                      ? selectedGroup.name === group.name 
+                        ? 'opacity-100' 
+                        : 'opacity-30'
+                      : 'opacity-80'
+                  }`}
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-xs font-bold text-white">
+                  <span className={`text-xs font-bold ${
+                    selectedGroup && selectedGroup.name !== group.name 
+                      ? 'text-gray-400' 
+                      : 'text-white'
+                  }`}>
                     {group.percentage}%
                   </span>
                 </div>
@@ -227,7 +237,7 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
             onClick={() => handleGroupClick(group)}
           >
             <h4 className="font-semibold text-[black] mb-2">{group.name}</h4>
-            <p className="text-sm text[var(--grey)] mb-2">{group.range}</p>
+            <p className="text-sm text-[var(--grey)] mb-2">{group.range}</p>
             <p className="text-lg font-bold text-[var(--green)]">
               Średnia: {group.average.toLocaleString()} zł
             </p>
