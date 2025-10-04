@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Lato } from "next/font/google";
 import Header from './components/header/zusheader'
 import "./globals.css";
 import Footer from "./components/footer/Footer";
+import FunFactsCarousel from './components/FunFact';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,11 +34,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Header />
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${lato.variable} antialiased`}
       >
+      <Header />
         {children}
+      
+      <FunFactsCarousel />
       <Footer />
       </body>
     </html>
