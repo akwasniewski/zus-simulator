@@ -12,8 +12,10 @@ export interface TelemetryEntry {
     monthlyPension: number;
     monthlyPensionAdjusted: number;
     FootOfReturn: number;
+    AverageFuturePension: number;
     totalSavings: number;
     yearsToRetirement: number;
+    yearsNeededForDesiredPension?: number;
   };
   userAgent: string;
 }
@@ -31,6 +33,11 @@ export const saveTelemetryData = async (
   expectedPension: number | null = null
 ): Promise<void> => {
   try {
+    console.log('Starting telemetry save...');
+    console.log('Form data received:', formData);
+    console.log('Calculation result received:', calculationResult);
+    console.log('Expected pension received:', expectedPension);
+    
     // Determine if user provided retirement account info
     const hasRetirementAccount = !!(formData.currentRetirementBalance && parseFloat(formData.currentRetirementBalance) > 0);
     
@@ -46,12 +53,16 @@ export const saveTelemetryData = async (
       userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : 'Unknown'
     };
 
+    console.log('Telemetry entry created:', telemetryEntry);
+
     // Get existing telemetry data
     const existingData = localStorage.getItem('pensionCalculatorTelemetry');
+    console.log('Existing telemetry data:', existingData);
     const telemetryArray: TelemetryEntry[] = existingData ? JSON.parse(existingData) : [];
     
     // Add new entry
     telemetryArray.push(telemetryEntry);
+    console.log('Updated telemetry array length:', telemetryArray.length);
     
     // Keep only last 100 entries to prevent localStorage from growing too large
     if (telemetryArray.length > 100) {
@@ -59,7 +70,9 @@ export const saveTelemetryData = async (
     }
     
     // Save back to localStorage
-    localStorage.setItem('pensionCalculatorTelemetry', JSON.stringify(telemetryArray, null, 2));
+    const dataToSave = JSON.stringify(telemetryArray, null, 2);
+    localStorage.setItem('pensionCalculatorTelemetry', dataToSave);
+    console.log('Data saved to localStorage successfully');
     
     console.log('Telemetry data saved:', telemetryEntry);
     
