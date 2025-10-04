@@ -161,7 +161,7 @@ export const calculateFullPension = (
     const valorization = parseFloat(row.waloryzacja.replace("%", "")) / 100;
 
     if (salaryEntry) {
-      const contribution = salaryEntry.salary * sickLeaveFactor * 0.1952;
+      const contribution = salaryEntry.salary * sickLeaveFactor * 0.1952*12;
       estimatedSavings = (estimatedSavings + contribution) * valorization;
     } else {
       // No salary this year, just valorize
