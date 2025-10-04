@@ -1,13 +1,17 @@
 'use client';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function ExpectationsForm() {
   const [expectedPension, setExpectedPension] = useState(4000);
-  const [showComparison, setShowComparison] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setShowComparison(true);
+    // Save expected pension to localStorage
+    localStorage.setItem('expectedPension', expectedPension.toString());
+    // Redirect to basic form
+    router.push('/basic-form');
   };
 
   return (
@@ -41,19 +45,17 @@ export default function ExpectationsForm() {
 
         <button
           type="submit"
-          className="w-full bg-[#007834] text-white py-3 px-6 rounded-lg font-semibold hover:bg-white hover:text-[#007834] border-2 border-[#007834] transition-all duration-300 shadow-lg"
+          className="w-full bg-[var(--green)] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[#3F84D2] focus:ring-offset-2 transition-all duration-300"
         >
-          Porównaj ze statystykami
+          Oblicz swoją emeryturę
         </button>
       </form>
 
-      {!showComparison && (
-        <div className="mt-6 p-4 bg-[#BEC3CE] rounded-lg">
-          <p className="text-sm text-[#00416E] text-center">
-            💡 Wpisz kwotę i zobacz, jak Twoje oczekiwania wypadają na tle innych emerytów
-          </p>
-        </div>
-      )}
+      <div className="mt-6 p-4 bg-[#BEC3CE] rounded-lg">
+        <p className="text-sm text-[#00416E] text-center">
+          💡 Wpisz kwotę i przejdź do szczegółowego kalkulatora emerytury
+        </p>
+      </div>
     </div>
   );
 }
