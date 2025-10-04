@@ -1,0 +1,98 @@
+.zus-header {
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.zus-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.zus-logo {
+  display: flex;
+  align-items: center;
+}
+
+.zus-logo-img {
+  width: 300px;
+  margin-right: 10px;
+}
+
+.zus-title {
+  font-weight: bold;
+  font-size: 12px;
+  color: #333;
+}
+
+.zus-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.zus-contact {
+  display: flex;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.zus-icons {
+  display: flex;
+  gap: 10px;
+  font-size: 18px;
+}
+
+.zus-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.zus-register-btn {
+  padding: 8px 12px;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.zus-login-btn {
+  padding: 8px 12px;
+  background-color: #f4a261;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.zus-search-eu {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 14px;
+}
+
+.zus-nav {
+  background-color: #f0f0f0;
+  padding: 10px 20px;
+}
+
+.zus-nav-list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 30px;
+}
+
+.zus-nav-item {
+  padding: 10px 0;
+  cursor: pointer;
+  font-weight: 500;
+  color: #333;
+}
+
+.zus-nav-item:hover {
+  color: #f4a261;
+}

@@ -1,6 +1,8 @@
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Header from "./components/zusheader"; // adjust path if necessary
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,7 +16,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Pension Calculator - Plan Your Retirement",
-  description: "Calculate your future pension with our easy-to-use retirement planning tool. Enter your current age, salary, and retirement plans to see your projected pension.",
+  description:
+    "Calculate your future pension with our easy-to-use retirement planning tool. Enter your current age, salary, and retirement plans to see your projected pension.",
 };
 
 export default function RootLayout({
@@ -27,8 +30,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Header />
         {children}
       </body>
     </html>
   );
 }
+
