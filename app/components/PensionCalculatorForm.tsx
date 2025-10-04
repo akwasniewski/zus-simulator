@@ -580,24 +580,18 @@ export default function PensionCalculatorForm() {
                 <span className="text-[black] font-medium">Przewidywana miesięczna emerytura:</span>
                 <span className="text-[var(--green)] font-bold text-xl">{formatCurrency(result.monthlyPension)}</span>
               </div>
-              <div className="flex justify-between items-center border-t border-[#00993F] pt-3 mt-2">
-        <span className="text-[black] font-medium">Emerytura po uwzględnieniu inflacji:</span>
-          <span className="text-[var(--green)] font-bold text-xl">
-            {formatCurrency(result.monthlyPensionAdjusted)}
-          </span>
-          <div className="flex justify-between items-center border-t border-[#00993F] pt-3 mt-2">
-        <span className="text-[black] font-medium">Stopa czegostam:</span>
-          <span className="text-[var(--green)] font-bold text-xl">
-            {result.FootOfReturn.toFixed(2)}
-          </span>
-        </div>
-        <div className="flex justify-between items-center border-t border-[#00993F] pt-3 mt-2">
-        <span className="text-[black] font-medium">Srednia przyszla emerytura:</span>
-          <span className="text-[var(--green)] font-bold text-xl">
-            {formatCurrency(result.AverageFuturePension)}
-          </span>
-        </div>
-        </div>
+              <div className="flex justify-between items-center">
+                <span className="text-[black] font-medium">Emerytura po uwzględnieniu inflacji:</span>
+                <span className="text-[#000000] font-bold">{formatCurrency(result.monthlyPensionAdjusted)}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-[black] font-medium">Stopa zastąpienia:</span>
+                <span className="text-[#000000] font-bold">{(result.FootOfReturn*100).toFixed(2)}%</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-[black] font-medium">Średnia przyszła emerytura:</span>
+                <span className="text-[#000000] font-bold">{formatCurrency(result.AverageFuturePension)}</span>
+              </div>
               {/* Additional calculations for working longer */}
               <div className="border-t border-gray-200 pt-3 mt-3">
                 <h4 className="text-[black] font-medium mb-2">Emerytura przy dłuższej pracy:</h4>
