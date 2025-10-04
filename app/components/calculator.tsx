@@ -309,7 +309,7 @@ export default function RetirementCalculator({ formData, setFormData }) {
                   value={formData?.currentRetirementBalance || ''}
                   onChange={(e) => {
                     const value = e.target.value;
-                    setFormData({ ...formData, currentRetirementBalance: value, hasRetirementAccount: true});
+                    setFormData({ ...formData, currentRetirementBalance: value, hasRetirementAccount: true });
                   }}
                   min="0"
                   placeholder="0"
@@ -338,7 +338,7 @@ export default function RetirementCalculator({ formData, setFormData }) {
                   <input
                     type="number"
                     value={bulkPastYears.startYear}
-                    onChange={(e) => setBulkPastYears({ ...bulkPastYears, startYear: parseInt(e.target.value) || currentYear - 10 })}
+                    onChange={(e) => setBulkPastYears({ ...bulkPastYears, startYear: parseInt(e.target.value) })}
                     min={currentYear - 50}
                     max={currentYear}
                     className="w-full px-2 py-1 border rounded"
@@ -350,8 +350,8 @@ export default function RetirementCalculator({ formData, setFormData }) {
                   <input
                     type="number"
                     value={bulkPastYears.endYear}
-                    onChange={(e) => setBulkPastYears({ ...bulkPastYears, endYear: parseInt(e.target.value) || currentYear - 1 })}
-                    min={currentYear - 50}
+                    onChange={(e) => setBulkPastYears({ ...bulkPastYears, endYear: parseInt(e.target.value) })}
+                    min={currentYear - 100}
                     max={currentYear}
                     className="w-full px-2 py-1 border rounded"
                     style={{ borderColor: 'var(--grey)' }}
@@ -362,7 +362,7 @@ export default function RetirementCalculator({ formData, setFormData }) {
                   <input
                     type="number"
                     value={bulkPastYears.startingSalary}
-                    onChange={(e) => setBulkPastYears({ ...bulkPastYears, startingSalary: parseFloat(e.target.value) || 50000 })}
+                    onChange={(e) => setBulkPastYears({ ...bulkPastYears, startingSalary: parseFloat(e.target.value) })}
                     min="0"
                     max="10000000"
                     className="w-full px-2 py-1 border rounded"
@@ -375,7 +375,7 @@ export default function RetirementCalculator({ formData, setFormData }) {
                     type="number"
                     step="0.5"
                     value={bulkPastYears.annualRaise}
-                    onChange={(e) => setBulkPastYears({ ...bulkPastYears, annualRaise: parseFloat(e.target.value) || 3 })}
+                    onChange={(e) => setBulkPastYears({ ...bulkPastYears, annualRaise: parseFloat(e.target.value) })}
                     min="-20"
                     max="50"
                     className="w-full px-2 py-1 border rounded"
