@@ -235,7 +235,7 @@ export default function RetirementCalculator({ formData, setFormData }) {
               <Calendar style={{ color: 'var(--blue)' }} size={24} />
               <span className="text-sm" style={{ color: 'var(--grey)' }}>Pozostało do emerytury</span>
             </div>
-            <div className="text-2xl font-bold" style={{ color: 'var(--foreground)' }}>{retirementAge - currentAge}</div>
+            <div className="text-2xl font-bold" style={{ color: 'var(--foreground)' }}>{retirementAge - currentAge} lat</div>
           </div>
 
           <div className="bg-whitee rounded-lg shadow-lg border border-[var(--grey)] p-6" style={{ borderLeft: '4px solid var(--red)' }}>
