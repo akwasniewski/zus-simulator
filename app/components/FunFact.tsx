@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 
 export const funFacts: string[] = [
   "Najwyższa emerytura w Polsce wynosi 15 287 zł - pobiera ją mieszkaniec woj. śląskiego",
-  "Najniższa emerytura to 1 588 zł - minimalna emerytura gwarantowana przez państwo",
-  "Średnia emerytura w Polsce to 3 126 zł brutto",
+  "Najniższa emerytura to 11 groszy",
+  "Średnia emerytura w Polsce to 4045 zł brutto",
   "Tylko 2% emerytów otrzymuje świadczenie powyżej 6 000 zł miesięcznie",
   "Co czwarty emeryt otrzymuje poniżej 2 500 zł miesięcznie",
   "Rekordzista przepracował 67 lat przed przejściem na emeryturę",
