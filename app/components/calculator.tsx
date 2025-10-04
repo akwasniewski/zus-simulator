@@ -573,9 +573,11 @@ export default function RetirementCalculator({ formData, setFormData }) {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-6">
-          <div className="bg-white rounded-lg shadow-md p-6 col-span-2">
-            <h2 className="text-xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>Historia i predykcja pensji</h2>
+        <div className="grid grid-cols-2 gap-6">
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h2 className="text-xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>
+              Historia i predykcja pensji
+            </h2>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={allData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--grey)" />
@@ -598,7 +600,36 @@ export default function RetirementCalculator({ formData, setFormData }) {
               </LineChart>
             </ResponsiveContainer>
           </div>
+
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h2 className="text-xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>
+              Historia i predykcja zebranych składek
+            </h2>
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={allData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--grey)" />
+                <XAxis dataKey="year" stroke="var(--foreground)" />
+                <YAxis stroke="var(--foreground)" />
+                <Tooltip
+                  formatter={(value) => `${value.toLocaleString()} zł`}
+                  contentStyle={{ backgroundColor: 'var(--background)', borderColor: 'var(--grey)' }}
+                  labelStyle={{ color: 'var(--foreground)' }}
+                />
+                <Legend />
+                <Line
+                  type="monotone"
+                  dataKey="salary"
+                  stroke="var(--green)"
+                  strokeWidth={2}
+                  name="Zarobki"
+                  dot={{ fill: 'var(--green)' }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
         </div>
+
+
       </div>
     </div>
   );
