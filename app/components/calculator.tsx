@@ -8,6 +8,7 @@ export default function RetirementCalculator({ formData, setFormData }) {
 
   // Initialize state variables FIRST
   const [currentAge, setCurrentAge] = useState(parseInt(formData?.currentAge) || 35);
+  const [predictedPension, setPredictedPension] = useState(0);
   const [retirementAge, setRetirementAge] = useState(parseInt(formData?.retirementAge) || (formData?.gender === 'female' ? 60 : 65));
   const [pastEarnings, setPastEarnings] = useState([{
     year: currentYear,
@@ -201,9 +202,9 @@ export default function RetirementCalculator({ formData, setFormData }) {
             <div className="text-2xl font-bold" style={{ color: 'var(--foreground)' }}>{retirementAge - currentAge}</div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-6" style={{ borderLeft: '4px solid var(--green)' }}>
+          <div className="bg-white rounded-lg shadow-md p-6" style={{ borderLeft: '4px solid var(--red)' }}>
             <div className="flex items-center justify-between mb-2">
-              <DollarSign style={{ color: 'var(--green)' }} size={24} />
+              <DollarSign style={{ color: 'var(--red)' }} size={24} />
               <span className="text-sm" style={{ color: 'var(--grey)' }}>Całkowite dochody</span>
             </div>
             <div className="text-2xl font-bold" style={{ color: 'var(--foreground)' }}>{totalEarnings} zł</div>
@@ -215,6 +216,14 @@ export default function RetirementCalculator({ formData, setFormData }) {
               <span className="text-sm" style={{ color: 'var(--grey)' }}>Średnia pensja</span>
             </div>
             <div className="text-2xl font-bold" style={{ color: 'var(--foreground)' }}>{avgSalary} zł</div>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-md p-6" style={{ borderLeft: '4px solid var(--green)' }}>
+            <div className="flex items-center justify-between mb-2">
+              <PiggyBank style={{ color: 'var(--green)' }} size={24} />
+              <span className="text-sm" style={{ color: 'var(--grey)' }}>Przewidywana emerytura</span>
+            </div>
+            <div className="text-2xl font-bold" style={{ color: 'var(--foreground)' }}>{predictedPension} zł</div>
           </div>
         </div>
 
