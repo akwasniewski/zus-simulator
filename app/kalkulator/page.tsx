@@ -323,8 +323,8 @@ export default function RetirementCalculator() {
                 <table className="w-full text-sm">
                   <thead className="sticky top-0 z-10" style={{ backgroundColor: 'var(--background)' }}>
                     <tr style={{ backgroundColor: 'rgba(190, 195, 206, 0.2)' }}>
-                      <th className="px-4 py-2 text-left">Year</th>
-                      <th className="px-4 py-2 text-left">Salary</th>
+                      <th className="px-4 py-2 text-left">Rok</th>
+                      <th className="px-4 py-2 text-left">Zarobki</th>
                       <th className="px-4 py-2 w-20"></th>
                     </tr>
                   </thead>
@@ -347,7 +347,7 @@ export default function RetirementCalculator() {
                           style={{ backgroundColor: 'var(--green)' }}
                           disabled={pastEarnings.length > 0 && Math.max(...pastEarnings.map(e => e.year)) >= currentYear}
                         >
-                          + Add Year Above
+                          + Dodaj rok powyżej
                         </button>
                       </td>
                     </tr>
@@ -357,7 +357,7 @@ export default function RetirementCalculator() {
                         return (
                           <tr>
                             <td colSpan="3" className="px-4 py-8 text-center text-gray-500">
-                              No earnings data. Click "Add Year Above" or "Add Year Below" to start.
+                              Brak danych, użyj przycisków "dodaj rok powyżej/poniżej" aby dodać zarobki za rok
                             </td>
                           </tr>
                         );
@@ -402,7 +402,7 @@ export default function RetirementCalculator() {
                                 min="0"
                                 className="w-full px-2 py-1 border rounded"
                                 style={{ borderColor: 'var(--grey)' }}
-                                placeholder="Enter salary"
+                                placeholder="Zarobki"
                               />
                             </td>
                             <td className="px-4 py-2">
@@ -440,7 +440,7 @@ export default function RetirementCalculator() {
                           className="px-3 py-1 text-xs rounded text-white"
                           style={{ backgroundColor: 'var(--green)' }}
                         >
-                          + Add Year Below
+                          + Dodaj rok poniżej
                         </button>
                       </td>
                     </tr>
