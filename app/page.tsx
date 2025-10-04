@@ -31,7 +31,7 @@ export default function SymulatorPage() {
         </div>
 
         {/* Stats comparison - pokazuj zawsze */}
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto mb-16">
           <StatisticsComparison expectedPension={expectedPension} />
         </div>
       </div>
