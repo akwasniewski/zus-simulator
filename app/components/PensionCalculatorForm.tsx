@@ -278,7 +278,7 @@ export default function PensionCalculatorForm() {
               min="18"
               max="99"
               className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[var(--green)] focus:border-[var(--green)] focus-visible:border-[var(--green)] transition-all duration-300 text-[#000000] focus:outline-none focus:ring-2 focus:ring-[var(--green)] ${
-                errors.currentAge ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
+                errors.currentAge ? 'border-[#F05E5E]' : 'border-[var(--grey)]'
               }`}
               placeholder="Podaj swój wiek"
               autoFocus
@@ -300,7 +300,7 @@ export default function PensionCalculatorForm() {
               min="0"
               step="0.01"
               className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[var(--green)] focus:border-[var(--green)] focus-visible:border-[var(--green)] transition-all duration-300 text-[#000000] focus:outline-none focus:ring-2 focus:ring-[var(--green)] ${
-                errors.currentSalary ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
+                errors.currentSalary ? 'border-[#F05E5E]' : 'border-[var(--grey)]'
               }`}
               placeholder="Pensja"
               autoFocus
@@ -322,7 +322,7 @@ export default function PensionCalculatorForm() {
               min="1950"
               max={new Date().getFullYear()}
               className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[var(--green)] focus:border-[var(--green)] focus-visible:ring-[var(--green)] focus-visible:border-[var(--green)] transition-all duration-300 text-[#000000] focus:outline-none focus:ring-2 focus:ring-[var(--green)] ${
-                errors.workStartYear ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
+                errors.workStartYear ? 'border-[#F05E5E]' : 'border-[var(--grey)]'
               }`}
               placeholder="Rok rozpoczęcia pracy"
               autoFocus
@@ -381,7 +381,7 @@ export default function PensionCalculatorForm() {
                       min="1"
                       max="10"
                       className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[var(--green)] focus:border-[var(--green)] focus-visible:ring-[var(--green)] focus-visible:border-[var(--green)] transition-all duration-300 text-[#000000] focus:outline-none focus:ring-2 focus:ring-[var(--green)] ${
-                        errors.numberOfChildren ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
+                        errors.numberOfChildren ? 'border-[#F05E5E]' : 'border-[var(--grey)]'
                       }`}
                       placeholder="Podaj liczbę"
                       autoFocus
@@ -393,7 +393,7 @@ export default function PensionCalculatorForm() {
                 )}
               </div>
             </div>
-            <p className="text-xs text-[#BEC3CE] mt-3">
+            <p className="text-xs text-[var(--grey)] mt-3">
               Powyższe opcje automatycznie zmieniają okresy składkowe.
             </p>
           </div>
@@ -427,7 +427,7 @@ export default function PensionCalculatorForm() {
                   min="0"
                   step="0.01"
                   className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[var(--green)] focus:border-[var(--green)] focus-visible:ring-[var(--green)] focus-visible:border-[var(--green)] transition-all duration-300 text-[#000000] focus:outline-none focus:ring-2 focus:ring-[var(--green)] ${
-                    errors.currentRetirementBalance ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
+                    errors.currentRetirementBalance ? 'border-[#F05E5E]' : 'border-[var(--grey)]'
                   }`}
                   placeholder="Stan konta emerytalnego"
                   autoFocus
@@ -437,7 +437,7 @@ export default function PensionCalculatorForm() {
                 )}
               </div>
             )}
-            <p className="text-sm text-[#BEC3CE]">
+            <p className="text-sm text-[var(--grey)]">
               Jeśli nie, spróbujemy go oszacować.
             </p>
           </div>
@@ -462,7 +462,7 @@ export default function PensionCalculatorForm() {
               min="55"
               max="100"
               className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[var(--green)] focus:border-[var(--green)] focus-visible:ring-[var(--green)] focus-visible:border-[var(--green)] transition-all duration-300 text-[#000000] focus:outline-none focus:ring-2 focus:ring-[var(--green)] ${
-                errors.retirementAge ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
+                errors.retirementAge ? 'border-[#F05E5E]' : 'border-[var(--grey)]'
               }`}
               placeholder={`Wpisz planowany wiek emerytalny (domyślnie: ${formData.gender === 'female' ? '60' : '65'})`}
               autoFocus
@@ -487,7 +487,7 @@ export default function PensionCalculatorForm() {
               maxLength={6}
               pattern="[0-9]{2}-[0-9]{3}"
               className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[var(--green)] focus:border-[var(--green)] focus-visible:ring-[var(--green)] focus-visible:border-[var(--green)] transition-all duration-300 text-[#000000] focus:outline-none focus:ring-2 focus:ring-[var(--green)] ${
-                errors.zipCode ? 'border-[#F05E5E]' : 'border-[#BEC3CE]'
+                errors.zipCode ? 'border-[#F05E5E]' : 'border-[var(--grey)]'
               }`}
               placeholder="00-000 (optional)"
               autoFocus
@@ -505,18 +505,18 @@ export default function PensionCalculatorForm() {
   return (
     <div className="w-full max-w-2xl mx-auto">
       {!result ? (
-        <div className="space-y-6 bg-white p-8 rounded-lg shadow-lg border border-[#BEC3CE]">
+        <div className="space-y-6 bg-white p-8 rounded-lg shadow-lg border border-[var(--grey)]">
           {/* Progress Indicator */}
           <div className="mb-8">
             <div className="flex justify-between items-center mb-4">
               <span className="text-sm font-medium text-[black]">
                 Krok {currentStep} z {totalSteps}
               </span>
-              {/* <span className="text-sm text-[#BEC3CE]">
+              {/* <span className="text-sm text-[var(--grey)]">
                 {Math.round((currentStep / totalSteps) * 100)}% Complete
               </span> */}
             </div>
-            <div className="w-full bg-[#BEC3CE] bg-opacity-30 rounded-full h-2">
+            <div className="w-full bg-[var(--grey)] bg-opacity-30 rounded-full h-2">
               <div 
                 className="bg-[var(--green)] h-2 rounded-full transition-all duration-300 ease-in-out"
                 style={{ width: `${(currentStep / totalSteps) * 100}%` }}
@@ -538,7 +538,7 @@ export default function PensionCalculatorForm() {
                 <button
                   type="button"
                   onClick={handlePrevious}
-                  className="flex-1 bg-[#BEC3CE] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[#BEC3CE] focus:ring-offset-2 transition-all duration-300"
+                  className="flex-1 bg-[var(--grey)] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[var(--grey)] focus:ring-offset-2 transition-all duration-300"
                 >
                   Wstecz
                 </button>
@@ -583,7 +583,7 @@ export default function PensionCalculatorForm() {
                 setResult(null);
                 setCurrentStep(totalSteps);
               }}
-              className="flex-1 bg-[#BEC3CE] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[#BEC3CE] focus:ring-offset-2 transition-all duration-300"
+              className="flex-1 bg-[var(--grey)] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[var(--grey)] focus:ring-offset-2 transition-all duration-300"
             >
               Wstecz
             </button>
