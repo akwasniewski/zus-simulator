@@ -1,5 +1,4 @@
 import PensionCalculatorForm from './components/PensionCalculatorForm';
-import Footer from './components/Footer';
 
 export default function Home() {
   return (
@@ -85,10 +84,6 @@ export default function Home() {
         </div>
 
       </div>
-
-      {/* Footer (full width, flush to bottom) */}
-      <Footer />
-
     </div>
   );
 }
