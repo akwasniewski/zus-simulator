@@ -230,7 +230,7 @@ export default function PensionCalculatorForm() {
       case 4: return 'Kiedy zacząłeś pracę (na UoP)?';
       case 5: return 'Uwzględniać okresy na zwolnieniach?';
       case 6: return 'Czy wiesz ile masz zgromadzone na koncie emerytalnym?';
-      case 7: return 'Kiedy planujesz przejsć na emeryturę?';
+      case 7: return 'Kiedy planujesz przejsć na emeryturę?<span>*</span>';
       case 8: return 'Jaki masz kod pocztowy?';
       default: return '';
     }
@@ -499,7 +499,7 @@ export default function PensionCalculatorForm() {
               className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[var(--green)] focus:border-[var(--green)] focus-visible:ring-[var(--green)] focus-visible:border-[var(--green)] transition-all duration-300 text-[#000000] focus:outline-none focus:ring-2 focus:ring-[var(--green)] ${
                 errors.zipCode ? 'border-[#F05E5E]' : 'border-[var(--grey)]'
               }`}
-              placeholder="00-000 (optional)"
+              placeholder="00-000 (opcjonalne)"
               autoFocus
             />
             {errors.zipCode && (
