@@ -24,7 +24,7 @@ export default function SymulatorPage() {
         </div>
 
         {/* Form */}
-        <div className="max-w-2xl mx-auto mb-16">
+        <div className="max-w-4xl mx-auto mb-16">
           <ExpectationsForm 
             onPensionChange={handlePensionChange}
           />
