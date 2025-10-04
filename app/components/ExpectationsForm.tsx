@@ -1,13 +1,24 @@
 'use client';
 import { useState } from 'react';
 
-export default function ExpectationsForm() {
+interface ExpectationsFormProps {
+  onPensionChange?: (pension: number) => void;
+  onShowComparison?: () => void;
+}
+
+export default function ExpectationsForm({ onPensionChange, onShowComparison }: ExpectationsFormProps) {
   const [expectedPension, setExpectedPension] = useState(4000);
-  const [showComparison, setShowComparison] = useState(false);
+  const [localPension, setLocalPension] = useState(4000);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setShowComparison(true);
+    setExpectedPension(localPension);
+    onPensionChange?.(localPension);
+    onShowComparison?.();
+  };
+
+  const handleLocalPensionChange = (value: number) => {
+    setLocalPension(value);
   };
 
   return (
@@ -26,16 +37,16 @@ export default function ExpectationsForm() {
           </label>
           <input
             type="number"
-            value={expectedPension}
-            onChange={(e) => setExpectedPension(Number(e.target.value))}
+            value={localPension}
+            onChange={(e) => handleLocalPensionChange(Number(e.target.value))}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3F84D2] focus:border-transparent text-center text-2xl font-bold"
             min="1000"
             step="100"
           />
           <div className="flex justify-between text-xs text-gray-500 mt-2">
-            <span>Minimalna: 1 588 zł</span>
-            <span>Średnia: 3 126 zł</span>
-            <span>Wysoka: 6 000+ zł</span>
+            <span>Minimalna: 1 878 zł</span>
+            <span>Średnia: 4 045 zł</span>
+            <span>Największa: 51 400 zł</span>
           </div>
         </div>
 
@@ -46,14 +57,6 @@ export default function ExpectationsForm() {
           Porównaj ze statystykami
         </button>
       </form>
-
-      {!showComparison && (
-        <div className="mt-6 p-4 bg-[#BEC3CE] rounded-lg">
-          <p className="text-sm text-[#00416E] text-center">
-            💡 Wpisz kwotę i zobacz, jak Twoje oczekiwania wypadają na tle innych emerytów
-          </p>
-        </div>
-      )}
     </div>
   );
 }
