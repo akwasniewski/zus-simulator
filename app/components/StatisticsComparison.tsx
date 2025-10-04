@@ -275,7 +275,7 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
               <strong>Porównanie:</strong> Twoje oczekiwania są {
                 expectedPension > selectedGroup.average ? 'wyższe' : 
                 expectedPension < selectedGroup.average ? 'niższe' : 'równe'
-              } średniej tej grupy
+              } od średniej emerytury w tej grupie
             </p>
           </div>
         </div>

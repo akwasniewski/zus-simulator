@@ -404,7 +404,7 @@ export default function PensionCalculatorForm() {
               </div>
             </div>
             <p className="text-xs text-[var(--grey)] mt-3">
-              Powyższe opcje automatycznie zmieniają okresy składkowe.
+              Przeciętny Polak spędza na zwolnieniach chorobowych około 34 dni w roku.
             </p>
           </div>
         );
@@ -499,7 +499,7 @@ export default function PensionCalculatorForm() {
               className={`w-full px-4 py-3 border rounded-md shadow-sm focus:ring-2 focus:ring-[var(--green)] focus:border-[var(--green)] focus-visible:ring-[var(--green)] focus-visible:border-[var(--green)] transition-all duration-300 text-[#000000] focus:outline-none focus:ring-2 focus:ring-[var(--green)] ${
                 errors.zipCode ? 'border-[#F05E5E]' : 'border-[var(--grey)]'
               }`}
-              placeholder="00-000 (optional)"
+              placeholder="00-000 (opcjonalne)"
               autoFocus
             />
             {errors.zipCode && (
@@ -580,6 +580,39 @@ export default function PensionCalculatorForm() {
                 <span className="text-[black] font-medium">Przewidywana miesięczna emerytura:</span>
                 <span className="text-[var(--green)] font-bold text-xl">{formatCurrency(result.monthlyPension)}</span>
               </div>
+              
+              {/* Additional calculations for working longer */}
+              <div className="border-t border-gray-200 pt-3 mt-3">
+                <h4 className="text-[black] font-medium mb-2">Emerytura przy dłuższej pracy:</h4>
+                {[1, 2, 5].map(years => {
+                  const extendedFormData = {
+                    ...formData,
+                    retirementAge: String(Number(formData.retirementAge) + years)
+                  };
+                  const extendedResult = calculatePension(extendedFormData);
+                  const difference = extendedResult.monthlyPension - result.monthlyPension;
+                  const percentageIncrease = ((difference / result.monthlyPension) * 100).toFixed(1);
+                  
+                  return (
+                    <div key={years} className="flex justify-between items-center py-1">
+                      <span className="text-[black] text-sm">Praca o {years} {years === 1 ? 'rok' : years <= 4 ? 'lata' : 'lat'} dłużej:</span>
+                      <span className="text-[#00416E] font-medium text-sm">
+                        {formatCurrency(extendedResult.monthlyPension)} 
+                        <span className="text-[var(--green)] ml-2">
+                          (+{formatCurrency(difference)}, +{percentageIncrease}%)
+                        </span>
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+              
+              {expectedPension && (
+                <div className="flex justify-between items-center border-t border-gray-300 pt-3">
+                  <span className="text-[black] font-medium">Oczekiwana emerytura (wprowadzona wcześniej):</span>
+                  <span className="text-[#666666] font-bold text-lg">{formatCurrency(expectedPension)}</span>
+                </div>
+              )}
             </div>
             <p className="mt-4 text-sm text-[black]">
               To są wyłącznie przewidywania. Rzeczywista emerytura może być inna.
