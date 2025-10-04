@@ -306,7 +306,7 @@ export default function RetirementCalculator({ formData, setFormData }) {
                   value={formData?.currentRetirementBalance || ''}
                   onChange={(e) => {
                     const value = e.target.value;
-                    setFormData({ ...formData, currentRetirementBalance: value });
+                    setFormData({ ...formData, currentRetirementBalance: value, hasRetirementAccount: true});
                   }}
                   min="0"
                   placeholder="0"

@@ -116,7 +116,6 @@ export const calculateFullPension = (
   // Determine start and end years
   const startYear = Math.min(...salaryHistory.map(s => s.year), new Date().getFullYear());
   const endYear = new Date().getFullYear() + yearsToRetirement;
-
   for (let year = startYear; year <= endYear; year++) {
     const salaryEntry = salaryHistory.find(s => s.year === year);
     const row = params.find((r) => r.rok === year);
