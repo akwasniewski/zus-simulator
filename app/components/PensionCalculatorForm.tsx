@@ -548,14 +548,14 @@ export default function PensionCalculatorForm() {
                 <button
                   type="button"
                   onClick={handlePrevious}
-                  className="flex-1 bg-[var(--grey)] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[var(--grey)] focus:ring-offset-2 transition-all duration-300"
+                  className="flex-1 bg-[var(--grey)] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[var(--grey)] focus:ring-offset-2 transition-all duration-300 cursor-pointer"
                 >
                   Wstecz
                 </button>
               )}
               <button
                 type="submit"
-                className="flex-1 bg-[var(--green)] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[#3F84D2] focus:ring-offset-2 transition-all duration-300"
+                className="flex-1 bg-[var(--green)] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[#3F84D2] focus:ring-offset-2 transition-all duration-300 cursor-pointer"
               >
                 {currentStep < totalSteps ? 'Dalej' : 'Oblicz moją emeryturę'}
               </button>
@@ -593,7 +593,7 @@ export default function PensionCalculatorForm() {
                 setResult(null);
                 setCurrentStep(totalSteps);
               }}
-              className="flex-1 bg-[var(--grey)] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[var(--grey)] focus:ring-offset-2 transition-all duration-300"
+              className="flex-1 bg-[var(--grey)] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[var(--grey)] focus:ring-offset-2 transition-all duration-300 cursor-pointer"
             >
               Wstecz
             </button>
@@ -616,7 +616,7 @@ export default function PensionCalculatorForm() {
                 });
                 setErrors({});
               }}
-              className="flex-1 bg-[var(--green)] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[#3F84D2] focus:ring-offset-2 transition-all duration-300"
+              className="flex-1 bg-[var(--green)] text-white py-3 px-6 rounded-md font-medium hover:opacity-80 focus:ring-2 focus:ring-[#3F84D2] focus:ring-offset-2 transition-all duration-300 cursor-pointer"
               >
               Przelicz ponownie
             </button>
@@ -624,7 +624,7 @@ export default function PensionCalculatorForm() {
           <div className="w-full">
             <button
               onClick={handleCalculatorRedirect}
-              className="w-full bg-[var(--blue)]  text-white py-3 px-6 rounded-md font-medium  hover:opacity-80 focus:ring-2 focus:ring-[#00993F] focus:ring-offset-2 transition-all duration-300"
+              className="w-full bg-[var(--blue)]  text-white py-3 px-6 rounded-md font-medium  hover:opacity-80 focus:ring-2 focus:ring-[#00993F] focus:ring-offset-2 transition-all duration-300 cursor-pointer"
             >
               Przejdź do zaawansowanego kalkulatora
             </button>

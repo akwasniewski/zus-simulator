@@ -187,7 +187,7 @@ export default function StatisticsComparison({ expectedPension = 4000 }: Statist
                   } ${selectedGroup?.name === group.name ? 'opacity-100 ring-2 ring-[var(--green)] ring-offset-1' : 'opacity-80'}`}
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-xs font-bold text-white mix-blend-difference">
+                  <span className="text-xs font-bold text-white">
                     {group.percentage}%
                   </span>
                 </div>
