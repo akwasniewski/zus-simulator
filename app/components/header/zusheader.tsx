@@ -18,7 +18,7 @@ const ZUSHeader = () => {
     { label: 'Wzory formularzy', href: '/wzory-formularzy' },
     { label: 'Baza wiedzy', href: '/baza-wiedzy' },
     { label: 'O ZUS', href: '/o-zus' },
-    { label: 'Kalkulator', href: '/kalkulator' },
+    { label: 'Kalkulator', href: '/' },
   ];
   return (
     <header className="w-full bg-white border-b border-gray-200">
@@ -112,7 +112,7 @@ const ZUSHeader = () => {
           {/* Tylko Kalkulator na telefonie */}
           <div className="flex md:hidden">
             <a
-              href="/kalkulator"
+              href="/"
               className="text-[var(--green)] font-semibold hover:opacity-80 text-lg px-3 py-2"
             >
               Kalkulator
